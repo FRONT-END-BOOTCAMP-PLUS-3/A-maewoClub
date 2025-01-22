@@ -1,18 +1,22 @@
-"use client"
-import Link from "next/link"
+"use client";
+
+
+import { HeaderStyle, LogoStyle, NavStyle, LinkStyle, LoginStyle } from "./header.style";
 
 export const Header = () => {
   return (
-    <header>
-      <h1><Link href="/">logo</Link></h1>
-      <nav>
-        <Link href="/">레시피</Link>
-        <Link href="/">커뮤니티</Link>
-        <Link href="/">챌린지</Link>
-      </nav>
-      <div>
-        <Link href="/login">Login</Link>
-      </div>
-    </header>
-  )
-}
+    <HeaderStyle>
+      <LogoStyle>
+        <LinkStyle href="/">logo</LinkStyle>
+      </LogoStyle>
+      <NavStyle>
+        <LinkStyle href="/recipes">레시피</LinkStyle>
+        <LinkStyle href="/board">커뮤니티</LinkStyle>
+        <LinkStyle href="/quest">챌린지</LinkStyle>
+      </NavStyle>
+      <LoginStyle>
+        <LinkStyle href="/login">Login</LinkStyle>
+      </LoginStyle>
+    </HeaderStyle>
+  );
+};
