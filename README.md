@@ -26,7 +26,7 @@
 
 ##  👨‍👩‍👧‍👦팀원 구성
 
-|[김주영(Lead)](https://github.com/hyservice781)|[최승원(Recorder)](https://github.com/romaneechoiti)|[정현수(Scrum)](https://github.com/hyun9758)|[한정현(PM)](https://github.com/hanjeonghyun)
+|[김주영(Lead)](https://github.com/jyservice781)|[최승원(Recorder)](https://github.com/romaneechoiti)|[정현수(Scrum)](https://github.com/hyun9758)|[한정현(PM)](https://github.com/hanjeonghyun)
 |:----:|:----:|:----:|:----:|
 |<img src="https://avatars.githubusercontent.com/u/142976288?v=4" width="200">|<img src="https://avatars.githubusercontent.com/u/112051914?v=4" width="200">|<img src="https://github.com/FRONTENDSCHOOL8/dosirak/assets/82191626/ad014ace-2ce2-4a0a-ae8a-b12a439eb5c5" width="200">|<img src="https://avatars.githubusercontent.com/u/129199377?v=4" width="200">
 
