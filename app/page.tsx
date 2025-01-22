@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image";
 import styles from "./page.module.css";
+import Button from "@/components/board/button/button";
 
 // test
 
@@ -15,6 +18,7 @@ export default function Home() {
           height={38}
           priority
         />
+        <Button>클릭</Button>
         <ol>
           <li>
             Get started by editing <code>app/page.tsx</code>.
