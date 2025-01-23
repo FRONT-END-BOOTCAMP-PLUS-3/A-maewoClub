@@ -3,6 +3,7 @@
   --subRed: #a80c18;
   --darkRed: #600000;
   --black: #000000;
+  background-color: var(--black);
 }
 
 *,
