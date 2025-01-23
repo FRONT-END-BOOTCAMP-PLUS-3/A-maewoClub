@@ -1,5 +1,19 @@
-export default function page() {
+"use client";
+
+import React from "react";
+import SubPage from "@/components/index/pages/subPage";
+
+type Props = {
+  children: React.ReactNode;
+};
+
+const ScrollContainer = () => {
   return (
-    <div>page</div>
-  )
-}
+    <>
+      <SubPage />
+    </>
+  );
+};
+
+export default ScrollContainer;
+
