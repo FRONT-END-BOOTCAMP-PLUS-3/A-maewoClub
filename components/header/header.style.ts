@@ -34,7 +34,20 @@ export const LinkStyle = styled(Link)`
   border-radius: 5px;
   color: #e50914;
   &:hover {
-    background: darkgray;
+    text-decoration: underline;
+    color: white;
+  }
+`;
+
+export const LoginBtnStyle = styled(Link)`
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  text-decoration: none;
+  border-radius: 5px;
+  color: #e50914;
+  &:hover {
+    background: #600000;
     color: white;
   }
 `;
