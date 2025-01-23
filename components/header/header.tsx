@@ -1,9 +1,13 @@
 "use client";
 
-
-import { HeaderStyle, LogoStyle, NavStyle, LinkStyle, LoginStyle } from "./header.style";
+import { HeaderStyle, LoginBtnStyle, LogoStyle, NavStyle, LinkStyle, LoginStyle } from "./header.style";
 
 export const Header = () => {
+  const loginModal = () => {
+    console.log("loginModal")
+    alert("login Modal")
+  }
+
   return (
     <HeaderStyle>
       <LogoStyle>
@@ -15,7 +19,7 @@ export const Header = () => {
         <LinkStyle href="/quest">챌린지</LinkStyle>
       </NavStyle>
       <LoginStyle>
-        <LinkStyle href="/login">Login</LinkStyle>
+        <LoginBtnStyle href="/" onClick={loginModal}>Login</LoginBtnStyle>
       </LoginStyle>
     </HeaderStyle>
   );
