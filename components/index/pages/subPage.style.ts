@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Picosisimo = styled.p`
   text-align: center;
-  font-size: 20vh;
+  font-size: 14rem;
   font-weight: 1000;
   line-height: 400px;
   letter-spacing: -8px;
@@ -16,6 +16,10 @@ export const Picosisimo = styled.p`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+`;
+
+export const Wrapper = styled.div`
+  overflow: hidden;
 `;
 
 export const Container = styled.div`
