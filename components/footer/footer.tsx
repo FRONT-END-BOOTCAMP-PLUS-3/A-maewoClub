@@ -15,6 +15,7 @@ const Footer = () => {
         고객문의 바로가기 대표메일 : amaewoclub@gmail.com 팀 구성원 : 김주영,
         정현수, 최승원, 한정현
       </p>
+
       <br />
       <p>Copyright © 주식회사 아매워클럽 All right reserved.</p>
     </FooterStyle>
