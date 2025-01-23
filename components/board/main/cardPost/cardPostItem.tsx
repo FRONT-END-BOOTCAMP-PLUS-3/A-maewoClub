@@ -9,13 +9,13 @@ import {
 } from "./cardPost.style";
 
 interface Post {
-  image: string; // 이미지
-  title: string; // 제목
-  content: string; // 내용용
-  id: string; // 아이디
-  comment: number; // 내용
-  view: number; // 조회수
-  heart: number; // 좋아요
+  image: string;
+  title: string;
+  content: string;
+  id: string;
+  comment: number;
+  view: number;
+  heart: number;
 }
 
 interface PostListItemProps {
