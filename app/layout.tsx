@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-
 export const metadata: Metadata = {
   title: "A-maewoClub",
   description: "A-maewoClub",
@@ -14,11 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
-  )
+  );
 }
 
-// WebHook test
+// footer comm test
