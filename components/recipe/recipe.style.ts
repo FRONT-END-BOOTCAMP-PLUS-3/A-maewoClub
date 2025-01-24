@@ -9,6 +9,7 @@ export const SubTitle = styled.h2`
   font-size: 1.5rem;
   margin: 1rem 0;
   text-align: left;
+  color: #fff;
 `;
 
 export const RecipeList = styled.div`
@@ -43,7 +44,7 @@ export const SlideButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   color: white;
   border: none;
   border-radius: 50%;
@@ -60,7 +61,7 @@ export const SlideButton = styled.button`
   }
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
   }
 `;
 

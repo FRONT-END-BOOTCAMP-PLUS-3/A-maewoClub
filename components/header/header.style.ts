@@ -5,7 +5,7 @@ export const HeaderStyle = styled.header`
   display: flex;
   align-items: center;
   padding: 20px;
-  background: #0c0c0c;
+  background: var(--black);
 `;
 
 export const LogoStyle = styled.h1`
@@ -30,7 +30,7 @@ export const LinkStyle = styled(Link)`
   margin: 5px;
   text-decoration: none;
   border-radius: 5px;
-  color: #e50914;
+  color: var(--mainRed);
   &:hover {
     text-decoration: underline;
     color: white;
@@ -43,9 +43,9 @@ export const LoginBtnStyle = styled(Link)`
   margin: 5px;
   text-decoration: none;
   border-radius: 5px;
-  color: #e50914;
+  color: var(--mainRed);
   &:hover {
-    background: #600000;
+    background: var(--darkRed);
     color: white;
   }
 `;
