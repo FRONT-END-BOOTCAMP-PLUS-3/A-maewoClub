@@ -4,7 +4,7 @@ import { FoodImage, UserNickname, TextContainer, Container, Description, Tier, T
 
 const RecipeCardSlide = () => {
   // 이미지 URL 변수 추가
-  const imageUrl = '/your-image-path.jpg'; // 실제 이미지 경로로 대체
+  const imageUrl = '/'; // 실제 이미지 경로로 대체
   const tag = '음식 태그'; // 태그 변수 추가
 
   return (
@@ -15,6 +15,7 @@ const RecipeCardSlide = () => {
           alt="Avatar" 
           width={100} 
           height={100} 
+          // placeholder="blur"
         />
       )}
       <TextContainer>

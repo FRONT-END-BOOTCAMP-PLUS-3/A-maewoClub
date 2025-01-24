@@ -3,26 +3,28 @@ import styled from "styled-components";
 export const SubTitle = styled.h2`
   font-size: 1.5rem;
   margin: 1rem 0;
-  text-align: center;
+  text-align: left;
 `;
 
 export const RecipeList = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
+  margin: 0 20%;
+  padding: 5% 0;
   gap: 2rem;
 `;
 
 export const RecipeSlideContainer = styled.div`
   position: relative;
   width: 100%;
-  max-width: 600px;
   overflow: hidden;
 `;
 
-export const SlideTrack = styled.div`
+export const SlideTrack = styled.div<{ position: number }>`
   display: flex;
   transition: transform 0.5s ease-in-out;
+  transform: ${({ position }) => `translateX(${position}%)`};
 `;
 
 export const SlideWrapper = styled.div`
@@ -62,4 +64,17 @@ export const RecipeContainer = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+`;
+
+export const RecipeCard = styled.div`
+  width: 150px;
+  height: 150px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #555;
 `;

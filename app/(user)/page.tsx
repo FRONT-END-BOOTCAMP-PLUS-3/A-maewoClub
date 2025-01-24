@@ -3,9 +3,9 @@
 import React from "react";
 import SubPage from "@/components/index/pages/subPage";
 
-type Props = {
-  children: React.ReactNode;
-};
+// type Props = {
+//   children: React.ReactNode;
+// };
 
 const ScrollContainer = () => {
   return (

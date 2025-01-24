@@ -2,7 +2,7 @@
 import { FoodImage ,UserNickname, TextContainer, Container, Description, Tier } from "./recipeCardSlide.style";
 
 
-const RecipeCardSlide = () => {
+const SlideTrack = () => {
   return (
     <Container>
       <FoodImage src="/" alt="Avatar" width={100} height={100} />
@@ -17,4 +17,4 @@ const RecipeCardSlide = () => {
   )
 };
 
-export default RecipeCardSlide;
+export default SlideTrack;
