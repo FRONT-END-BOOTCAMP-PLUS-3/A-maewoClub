@@ -40,21 +40,18 @@ const Comment = () => {
   return (
     <>
       <CommentBox>
-        {mock.map(({ nickname, createdDate, image, comment }, index) => (
-          <Container key={index}>
-            <Profile
-              nickname={nickname}
-              createdDate={createdDate}
-              image={image}
-            />
-            <Content>{comment}</Content>
+        {mock.map((e) => (
+          <Container key={e.nickname}>
+            <Profile />
+            <Content>{e.comment}</Content>
           </Container>
         ))}
-        <CommentInput />
-        <ButtonBox>
-          <Button>등록</Button>
-        </ButtonBox>
       </CommentBox>
+      <CommentInput />
+
+      <ButtonBox>
+        <Button>등록</Button>
+      </ButtonBox>
     </>
   );
 };
