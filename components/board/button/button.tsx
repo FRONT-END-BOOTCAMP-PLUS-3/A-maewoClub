@@ -6,7 +6,7 @@ interface ButtonProps {
   children: ReactNode; // 버튼 안에 들어갈 텍스트나 내용
 }
 
-const Button: React.FC<ButtonProps> = ({ children }) => {
+const Button = ({ children }: ButtonProps) => {
   return (
     <StyledButton>
       <StyledButtonText>{children}</StyledButtonText>
