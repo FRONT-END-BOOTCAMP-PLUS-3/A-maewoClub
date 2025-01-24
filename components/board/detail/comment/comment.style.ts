@@ -25,8 +25,9 @@ export const Content = styled.p`
 
 export const ButtonBox = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: end;
+  justify-content: end;
+
+  width: 100%;
 `;
 
 export const CommentInput = styled.textarea`
@@ -34,7 +35,7 @@ export const CommentInput = styled.textarea`
   height: 150px;
 
   padding: 20px;
-  margin: 10px;
+  margin: 20px 0;
 
   border: 2px solid var(--darkRed);
   border-radius: 20px;

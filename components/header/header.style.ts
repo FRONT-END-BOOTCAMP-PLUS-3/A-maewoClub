@@ -9,7 +9,6 @@ export const HeaderStyle = styled.header`
 `;
 
 export const LogoStyle = styled.h1`
-  // background: red;
   margin-right: 20px;
   padding: 5px;
   font-size: 25px;
@@ -27,7 +26,6 @@ export const NavStyle = styled.nav`
 
 export const LinkStyle = styled(Link)`
   display: inline-block;
-  //color: #fff;
   padding: 5px 10px;
   margin: 5px;
   text-decoration: none;

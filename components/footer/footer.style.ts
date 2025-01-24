@@ -5,10 +5,8 @@ const FooterStyle = styled.footer`
   padding: 20px;
   font-size: 14px;
   width: 100%;
-  position: fixed;
-  bottom: 0;
-
   color: #999;
+  bottom: 0;
 
   p {
     margin: 0;
