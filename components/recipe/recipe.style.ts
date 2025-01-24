@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const RecipeDetailContainer = styled.div`
+  width:100%;
+  
+`
+
 export const SubTitle = styled.h2`
   font-size: 1.5rem;
   margin: 1rem 0;

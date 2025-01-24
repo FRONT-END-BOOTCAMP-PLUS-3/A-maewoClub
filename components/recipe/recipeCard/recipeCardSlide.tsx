@@ -15,7 +15,7 @@ type RecipeCardProps = {
 };
 
 const RecipeCardSlide = ({ children }: RecipeCardProps) => {
-  const imageUrl = '/DfImage.png'; 
+  const imageUrl = '/recipe.jpg'; 
   const profileUrl = '/Dfprofile.png'
 
   return (

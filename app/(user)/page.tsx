@@ -3,10 +3,6 @@
 import React from "react";
 import SubPage from "@/components/index/pages/subPage";
 
-// type Props = {
-//   children: React.ReactNode;
-// };
-
 const ScrollContainer = () => {
   return (
     <>
@@ -16,4 +12,3 @@ const ScrollContainer = () => {
 };
 
 export default ScrollContainer;
-

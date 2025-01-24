@@ -7,7 +7,7 @@ type RecipeCardProps = {
 }
 
 const RecipeCard = ({children}: RecipeCardProps) => {
-  const imageUrl = '/DfImage.png'; 
+  const imageUrl = '/recipe.jpg'; 
   const profileUrl = '/Dfprofile.png'
   const tag = '#매운 음식 1단계';
 
