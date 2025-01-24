@@ -9,8 +9,8 @@ export const Container = styled.span`
 `;
 
 export const ProfileImage = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 70px;
 
   overflow: auto;
