@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import PostListItem from "./cardPostItem";
 
@@ -15,7 +16,7 @@ interface CardPostProps {
   posts: Post[];
 }
 
-const CardPost: React.FC<CardPostProps> = ({ posts }) => {
+const CardPost = ({ posts }: CardPostProps) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       {posts.map((post) => (

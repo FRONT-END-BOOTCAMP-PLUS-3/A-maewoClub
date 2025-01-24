@@ -45,7 +45,7 @@ export const UserContainer = styled.div`
   padding: 10px 0px;
 `
 export const UserProfileImage = styled(Image)`
-  width:40px;
+  width:50px;
   height:auto;
 `
 export const UserNickname = styled.h4`
