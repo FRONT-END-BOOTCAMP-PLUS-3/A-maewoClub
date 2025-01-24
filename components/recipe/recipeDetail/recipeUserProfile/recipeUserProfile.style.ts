@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const Card = styled.div`
   background: rgba(255, 255, 255, 0.2);
@@ -18,6 +19,8 @@ export const Card = styled.div`
   border-radius: 20px;
   overflow: hidden;
 `;
+
+export const FoodImage = styled(Image)``
 
 export const MainImageWrapper = styled.div`
   width: 100%;

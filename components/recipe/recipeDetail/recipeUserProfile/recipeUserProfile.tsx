@@ -1,32 +1,39 @@
-import Image from "next/image";
+'use client'
 import {
   Card,
   CardDescription,
   UserName,
   CardTitle,
+  FoodImage,
   RecipeUserInfo,
   MainImageWrapper,
   StepImageWrapper,
 } from "./recipeUserProfile.style";
 
 export const RecipeUserProfile = () => {
+  const imageUrl = '/recipe.jpg'; 
+
   return (
     <Card>
       <MainImageWrapper>
-        <Image
-          src="/recipe.jpg"
-          alt="Recipe Main Image"
-          width={100}
-          height={100}
+      {imageUrl && (
+        <FoodImage 
+          src={imageUrl} 
+          alt="Avatar" 
+          width={100} 
+          height={100} 
         />
+      )}
       </MainImageWrapper>
       <StepImageWrapper>
-        <Image
-          src="/recipe.jpg"
-          alt="Recipe Step Image"
-          width={100}
-          height={100}
+      {imageUrl && (
+        <FoodImage 
+          src={imageUrl} 
+          alt="Avatar" 
+          width={100} 
+          height={100} 
         />
+      )}
       </StepImageWrapper>
       <RecipeUserInfo>
         <UserName>순쾌위파</UserName>
