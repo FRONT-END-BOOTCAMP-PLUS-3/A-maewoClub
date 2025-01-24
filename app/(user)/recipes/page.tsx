@@ -35,7 +35,6 @@ export default function Page() {
   const totalRecipes = 20; // 전체 레시피 수
   const totalPages = Math.ceil(totalRecipes / recipesPerPage);
 
-  // 현재 페이지의 레시피 데이터 가져오기
   const currentRecipes = [...Array(totalRecipes)].slice(
     (currentPage - 1) * recipesPerPage,
     currentPage * recipesPerPage
