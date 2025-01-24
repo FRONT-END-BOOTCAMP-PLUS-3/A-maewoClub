@@ -1,16 +1,16 @@
-'use client'
+"use client";
+
 import {
-  PhotoReviewButton,
   PhotoReviewContainer,
   PhotoReviewTitle,
+  Photo,
 } from "./photoReview.style";
 
 export const PhotoReview = () => {
   return (
     <PhotoReviewContainer>
-      <PhotoReviewTitle></PhotoReviewTitle>
-      <PhotoReviewButton></PhotoReviewButton>
-      <PhotoReview></PhotoReview>
+      <PhotoReviewTitle>포토리뷰</PhotoReviewTitle>
+      <Photo></Photo>
     </PhotoReviewContainer>
   );
 };
