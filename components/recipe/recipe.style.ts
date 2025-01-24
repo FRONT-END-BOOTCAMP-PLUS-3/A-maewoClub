@@ -62,7 +62,7 @@ export const SlideButton = styled.button`
 export const RecipeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 2rem;
   justify-content: center;
 `;
 

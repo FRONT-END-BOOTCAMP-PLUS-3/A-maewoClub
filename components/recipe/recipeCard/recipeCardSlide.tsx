@@ -1,20 +1,52 @@
-'use client'
-import { FoodImage ,UserNickname, TextContainer, Container, Description, Tier } from "./recipeCardSlide.style";
+"use client";
+import { UserContainer } from "./recipeCard.style";
+import {
+  FoodImage,
+  UserNickname,
+  TextContainer,
+  Container,
+  Description,
+  Tier,
+  UserProfileImage
+} from "./recipeCardSlide.style";
 
-
-const SlideTrack = () => {
-  return (
-    <Container>
-      <FoodImage src="/" alt="Avatar" width={100} height={100} />
-      <TextContainer>
-        <Description>아주 맛있고 담백하고 아주 좋고 빨갛고 매워요</Description>
-        <UserNickname>
-          나의 고향 신길동 매운 떡볶이 
-          <Tier>알</Tier>
-        </UserNickname>
-      </TextContainer>
-    </Container>
-  )
+type RecipeCardProps = {
+  children: React.ReactNode;
 };
 
-export default SlideTrack;
+const RecipeCardSlide = ({ children }: RecipeCardProps) => {
+  const imageUrl = '/DfImage.png'; 
+  const profileUrl = '/Dfprofile.png'
+
+  return (
+    <Container>
+       {imageUrl && (
+             <FoodImage 
+               src={imageUrl} 
+               alt="Avatar" 
+               width={100} 
+               height={100} 
+             />
+           )}
+      <TextContainer>
+        <Description>{children}</Description>
+        <UserContainer>
+          {imageUrl && (
+            <UserProfileImage
+              src={profileUrl}
+              alt="Avatar"
+              width={100}
+              height={100}
+            />
+          )}
+          <UserNickname>
+            나의 고향 신길동 매운 떡볶이
+            <Tier>알</Tier>
+          </UserNickname>
+        </UserContainer>
+      </TextContainer>
+    </Container>
+  );
+};
+
+export default RecipeCardSlide;
