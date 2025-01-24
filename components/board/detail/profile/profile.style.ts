@@ -6,8 +6,6 @@ export const Container = styled.span`
 
   padding: 10px;
   column-gap: 20px;
-
-  background-color: black;
 `;
 
 export const ProfileImage = styled.img`
