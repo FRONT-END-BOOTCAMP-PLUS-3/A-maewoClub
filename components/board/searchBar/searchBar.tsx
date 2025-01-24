@@ -7,11 +7,13 @@ import {
   SearchIcon,
   SearchForm,
 } from "./searchBar.style";
+import TextForm from "../textForm/textForm";
 
 const SearchBar = () => {
   const SearchIconSvg = "/search.svg";
   return (
     <SearchBarContainer>
+      <TextForm />
       <SearchForm>
         {SearchIconSvg && (
           <SearchIcon
