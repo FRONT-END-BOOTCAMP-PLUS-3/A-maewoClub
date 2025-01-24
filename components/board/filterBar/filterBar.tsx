@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { FilterBarContainer, FilterButton } from "./filterBar.style";
 
-// 컴포넌트 정의
 const FilterBar = () => {
   const [activeButton, setActiveButton] = useState<string>("");
 
-  // 버튼 클릭 이벤트 핸들러
   const handleButtonClick = (buttonName: string) => {
-    setActiveButton(buttonName); // 클릭한 버튼을 활성화 상태로 설정
+    setActiveButton(buttonName);
   };
 
   return (
