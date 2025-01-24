@@ -1,5 +1,12 @@
+import Button from "../../button/button";
 import Profile from "../profile/profile";
-import { Container, Content } from "./comment.style";
+import {
+  ButtonBox,
+  CommentBox,
+  CommentInput,
+  Container,
+  Content,
+} from "./comment.style";
 
 interface CommentProps {
   nickname: string;
@@ -32,16 +39,22 @@ const mock: CommentProps[] = [
 const Comment = () => {
   return (
     <>
-      {mock.map(({ nickname, createdDate, image, comment }, index) => (
-        <Container key={index}>
-          <Profile
-            nickname={nickname}
-            createdDate={createdDate}
-            image={image}
-          />
-          <Content>{comment}</Content>
-        </Container>
-      ))}
+      <CommentBox>
+        {mock.map(({ nickname, createdDate, image, comment }, index) => (
+          <Container key={index}>
+            <Profile
+              nickname={nickname}
+              createdDate={createdDate}
+              image={image}
+            />
+            <Content>{comment}</Content>
+          </Container>
+        ))}
+        <CommentInput />
+        <ButtonBox>
+          <Button>등록</Button>
+        </ButtonBox>
+      </CommentBox>
     </>
   );
 };

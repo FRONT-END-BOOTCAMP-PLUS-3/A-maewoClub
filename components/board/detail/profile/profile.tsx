@@ -6,22 +6,19 @@ import {
   ProfileImage,
 } from "./profile.style";
 
-interface Post {
-  id: number;
+interface ProfileProps {
   image: string;
-  title: string;
-  content: string;
-  view: number;
-  heart: number;
+  nickname: string;
+  createdDate: string;
 }
 
-const mock = {
+const mock: ProfileProps = {
   image: "/file.svg",
   nickname: "빨간떡볶이1짱",
   createdDate: "2025/01/23",
 };
 
-const Profile = () => {
+const Profile = ({ ...mock }: ProfileProps) => {
   return (
     <>
       <Container>
