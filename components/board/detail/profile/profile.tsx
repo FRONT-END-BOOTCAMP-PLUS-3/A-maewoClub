@@ -18,7 +18,7 @@ const mock: ProfileProps = {
   createdDate: "2025/01/23",
 };
 
-const Profile = ({ ...mock }: ProfileProps) => {
+const Profile = () => {
   return (
     <>
       <Container>
