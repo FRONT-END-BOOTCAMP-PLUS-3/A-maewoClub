@@ -1,7 +1,6 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { FilterBarContainer, FilterButton } from "./filterBar.style";
-
 const FilterBar = () => {
   const [activeButton, setActiveButton] = useState<string>("");
 

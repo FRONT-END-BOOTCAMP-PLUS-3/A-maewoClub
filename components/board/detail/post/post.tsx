@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Comment from "../comment/comment";
 import Profile from "../profile/profile";
 import {

@@ -17,7 +17,7 @@ export const Container = styled.div`
 export const Content = styled.p`
   display: flex;
   justify-content: start;
-  margin-left: 100px;
+  margin-left: 90px;
 
   font-size: 18px;
   color: white;
