@@ -20,18 +20,18 @@ export const CookCardNumber = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 100%;
+  // 동그랗게 만들기
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+
   padding: 12px 12px 11px 13px;
-  margin-right: 1rem;
 
   color: rgb(255, 255, 255);
   background-color: rgb(255, 0, 0);
 `;
 export const CookCardDescription = styled.p`
-  margin-top: 3rem;
-  margin-right: 3rem;
+  margin: 3rem 3rem 0rem 1rem;
   width: 30rem;
   font-size: 1rem;
 

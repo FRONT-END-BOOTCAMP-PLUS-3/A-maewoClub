@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import {
   CookCardDescription,
@@ -22,6 +22,7 @@ export const CookingSteps = () => {
         어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다
         어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다
       </CookCardDescription>
+      {/* TODO: 더보기 구현 */}
       <CookCardImage>
         <Image src="/recipe.jpg" alt="Recipe Image" width={100} height={100} />
       </CookCardImage>
