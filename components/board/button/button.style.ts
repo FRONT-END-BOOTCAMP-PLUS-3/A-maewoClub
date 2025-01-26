@@ -6,9 +6,8 @@ export const StyledButton = styled.div`
   flex-shrink: 0;
 
   border-radius: 78px;
-  background: var(--point_red, #E50913);
+  background: var(--point_red, #e50913);
 
-  /* 버튼 텍스트를 가운데 정렬하기 위해 flex 사용 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,7 +21,7 @@ export const StyledButtonText = styled.span`
   justify-content: center;
   flex-shrink: 0;
 
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
   font-family: Inter, sans-serif;
   font-size: 20px;
