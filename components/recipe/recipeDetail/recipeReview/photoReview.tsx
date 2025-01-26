@@ -7,10 +7,15 @@ import {
 } from "./photoReview.style";
 
 export const PhotoReview = () => {
+  const photoUrl = "/recipe.jpg";
+
   return (
     <PhotoReviewContainer>
       <PhotoReviewTitle>포토리뷰</PhotoReviewTitle>
-      <Photo></Photo>
+      {/* TODO: 포토리뷰 5개만 보이도록 */}
+      {photoUrl && (
+        <Photo src={photoUrl} alt="foodPhoto" width={100} height={100} />
+      )}
     </PhotoReviewContainer>
   );
 };
