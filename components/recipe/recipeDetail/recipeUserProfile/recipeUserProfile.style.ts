@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-export const Card = styled.div`
+export const ProfileContainer = styled.div`
   background: rgba(255, 255, 255, 0.2);
   margin-top: 4rem;
   border: 2px solid var(--original_red, #a90d18);
@@ -20,7 +20,7 @@ export const Card = styled.div`
   overflow: hidden;
 `;
 
-export const FoodImage = styled(Image)``
+export const FoodImage = styled(Image)``;
 
 export const MainImageWrapper = styled.div`
   width: 100%;
@@ -54,7 +54,9 @@ export const UserName = styled.p`
   font-size: 18px;
 `;
 
-export const CardTitle = styled.h2``;
+export const CardTitle = styled.h2`
+  color: var(--mainRed);
+`;
 
 export const CardDescription = styled.p`
   overflow: hidden;

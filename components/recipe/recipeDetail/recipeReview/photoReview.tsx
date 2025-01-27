@@ -2,7 +2,7 @@
 
 import {
   PhotoReviewContainer,
-  PhotoReviewTitle,
+  PhotoContainer,
   Photo,
 } from "./photoReview.style";
 
@@ -11,11 +11,18 @@ export const PhotoReview = () => {
 
   return (
     <PhotoReviewContainer>
-      <PhotoReviewTitle>포토리뷰</PhotoReviewTitle>
-      {/* TODO: 포토리뷰 5개만 보이도록 */}
-      {photoUrl && (
-        <Photo src={photoUrl} alt="foodPhoto" width={100} height={100} />
-      )}
+      <PhotoContainer>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Photo
+            key={index}
+            src={photoUrl}
+            alt={`foodPhoto${index + 1}`}
+            width={100}
+            height={100}
+            layout="fixed"
+          />
+        ))}
+      </PhotoContainer>
     </PhotoReviewContainer>
   );
 };

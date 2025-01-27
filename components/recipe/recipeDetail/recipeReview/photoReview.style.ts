@@ -4,16 +4,16 @@ import Image from "next/image";
 export const PhotoReviewContainer = styled.div`
   width: 55rem;
   height: 10rem;
-  margin-top: 2rem;
+  margin: 1rem 0;
 `;
 
-export const PhotoReviewTitle = styled.h1`
-  color: #fff;
+export const PhotoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Photo = styled(Image)`
   width: 10rem;
-
   height: auto;
-  object-fit: container;
+  object-fit: contain;
 `;

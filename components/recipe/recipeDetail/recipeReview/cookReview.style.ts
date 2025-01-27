@@ -7,22 +7,7 @@ export const CookReviewContainer = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-`;
-
-export const CookButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: 0.5rem;
-  width: 100%;
-`;
-
-export const CookReviewButton = styled.button<{ isActive: boolean }>`
-  background-color: ${({ isActive }) =>
-    isActive ? "var(--mainRed)" : "var(--darkRed)"};
-  color: white;
-  padding: 5px 20px;
-  cursor: pointer;
-  font-size: 1rem;
+  align-items: center;
 `;
 
 export const CookReviewCard = styled.div`
@@ -30,15 +15,16 @@ export const CookReviewCard = styled.div`
   padding: 1rem;
   background-color: rgb(255, 255, 255);
   display: flex;
+  align-items: flex-start;
   margin-bottom: 1rem;
 `;
 
 export const CookReviewUserImg = styled(Image)`
   width: 3rem;
-  object-fit: cover;
-  border-radius: 50%;
   height: 3rem;
   object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
 `;
 
 export const ReviewBox = styled.div`
@@ -62,7 +48,7 @@ export const CookReviewUserCreatedAt = styled.p`
 
 export const CookReviewUserPoints = styled.div`
   font-size: 1rem;
-  color: #ffcc00;
+  color: var(--mainRed);
 `;
 
 export const CookReviewUserDescriptionBox = styled.div`
@@ -83,17 +69,4 @@ export const CookReviewCardContainer = styled.div`
 
   padding-bottom: 0.5rem;
   width: 100%;
-`;
-
-export const ReviewMoreButton = styled.button`
-  color: #fff;
-  padding: 0.5rem 10rem;
-  cursor: pointer;
-  font-size: 1rem;
-  background-color: var(--mainRed);
-  border-radius: 20px;
-
-  &:hover {
-    background-color: var(--darkRed);
-  }
 `;

@@ -1,4 +1,4 @@
-'use clie'
+"use client";
 import React, { ReactNode } from "react";
 import { StyledButton, StyledButtonText } from "./button.style";
 
