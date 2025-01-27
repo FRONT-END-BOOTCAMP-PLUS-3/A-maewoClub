@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 
+
 export const FoodImage = styled(Image)`
   width: 215px; 
   height: auto;
@@ -14,21 +15,9 @@ export const Container = styled.div`
   height: auto;
   border-radius: 20px;
   overflow:hidden;
+  cursor: pointer;
 `
 
-export const TagContainer = styled.div`
-  background: #fff;
-  width:100%
-`
-
-export const Tag = styled.span`
-  background: red;
-  padding: 2px 10px;
-  font-size: 12px;
-  border-radius: 30px;
-  display: inline-block;
-
-`
 
 export const TextContainer = styled.div`
   padding: 5px 10px;

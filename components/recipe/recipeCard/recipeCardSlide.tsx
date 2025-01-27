@@ -1,5 +1,6 @@
 "use client";
 import { UserContainer } from "./recipeCard.style";
+import { useRouter } from 'next/navigation';
 import {
   FoodImage,
   UserNickname,
@@ -12,14 +13,20 @@ import {
 
 type RecipeCardProps = {
   children: React.ReactNode;
+  id: string;
 };
 
-const RecipeCardSlide = ({ children }: RecipeCardProps) => {
+const RecipeCardSlide = ({ children, id }: RecipeCardProps) => {
+  const router = useRouter();
   const imageUrl = '/recipe.jpg'; 
   const profileUrl = '/Dfprofile.png'
 
+  const handleCardClick = () => {
+    router.push(`/recipes/${id}`);
+  };
+
   return (
-    <Container>
+    <Container onClick={handleCardClick}>
        {imageUrl && (
              <FoodImage 
                src={imageUrl} 
