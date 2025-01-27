@@ -1,13 +1,5 @@
 import styled from "styled-components";
 
-export const RecipeDetailContainer = styled.div`
-  width: 100%;
-  // 중앙 정렬
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 export const SubTitle = styled.h2`
   font-size: 1.5rem;
   margin: 1rem 0;

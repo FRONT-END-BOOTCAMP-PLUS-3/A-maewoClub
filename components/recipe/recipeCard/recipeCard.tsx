@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import {
   FoodImage,
   UserNickname,
@@ -10,8 +10,8 @@ import {
   Tier,
   UserContainer,
   UserProfileImage,
-} from './recipeCard.style';
-import { Tag, TagContainer } from '../tag/tag.style';
+} from "./recipeCard.style";
+import { Tag, TagContainer } from "../tag/tag.style";
 
 type RecipeCardProps = {
   children: React.ReactNode;
@@ -20,9 +20,9 @@ type RecipeCardProps = {
 
 const RecipeCard = ({ children, id }: RecipeCardProps) => {
   const router = useRouter();
-  const imageUrl = '/recipe.jpg';
-  const profileUrl = '/Dfprofile.png';
-  const tag = '#매운 음식 1단계';
+  const imageUrl = "/recipe.jpg";
+  const profileUrl = "/Dfprofile.png";
+  const tag = "#매운 음식 1단계";
 
   const handleCardClick = () => {
     router.push(`/recipes/${id}`);

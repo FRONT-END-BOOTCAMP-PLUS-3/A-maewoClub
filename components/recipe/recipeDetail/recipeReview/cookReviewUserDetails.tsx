@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CookReviewUserInfo,
   CookReviewUserName,
@@ -7,7 +9,7 @@ import {
   CookReviewUserDescription,
   ReviewBox,
 } from "./cookReview.style";
-// import { FaStar } from "react-icons/fa";
+import { FaFire } from "react-icons/fa";
 
 type CookReviewUserDetailsProps = {
   userName: string;
@@ -28,8 +30,9 @@ const CookReviewUserDetails = ({
         <CookReviewUserName>{userName}</CookReviewUserName>
         <CookReviewUserCreatedAt>{createdAt}</CookReviewUserCreatedAt>
         <CookReviewUserPoints>
-          {/* <FaStar /> {points} */}
-          {points}
+          {Array.from({ length: Math.floor(points) }).map((_, index) => (
+            <FaFire key={index} />
+          ))}
         </CookReviewUserPoints>
       </CookReviewUserInfo>
       <CookReviewUserDescriptionBox>

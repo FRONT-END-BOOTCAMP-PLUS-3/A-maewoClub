@@ -4,7 +4,7 @@ export const CookingCard = styled.div`
   background-color: rgb(255, 255, 255);
   margin-top: 4rem;
   width: 55rem;
-  height: 27rem;
+  height: auto;
   padding: 1rem;
   border-radius: 1rem;
   @media (max-width: 768px) {
@@ -20,7 +20,6 @@ export const CookCardNumber = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
-  // 동그랗게 만들기
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
