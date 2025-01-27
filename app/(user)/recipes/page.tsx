@@ -13,9 +13,9 @@ import {
 import RecipeCard from "@/components/recipe/recipeCard/recipeCard";
 import RecipeCardSlide from "@/components/recipe/recipeCard/recipeCardSlide";
 import Pagination from "@/components/recipe/cardPaging/cardPaging";
+import Tag from "@/components/recipe/tag/tag";
 
 export default function Page() {
-  // 슬라이드 상태 관리
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideCount = 10; // 슬라이드의 총 개수
   const visibleSlides = 3; // 화면에 보여질 슬라이드 개수
@@ -29,7 +29,7 @@ export default function Page() {
     setCurrentSlide((prev) => Math.min(prev + 100, 0));
   };
 
-  // 페이지네이션 상태 관리
+  // 페이지네이션 상태 관리 -> controller 내용
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 5; // 페이지당 레시피 수
   const totalRecipes = 20; // 전체 레시피 수
@@ -46,6 +46,7 @@ export default function Page() {
 
   return (
     <RecipeList>
+      <Tag></Tag>
       <SubTitle>Top. 10</SubTitle>
       <RecipeSlideContainer>
         <SlideButton className="left" onClick={handlePrev}>
@@ -54,7 +55,7 @@ export default function Page() {
         <SlideTrack position={currentSlide}>
           {[...Array(slideCount)].map((_, index) => (
             <SlideWrapper key={index}>
-              <RecipeCardSlide>{`레시피 ${index + 1}`}</RecipeCardSlide>
+              <RecipeCardSlide id={'2'}>{`레시피 ${index + 1}`}</RecipeCardSlide>
             </SlideWrapper>
           ))}
         </SlideTrack>
@@ -66,7 +67,7 @@ export default function Page() {
       <SubTitle>총 1000개의 레시피가 있습니다.</SubTitle>
       <RecipeContainer>
         {currentRecipes.map((_, index) => (
-          <RecipeCard key={index}>
+          <RecipeCard key={index} id={'2'}>
             레시피 {(currentPage - 1) * recipesPerPage + index + 1}
           </RecipeCard>
         ))}
