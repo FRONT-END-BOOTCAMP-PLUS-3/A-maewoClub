@@ -24,7 +24,6 @@ export const Header = () => {
         <LinkStyle href="/recipes">레시피</LinkStyle>
         <LinkStyle href="/boards">커뮤니티</LinkStyle>
         <LinkStyle href="/quests">챌린지</LinkStyle>
-        <LinkStyle href="/recipes/1">recipes/1</LinkStyle>
       </NavStyle>
       <LoginStyle>
         <LoginBtnStyle href="/" onClick={loginModal}>

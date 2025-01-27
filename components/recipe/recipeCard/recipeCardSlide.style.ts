@@ -13,6 +13,7 @@ export const Container = styled.div`
   height: auto;
   border-radius: 20px;
   overflow:hidden;
+  cursor: pointer;
 `
 export const TextContainer = styled.div`
   padding: 0px 10px;
