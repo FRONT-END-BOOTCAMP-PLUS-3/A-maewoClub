@@ -48,7 +48,7 @@ const Page = () => {
 
   return (
     <>
-      <div style={{ padding: "0 20%" }}>
+      <div style={{ padding: "0 20%", height: "auto" }}>
         <div
           style={{
             display: "flex",
@@ -62,9 +62,7 @@ const Page = () => {
           <ImageBox onUpdate={handleFileUpdate} />
         </div>
         <div style={{ display: "flex", justifyContent: "end" }}>
-          <div onClick={handleSubmit}>
-            <Button>등록</Button>
-          </div>
+          <Button>등록</Button>
         </div>
       </div>
     </>

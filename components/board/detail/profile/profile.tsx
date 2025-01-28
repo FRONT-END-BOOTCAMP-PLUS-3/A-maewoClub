@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Container,
   CreateDate,
@@ -13,23 +14,21 @@ interface ProfileProps {
   createdDate: string;
 }
 
-const mock: ProfileProps = {
-  image: "/file.svg",
-  nickname: "빨간떡볶이1짱",
-  createdDate: "2025/01/23",
-};
-
-const Profile = () => {
+const Profile = ({
+  nickname,
+  image = "/Dfprofile.png",
+  createdDate,
+}: ProfileProps) => {
   return (
     <>
       <Container>
         <ProfileImage
-          src={mock.image}
+          src={image}
           alt='profile-image'
         />
         <InfoWrapper>
-          <Nickname>{mock.nickname}</Nickname>
-          <CreateDate>{mock.createdDate}</CreateDate>
+          <Nickname>{nickname}</Nickname>
+          <CreateDate>{createdDate}</CreateDate>
         </InfoWrapper>
       </Container>
     </>
