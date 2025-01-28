@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const CookingCard = styled.div`
   background-color: rgb(255, 255, 255);
@@ -41,15 +42,16 @@ export const CookCardDescription = styled.p`
 `;
 
 export const CookCardImage = styled.div`
+  position: relative;
+  width: 20rem;
   height: 20rem;
 
-  img {
-    height: 100%;
-    width: 100%;
-    border-radius: 1rem;
-  }
   @media (max-width: 768px) {
     width: 30rem;
     height: 10rem;
   }
+`;
+export const CookStepImage = styled(Image)`
+  border-radius: 1rem;
+  object-fit: cover;
 `;

@@ -45,29 +45,3 @@ export const WriteReviewButton = styled.button`
     background-color: var(--darkRed);
   }
 `;
-
-export const SortButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-left: 45rem;
-  padding-bottom: 0.5rem;
-  overflow: hidden;
-`;
-
-export const SortButton = styled.button.attrs<{ active: boolean }>(
-  ({ active }) => ({
-    style: {
-      backgroundColor: active ? "var(--mainRed)" : "var(--darkRed)",
-    },
-  })
-)<{ active: boolean }>`
-  color: white;
-  padding: 5px 20px;
-  cursor: pointer;
-  font-size: 1rem;
-
-  &:hover {
-    background-color: ${({ active }) =>
-      active ? "var(--mainRed)" : "#800000"};
-  }
-`;

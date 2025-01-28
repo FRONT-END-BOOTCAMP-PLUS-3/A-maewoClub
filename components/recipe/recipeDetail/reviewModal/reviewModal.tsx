@@ -3,6 +3,7 @@
 import { FaFire } from "react-icons/fa";
 import {
   ButtonGroup,
+  ImageNameContainer,
   InputImage,
   InputImageLabel,
   ModalButton,
@@ -17,9 +18,26 @@ import {
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedFire: number | null;
+  handleFireClick: (index: number) => void;
+  handleRegister: () => void;
+  reviewRef: React.RefObject<HTMLTextAreaElement>;
+  imageRef: React.RefObject<HTMLInputElement>;
+  handleImageChange: () => void;
+  imageName: string | null;
 }
 
-export const ReviewModal = ({ isOpen, onClose }: ReviewModalProps) => {
+export const ReviewModal = ({
+  isOpen,
+  onClose,
+  selectedFire,
+  handleFireClick,
+  handleRegister,
+  reviewRef,
+  imageRef,
+  handleImageChange,
+  imageName,
+}: ReviewModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -27,22 +45,42 @@ export const ReviewModal = ({ isOpen, onClose }: ReviewModalProps) => {
       <ModalContent>
         <ModalTitle>요리 후기</ModalTitle>
         <ModalPoint>
-          <FaFire size={40} color={`var(--main)`} />
-          <FaFire size={40} color="gray" />
-          <FaFire size={40} color="gray" />
-          <FaFire size={40} color="gray" />
-          <FaFire size={40} color="gray" />
+          {[...Array(5)].map((_, index) => (
+            <FaFire
+              key={index}
+              size={40}
+              color={
+                selectedFire !== null && selectedFire >= index
+                  ? "var(--main)"
+                  : "gray"
+              }
+              onClick={() => handleFireClick(index)}
+              style={{ cursor: "pointer" }}
+            />
+          ))}
         </ModalPoint>
-        <ModalReview defaultValue="얼마나 매운지 의견 남겨주세요" />
+        <ModalReview
+          ref={reviewRef}
+          placeholder="얼마나 매운지 의견 남겨주세요"
+        />
 
         <ModalButtonContainer>
-          <InputImageLabel htmlFor="file-upload">+</InputImageLabel>
-          <InputImage id="file-upload" type="file" accept="image/*" />
+          <InputImageLabel htmlFor="file-upload">이미지 업로드</InputImageLabel>
+          <InputImage
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            ref={imageRef}
+            onChange={handleImageChange}
+          />
           <ButtonGroup>
             <ModalButton onClick={onClose}>취소</ModalButton>
-            <ModalButton>등록</ModalButton>
+            <ModalButton onClick={handleRegister}>등록</ModalButton>
           </ButtonGroup>
         </ModalButtonContainer>
+        <ImageNameContainer>
+          {imageName && <p>{imageName}</p>}
+        </ImageNameContainer>
       </ModalContent>
     </ModalOverlay>
   );

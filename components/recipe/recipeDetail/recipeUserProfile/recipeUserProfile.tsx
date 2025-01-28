@@ -4,15 +4,16 @@ import {
   CardDescription,
   UserName,
   CardTitle,
-  FoodImage,
   RecipeUserInfo,
   MainImageWrapper,
   StepImageWrapper,
+  ThumbnailImage,
+  ProfileImage,
 } from "./recipeUserProfile.style";
 
 export const RecipeUserProfile = () => {
-  const imageUrl = "/recipe.jpg";
-  const profileUrl = "/Dfprofile.png";
+  const thumbnailImage = "/recipe.jpg";
+  const profileImage = "/Dfprofile.png";
   const userName = "순대위장";
   const cardTitle = "순쾌위파 떡볶이 만들기";
   const userDescription =
@@ -21,13 +22,19 @@ export const RecipeUserProfile = () => {
   return (
     <ProfileContainer>
       <MainImageWrapper>
-        {imageUrl && (
-          <FoodImage src={imageUrl} alt="image" width={100} height={100} />
+        {thumbnailImage && (
+          <ThumbnailImage
+            src={thumbnailImage}
+            alt="Thumbnail Image"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority
+          />
         )}
       </MainImageWrapper>
       <StepImageWrapper>
-        {profileUrl && (
-          <FoodImage src={profileUrl} alt="Avatar" width={100} height={100} />
+        {profileImage && (
+          <ProfileImage src={profileImage} alt="Avatar" fill sizes="5rem" />
         )}
       </StepImageWrapper>
       <RecipeUserInfo>
