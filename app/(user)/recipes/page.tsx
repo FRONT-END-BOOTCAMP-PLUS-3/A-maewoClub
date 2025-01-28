@@ -9,14 +9,17 @@ import {
   SlideWrapper,
   SlideButton,
   RecipeContainer,
+  CreateBtn,
 } from "@/components/recipe/recipe.style";
 import RecipeCard from "@/components/recipe/recipeCard/recipeCard";
 import RecipeCardSlide from "@/components/recipe/recipeCard/recipeCardSlide";
 import Pagination from "@/components/recipe/cardPaging/cardPaging";
 import Tag from "@/components/recipe/tag/tag";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const router = useRouter();
   const slideCount = 10; // 슬라이드의 총 개수
   const visibleSlides = 3; // 화면에 보여질 슬라이드 개수
   const maxIndex = Math.ceil(slideCount / visibleSlides) - 1;
@@ -44,9 +47,14 @@ export default function Page() {
     setCurrentPage(page);
   };
 
+  const moveToPage = () => {
+    router.push("/recipes/create")
+  }
+
   return (
     <RecipeList>
       <Tag></Tag>
+      <CreateBtn onClick={moveToPage}>+</CreateBtn>
       <SubTitle>Top. 10</SubTitle>
       <RecipeSlideContainer>
         <SlideButton className="left" onClick={handlePrev}>
@@ -55,7 +63,9 @@ export default function Page() {
         <SlideTrack position={currentSlide}>
           {[...Array(slideCount)].map((_, index) => (
             <SlideWrapper key={index}>
-              <RecipeCardSlide id={'2'}>{`레시피 ${index + 1}`}</RecipeCardSlide>
+              <RecipeCardSlide id={"2"}>{`레시피 ${
+                index + 1
+              }`}</RecipeCardSlide>
             </SlideWrapper>
           ))}
         </SlideTrack>
@@ -67,16 +77,16 @@ export default function Page() {
       <SubTitle>총 1000개의 레시피가 있습니다.</SubTitle>
       <RecipeContainer>
         {currentRecipes.map((_, index) => (
-          <RecipeCard key={index} id={'2'}>
+          <RecipeCard key={index} id={"2"}>
             레시피 {(currentPage - 1) * recipesPerPage + index + 1}
           </RecipeCard>
         ))}
       </RecipeContainer>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
 
       <SubTitle>최근 본 레시피</SubTitle>
       <RecipeContainer>
