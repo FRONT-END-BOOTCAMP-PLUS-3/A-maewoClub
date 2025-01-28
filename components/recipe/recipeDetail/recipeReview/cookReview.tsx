@@ -59,8 +59,8 @@ export const CookReview = ({ review }: CookReviewProps) => {
                 <CookReviewUserImg
                   src={userImgUrl}
                   alt="Avatar"
-                  width={100}
-                  height={100}
+                  width={40}
+                  height={40}
                 />
               )}
 

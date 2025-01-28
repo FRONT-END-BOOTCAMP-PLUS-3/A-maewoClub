@@ -1,10 +1,10 @@
 "use client";
-import Image from "next/image";
 import {
   CookCardDescription,
   CookCardImage,
   CookCardNumber,
   CookingCard,
+  CookStepImage,
 } from "./cookingStep.style";
 
 export const testDatas = [
@@ -54,12 +54,14 @@ export const CookingSteps = ({ steps }: CookingStepsProps) => {
           <CookCardNumber>{data.number}</CookCardNumber>
           <CookCardDescription>{data.description}</CookCardDescription>
           <CookCardImage>
-            <Image
-              src={data.image}
-              alt="Recipe Image"
-              width={100}
-              height={100}
-            />
+            {data.image && (
+              <CookStepImage
+                src={data.image}
+                alt="Recipe Image"
+                fill
+                sizes="(max-width: 768px) 20rem, 20rem"
+              />
+            )}
           </CookCardImage>
         </CookingCard>
       ))}

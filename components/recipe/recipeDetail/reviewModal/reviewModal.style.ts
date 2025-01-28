@@ -75,7 +75,7 @@ export const InputImageLabel = styled.label`
   display: inline-block;
 
   &:hover {
-    background-color: var(--darkRed);
+    background-color: var(--mainRed);
   }
 `;
 
@@ -96,4 +96,9 @@ export const ModalButton = styled.button`
   &:hover {
     background-color: var(--darkRed);
   }
+`;
+
+export const ImageNameContainer = styled.div`
+  margin-right: auto;
+  color: var(--mainRed);
 `;

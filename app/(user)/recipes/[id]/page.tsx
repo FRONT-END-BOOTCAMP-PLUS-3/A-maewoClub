@@ -5,8 +5,6 @@ import {
   RecipeDetailContainer,
   TitleBox,
   ReviewMoreButton,
-  SortButtonContainer,
-  SortButton,
   WriteReviewButton,
 } from "@/components/recipe/recipeDetail/recipeDetailPage.style";
 import {
@@ -19,14 +17,25 @@ import {
   CookReview,
   reviewTestData,
 } from "@/components/recipe/recipeDetail/recipeReview/cookReview";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ReviewModal } from "@/components/recipe/recipeDetail/reviewModal/reviewModal";
+import {
+  SortButtonContainer,
+  SortButton,
+} from "@/components/recipe/recipeDetail/recipeReview/cookReview.style";
 
 const RecipeDetailPage = () => {
+  // 리뷰 관련 상태
   const [showAllSteps, setShowAllSteps] = useState(false);
   const [reviewShowAll, setReviewShowAll] = useState(false);
   const [sortType, setSortType] = useState("points");
+
+  // 모달 관련 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFire, setSelectedFire] = useState<number | null>(null);
+  const [imageName, setImageName] = useState<string | null>(null);
+  const reviewRef = useRef<HTMLTextAreaElement>(null!);
+  const imageRef = useRef<HTMLInputElement>(null!);
 
   const handleReview = () => {
     setReviewShowAll(true);
@@ -38,19 +47,45 @@ const RecipeDetailPage = () => {
   const handleSort = (type: string) => {
     setSortType(type);
   };
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
+    setSelectedFire(null);
+    setImageName(null);
     setIsModalOpen(false);
   };
 
+  const handleFireClick = (index: number) => {
+    setSelectedFire(index);
+  };
+  // 리뷰 등록
+  const handleRegister = () => {
+    const review = reviewRef.current?.value;
+    const image = imageRef.current?.files?.[0];
+    console.log("ModalReview:", review);
+    console.log("InputImage:", image);
+    console.log("ModalPoint:", selectedFire);
+    handleCloseModal();
+  };
+
+  // 이미지 파일 이름 표시
+  const handleImageChange = () => {
+    const image = imageRef.current?.files?.[0];
+    if (image) {
+      setImageName(image.name);
+    }
+  };
+
+  // 레시피 상세페이지에서 보여줄 데이터
   const stepsToShow = showAllSteps ? testDatas : testDatas.slice(0, 2);
   const reviewToShow = reviewShowAll
     ? reviewTestData
     : reviewTestData.slice(0, 2);
 
+  // 리뷰 정렬
   const sortedReviews = [...reviewToShow].sort((a, b) => {
     if (sortType === "points") {
       return b.points - a.points;
@@ -59,6 +94,24 @@ const RecipeDetailPage = () => {
     }
     return 0;
   });
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const photosPerPage = 5;
+  const totalPhotos = 10;
+
+  const nextPhotos = () => {
+    setCurrentPage(
+      (prevPage) => (prevPage + 1) % Math.ceil(totalPhotos / photosPerPage)
+    );
+  };
+
+  const prevPhotos = () => {
+    setCurrentPage(
+      (prevPage) =>
+        (prevPage - 1 + Math.ceil(totalPhotos / photosPerPage)) %
+        Math.ceil(totalPhotos / photosPerPage)
+    );
+  };
 
   return (
     <RecipeDetailContainer>
@@ -69,23 +122,36 @@ const RecipeDetailPage = () => {
           더보기
         </ReviewMoreButton>
       )}
-
       <WriteReviewButton onClick={handleOpenModal}>리뷰 작성</WriteReviewButton>
-      <ReviewModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <ReviewModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        selectedFire={selectedFire}
+        handleFireClick={handleFireClick}
+        handleRegister={handleRegister}
+        reviewRef={reviewRef}
+        imageRef={imageRef}
+        handleImageChange={handleImageChange}
+        imageName={imageName}
+      />
 
       <TitleBox>
         <SubTitle>포토리뷰</SubTitle>
       </TitleBox>
-      <PhotoReview></PhotoReview>
+      <PhotoReview
+        currentPage={currentPage}
+        nextPhotos={nextPhotos}
+        prevPhotos={prevPhotos}
+      />
       <SortButtonContainer>
         <SortButton
-          active={sortType === "points"}
+          className={sortType === "points" ? "active" : ""}
           onClick={() => handleSort("points")}
         >
           별점순
         </SortButton>
         <SortButton
-          active={sortType === "latest"}
+          className={sortType === "latest" ? "active" : ""}
           onClick={() => handleSort("latest")}
         >
           최신순

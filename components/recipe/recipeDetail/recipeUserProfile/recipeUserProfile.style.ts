@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import Image from "next/image";
+import styled from "styled-components";
 
 export const ProfileContainer = styled.div`
   background: rgba(255, 255, 255, 0.2);
@@ -12,7 +12,6 @@ export const ProfileContainer = styled.div`
   @media (max-width: 768px) {
     width: 30rem;
   }
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,16 +19,18 @@ export const ProfileContainer = styled.div`
   overflow: hidden;
 `;
 
-export const FoodImage = styled(Image)``;
-
 export const MainImageWrapper = styled.div`
   width: 100%;
+  height: 17rem;
+  position: relative;
+`;
 
-  img {
-    height: 17rem;
-    width: 100%;
-    object-fit: cover;
-  }
+export const ThumbnailImage = styled(Image)`
+  object-fit: cover;
+`;
+export const ProfileImage = styled(Image)`
+  object-fit: "cover";
+  border-radius: "100%";
 `;
 
 export const StepImageWrapper = styled.div`
@@ -37,10 +38,9 @@ export const StepImageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: -3rem;
-
-  img {
-    border-radius: 100%;
-  }
+  width: 5rem;
+  height: 5rem;
+  position: relative;
 `;
 
 export const RecipeUserInfo = styled.div`

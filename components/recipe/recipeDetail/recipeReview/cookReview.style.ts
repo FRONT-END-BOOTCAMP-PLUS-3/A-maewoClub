@@ -20,11 +20,8 @@ export const CookReviewCard = styled.div`
 `;
 
 export const CookReviewUserImg = styled(Image)`
-  width: 3rem;
-  height: 3rem;
   object-fit: cover;
   border-radius: 50%;
-  flex-shrink: 0;
 `;
 
 export const ReviewBox = styled.div`
@@ -69,4 +66,27 @@ export const CookReviewCardContainer = styled.div`
 
   padding-bottom: 0.5rem;
   width: 100%;
+`;
+
+export const SortButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-left: 45rem;
+  padding-bottom: 0.5rem;
+  overflow: hidden;
+`;
+export const SortButton = styled.button`
+  color: white;
+  padding: 5px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: var(--darkRed);
+
+  &.active {
+    background-color: var(--mainRed);
+  }
+
+  &:hover {
+    background-color: #800000;
+  }
 `;
