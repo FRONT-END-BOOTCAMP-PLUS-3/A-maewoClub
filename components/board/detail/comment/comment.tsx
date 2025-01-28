@@ -1,4 +1,5 @@
 "use client";
+
 import Button from "../../button/button";
 import Profile from "../profile/profile";
 import {
@@ -19,13 +20,13 @@ interface CommentProps {
 const mock: CommentProps[] = [
   {
     nickname: "1번닉네임",
-    createdDate: "2025/01/23",
+    createdDate: "2025/01/21",
     image: "/file.svg",
     comment: "1번 댓글 내용~ 대충 너무 맛있다는 뜻~",
   },
   {
     nickname: "2번닉네임",
-    createdDate: "2025/01/23",
+    createdDate: "2025/01/22",
     image: "/file.svg",
     comment: "2번 댓글 내용~ 대충 너무 맛있다는 뜻~",
   },
@@ -43,7 +44,11 @@ const Comment = () => {
       <CommentBox>
         {mock.map((e) => (
           <Container key={e.nickname}>
-            <Profile />
+            <Profile
+              nickname={e.nickname}
+              image={e.image}
+              createdDate={e.createdDate}
+            />
             <Content>{e.comment}</Content>
           </Container>
         ))}
