@@ -51,7 +51,7 @@ export const ReviewModal = ({
               size={40}
               color={
                 selectedFire !== null && selectedFire >= index
-                  ? "var(--main)"
+                  ? "var(--mainRed)"
                   : "gray"
               }
               onClick={() => handleFireClick(index)}
