@@ -18,32 +18,28 @@ const RecipeCreate = () => {
   const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
   const route = useRouter();
 
-  // 제목, 설명 핸들러
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name === "title") setTitle(value);
     if (name === "description") setDescription(value);
   };
 
-  // 재료 입력 핸들러
+  // 재료 입력 핸들러 -> type error 수정
   const handleIngredientChange = (index: number, field: string, value: string) => {
     const updatedIngredients = [...ingredients];
     updatedIngredients[index][field] = value;
     setIngredients(updatedIngredients);
   };
 
-  // 재료 추가
   const addIngredient = () => {
     setIngredients([...ingredients, { name: "", quantity: "" }]);
   };
 
-  // 재료 삭제
   const removeIngredient = (index: number) => {
     const updatedIngredients = ingredients.filter((_, i) => i !== index);
     setIngredients(updatedIngredients);
   };
 
-  // 폼 제출 핸들러
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log({ title, description, ingredients });
@@ -95,7 +91,7 @@ const RecipeCreate = () => {
         </Button>
       </IngredientsContainer>
 
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+      <div style={{ display: "flex", gap: "10px", paddingBottom: "20px" }}>
         <Button type="submit">업로드</Button>
         <Button type="button" onClick={() => {alert("돌아갑니다."); route.back()}}>취소</Button>
       </div>

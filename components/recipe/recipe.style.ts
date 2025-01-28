@@ -7,6 +7,33 @@ export const SubTitle = styled.h2`
   color: #fff;
 `;
 
+export const CreateBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--mainRed); 
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s;
+
+  &:hover {
+    background-color: var(--subRed); /* 더 어두운 톤 */
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+`
+
 export const RecipeList = styled.div`
   display: flex;
   flex-direction: column;
