@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import {
   PostContent,
@@ -8,12 +8,14 @@ import {
   PostText,
   PostTitle,
 } from "./cardPost.style";
+import { useRouter } from "next/navigation";
 
 interface Post {
   image: string;
   title: string;
   content: string;
-  id: string;
+  nickname: string;
+  id: number;
   comment: number;
   view: number;
   heart: number;
@@ -29,23 +31,33 @@ const mock: Post = {
   title: "뜩뻑이 믁어염",
   content:
     "매운맛이 아니라 고통의 맛을 판매하는 거라면 성공적! 하지만 나의 평화로운 식사.",
-  id: "빨떡1짱",
+  nickname: "빨떡1짱",
+  id: 3,
   comment: 33,
   view: 33,
   heart: 33,
 };
 
 const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
+  const router = useRouter();
+
+  const handleDetail = () => {
+    router.push(`boards/${post.id}`);
+  };
+
   return (
-    <PostStyle>
+    <PostStyle onClick={handleDetail}>
       <PostImage>
-        <img src={post.image} alt={post.title} />
+        <img
+          src={post.image}
+          alt={post.title}
+        />
       </PostImage>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <PostContent>
           <PostTitle>{post.title}</PostTitle>
           <PostPhrase>{post.content}</PostPhrase>
-          <PostText>{post.id}</PostText>
+          <PostText>{post.nickname}</PostText>
         </PostContent>
         <PostText style={{ marginTop: "52px", marginBottom: "11px" }}>
           <span>댓글: {post.comment}</span>
