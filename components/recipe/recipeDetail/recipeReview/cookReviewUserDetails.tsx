@@ -11,6 +11,7 @@ import {
 } from "./cookReview.style";
 import { FaFire } from "react-icons/fa";
 
+
 type CookReviewUserDetailsProps = {
   userName: string;
   createdAt: string;
