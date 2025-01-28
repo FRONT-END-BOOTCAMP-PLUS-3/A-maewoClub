@@ -51,7 +51,7 @@ export const SortButtonContainer = styled.div`
   justify-content: center;
   margin-left: 45rem;
   padding-bottom: 0.5rem;
-  width: 100%;
+  overflow: hidden;
 `;
 
 export const SortButton = styled.button.attrs<{ active: boolean }>(
