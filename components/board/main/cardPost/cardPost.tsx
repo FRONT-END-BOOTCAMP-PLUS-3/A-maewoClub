@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import PostListItem from "./cardPostItem";
 
@@ -47,6 +47,36 @@ const mockPosts: Post[] = [
     comment: 50,
     view: 200,
     heart: 60,
+  },
+  {
+    image:
+      "https://blog.kakaocdn.net/dn/93m8M/btsEEGoFOG2/eKqSbvDh3anRKecus98YRk/img.jpg",
+    title: "세 번째 게시물",
+    content: "이것은 세 번째 게시물 내용입니다.",
+    id: "탕수육1짱",
+    comment: 15,
+    view: 85,
+    heart: 30,
+  },
+  {
+    image:
+      "https://blog.kakaocdn.net/dn/93m8M/btsEEGoFOG2/eKqSbvDh3anRKecus98YRk/img.jpg",
+    title: "세 번째 게시물",
+    content: "이것은 세 번째 게시물 내용입니다.",
+    id: "탕수육1짱",
+    comment: 15,
+    view: 85,
+    heart: 30,
+  },
+  {
+    image:
+      "https://blog.kakaocdn.net/dn/93m8M/btsEEGoFOG2/eKqSbvDh3anRKecus98YRk/img.jpg",
+    title: "세 번째 게시물",
+    content: "이것은 세 번째 게시물 내용입니다.",
+    id: "탕수육1짱",
+    comment: 15,
+    view: 85,
+    heart: 30,
   },
   {
     image:
