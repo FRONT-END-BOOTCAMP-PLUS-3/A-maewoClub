@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styled from "styled-components";
 
 export const PostContainer = styled.div`
@@ -29,9 +30,8 @@ export const Content = styled.p`
   color: white;
 `;
 
-export const Image = styled.div`
-  width: 300px;
-  height: 200px;
+export const PostImage = styled(Image)`
+  object-fit: cover;
 `;
 
 export const InfoWrapper = styled.div`
