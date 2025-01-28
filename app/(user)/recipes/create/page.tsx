@@ -1,6 +1,7 @@
 "use client"
 
 import RecipeCreate from "@/components/recipe/create/recipeCreate";
+import UploadImage from "@/components/recipe/create/uploadImage/uploadImage";
 
 const Page = () => {
   
@@ -14,6 +15,7 @@ const Page = () => {
     <>
     {/* 로그인 회원만 보이도록 할 것 */}
     <RecipeCreate></RecipeCreate>
+    <UploadImage></UploadImage>
     </>
   )
 }

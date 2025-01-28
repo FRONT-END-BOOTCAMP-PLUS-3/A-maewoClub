@@ -91,7 +91,7 @@ const RecipeCreate = () => {
         </Button>
       </IngredientsContainer>
 
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+      <div style={{ display: "flex", gap: "10px", paddingBottom: "20px" }}>
         <Button type="submit">업로드</Button>
         <Button type="button" onClick={() => {alert("돌아갑니다."); route.back()}}>취소</Button>
       </div>
