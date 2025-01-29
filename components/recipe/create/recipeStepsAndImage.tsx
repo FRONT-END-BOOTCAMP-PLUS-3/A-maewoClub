@@ -19,9 +19,11 @@ import UploadImage from "./uploadImage/uploadImage";
 export const RecipeStepsAndImage = () => {
   const [steps, setSteps] = useState([{ description: "" }]);
   const [imageNames, setImageNames] = useState<string[]>([]);
+
   const handleRemoveImage = (index: number) => {
     setImageNames((prevNames) => prevNames.filter((_, i) => i !== index));
   };
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files).map(
