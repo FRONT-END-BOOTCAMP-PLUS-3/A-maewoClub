@@ -1,5 +1,5 @@
-export interface Recipe {
-  id: number,
+export interface RecipeDto {
+  id: number;
   userId: number,
   title: string,
   instruction: string,
@@ -7,4 +7,4 @@ export interface Recipe {
   createdAt: Date,
   updatedAt: Date,
   likeCount:number,
-} 
+}
