@@ -7,9 +7,9 @@ import {
   InfoWrapper,
   SubInfo,
   Title,
-  Image,
   PostContainer,
   ContentBox,
+  PostImage,
 } from "./post.style";
 
 interface PostProps {
@@ -54,12 +54,12 @@ const Post = () => {
             createdDate={mock.createdDate}
           />
           <Title>{mock.title}</Title>
-          <Image>
-            <img
-              src={mock.image}
-              alt='post_image'
-            />
-          </Image>
+          <PostImage
+            src={mock.image}
+            width={500}
+            height={300}
+            alt='post_image'
+          />
           <Content>{mock.content}</Content>
           <InfoWrapper>
             <SubInfo>조회 : {mock.view}</SubInfo>
