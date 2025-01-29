@@ -16,7 +16,7 @@ export class SbRecipeImageRepository implements RecipeImageRepository{
 
         return data || [];
   }
-  
+
   async findDefaultImageByRecipeId(id: number): Promise<RecipeImage> {
     const supabase = await createClient();
     const { data, error } = await supabase
