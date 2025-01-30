@@ -1,8 +1,25 @@
 import styled from "styled-components";
 
+
+export const RecipeForm = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const InputContainer = styled.div`
+  width: 55%;
+`;
+
 export const Text = styled.p`
   color: #fff;
 `;
+
+export const PreviewImage = styled.p`
+  color: #fff;
+  width: 100%;
+  font-size: 12px;
+`
 
 export const FormContainer = styled.form`
   display: flex;
@@ -18,6 +35,7 @@ export const Input = styled.input`
   border: 1px solid var(--mainRed);
   border-radius: 4px;
   outline: none;
+  width: 100%;
 `;
 
 export const TextArea = styled.textarea`
@@ -27,7 +45,11 @@ export const TextArea = styled.textarea`
   border-radius: 4px;
   resize: vertical;
   height: 100px;
+  width: 100%;
   outline: none;
+`;
+export const ImageUploadContainer = styled.div`
+  width: 40%;
 `;
 
 export const Button = styled.button`

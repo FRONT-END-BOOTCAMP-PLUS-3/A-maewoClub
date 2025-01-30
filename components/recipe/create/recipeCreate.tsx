@@ -9,9 +9,14 @@ import {
   Button,
   IngredientsContainer,
   IngredientInput,
+  InputContainer,
+  ImageUploadContainer,
+  RecipeForm,
+  PreviewImage
 } from "./recipeCreate.style";
 import { useRouter } from "next/navigation";
 import { RecipeStepsAndImage } from "./recipeStepsAndImage";
+import UploadImage from "./uploadImage/uploadImage";
 
 const RecipeCreate = () => {
   const [title, setTitle] = useState("");
@@ -53,24 +58,36 @@ const RecipeCreate = () => {
     alert("레시피가 업로드 되었습니다 !");
   };
 
+  const [image1, setImage1] = useState<File | null>(null);
+
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <Text>레시피 제목</Text>
-      <Input
-        type="text"
-        name="title"
-        placeholder="레시피 제목을 적어주세요"
-        value={title}
-        onChange={handleInputChange}
-      />
+     <RecipeForm>
+      <InputContainer>
+        <Text>레시피 제목</Text>
+        <Input
+          type="text"
+          name="title"
+          placeholder="레시피 제목을 적어주세요"
+          value={title}
+          onChange={handleInputChange}
+        />
 
-      <Text>레시피 한줄 설명</Text>
-      <TextArea
-        name="description"
-        placeholder="레시피의 한줄 설명을 적어주세요"
-        value={description}
-        onChange={handleInputChange}
-      />
+        <Text>레시피 한줄 설명</Text>
+        <TextArea
+          name="description"
+          placeholder="레시피의 한줄 설명을 적어주세요"
+          value={description}
+          onChange={handleInputChange}
+        />
+      </InputContainer>
+      <ImageUploadContainer>
+      <UploadImage size={200} onImageUpload={setImage1} ></UploadImage>
+
+      {image1 && <PreviewImage>첫 번째 이미지: {image1.name}</PreviewImage>}
+
+      </ImageUploadContainer>
+      </RecipeForm>
 
       <IngredientsContainer>
         <Text>재료명</Text>
@@ -101,7 +118,7 @@ const RecipeCreate = () => {
           </div>
         ))}
         <Button type="button" onClick={addIngredient}>
-          +
+          추가+
         </Button>
       </IngredientsContainer>
 
