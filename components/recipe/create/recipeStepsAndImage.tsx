@@ -9,21 +9,27 @@ import {
   InputImageLabel,
   InputImageContainer,
   ButtonGroup,
+  ImageNameList,
+  ImageNameItem,
+  RemoveButton,
 } from "./stepAndImage.style";
 
 import UploadImage from "./uploadImage/uploadImage";
 
 export const RecipeStepsAndImage = () => {
   const [steps, setSteps] = useState([{ description: "" }]);
+  const [imageNames, setImageNames] = useState<string[]>([]);
 
-  const handleMultipleImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (e.target.files) {
-      const files = Array.from(e.target.files);
-      files.forEach((file) => {
-        console.log(file.name); // 파일 이름을 출력하거나 필요한 처리를 수행합니다.
-      });
+  const handleRemoveImage = (index: number) => {
+    setImageNames((prevNames) => prevNames.filter((_, i) => i !== index));
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const filesArray = Array.from(event.target.files).map(
+        (file) => file.name
+      );
+      setImageNames(filesArray);
     }
   };
 
@@ -77,13 +83,23 @@ export const RecipeStepsAndImage = () => {
             type="file"
             accept="image/*"
             multiple
-            onChange={handleMultipleImageChange}
+            onChange={handleImageChange}
           />
         </InputImageContainer>
         <UploadImage />
         <UploadImage />
         <UploadImage />
       </RecipeCompletionImageUpload>
+      <ImageNameList>
+        {imageNames.map((name, index) => (
+          <ImageNameItem key={index}>
+            <RemoveButton onClick={() => handleRemoveImage(index)}>
+              x
+            </RemoveButton>
+            {name}
+          </ImageNameItem>
+        ))}
+      </ImageNameList>
     </>
   );
 };

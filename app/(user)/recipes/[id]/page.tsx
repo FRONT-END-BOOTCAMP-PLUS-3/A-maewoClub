@@ -23,6 +23,7 @@ import {
   SortButtonContainer,
   SortButton,
 } from "@/components/recipe/recipeDetail/recipeReview/cookReview.style";
+import { Ingredient } from "@/components/recipe/recipeDetail/recipeIngredient/ingredient";
 
 const RecipeDetailPage = () => {
   // 리뷰 관련 상태
@@ -122,7 +123,9 @@ const RecipeDetailPage = () => {
           더보기
         </ReviewMoreButton>
       )}
+      <Ingredient />
       <WriteReviewButton onClick={handleOpenModal}>리뷰 작성</WriteReviewButton>
+
       <ReviewModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
