@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 export default function Page() {
   const router = useRouter();
 
-  // 🌟 [Top 10 레시피 슬라이드] 상태 관리
+  // Top 10 레시피
   const [topCurrentSlide, setTopCurrentSlide] = useState(0);
   const topSlideCount = 10; // Top 10 슬라이드 개수
   const topVisibleSlides = 3; // 한 번에 보여줄 개수
@@ -34,7 +34,7 @@ export default function Page() {
     setTopCurrentSlide((prev) => Math.min(prev + 100, 0));
   };
 
-  // 최근 본 레시피 슬라이드 상태 관리 -> controller 로직 분리
+  // 최근 본 레시피 슬라이드-> controller 로직 분리
   const recentRecipes = [
     { id: 1, title: "김치찌개" },
     { id: 2, title: "된장찌개" },
