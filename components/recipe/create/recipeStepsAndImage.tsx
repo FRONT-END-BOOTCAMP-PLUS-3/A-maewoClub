@@ -42,6 +42,7 @@ export const RecipeStepsAndImage = () => {
     setSteps(newSteps);
   };
 
+  //--- uploadImage : multiple Preview 추가하기 ----
   return (
     <>
       <Text>요리순서</Text>
@@ -86,9 +87,7 @@ export const RecipeStepsAndImage = () => {
             onChange={handleImageChange}
           />
         </InputImageContainer>
-        <UploadImage />
-        <UploadImage />
-        <UploadImage />
+      
       </RecipeCompletionImageUpload>
       <ImageNameList>
         {imageNames.map((name, index) => (
