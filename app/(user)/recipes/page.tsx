@@ -18,26 +18,47 @@ import Tag from "@/components/recipe/tag/tag";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const router = useRouter();
-  const slideCount = 10; // 슬라이드의 총 개수
-  const visibleSlides = 3; // 화면에 보여질 슬라이드 개수
-  const maxIndex = Math.ceil(slideCount / visibleSlides) - 1;
 
-  const handleNext = () => {
-    setCurrentSlide((prev) => Math.max(prev - 100, -100 * maxIndex));
+  // Top 10 레시피
+  const [topCurrentSlide, setTopCurrentSlide] = useState(0);
+  const topSlideCount = 10; // Top 10 슬라이드 개수
+  const topVisibleSlides = 3; // 한 번에 보여줄 개수
+  const topMaxIndex = Math.ceil(topSlideCount / topVisibleSlides) - 1;
+
+  const handleTopNext = () => {
+    setTopCurrentSlide((prev) => Math.max(prev - 100, -100 * topMaxIndex));
   };
 
-  const handlePrev = () => {
-    setCurrentSlide((prev) => Math.min(prev + 100, 0));
+  const handleTopPrev = () => {
+    setTopCurrentSlide((prev) => Math.min(prev + 100, 0));
   };
 
-  // 페이지네이션 상태 관리 -> controller 내용
+  // 최근 본 레시피 슬라이드-> controller 로직 분리
+  const recentRecipes = [
+    { id: 1, title: "김치찌개" },
+    { id: 2, title: "된장찌개" },
+    { id: 3, title: "불고기" },
+    { id: 4, title: "잡채" },
+    { id: 5, title: "떡볶이" },
+  ];
+  const [recentCurrentSlide, setRecentCurrentSlide] = useState(0);
+  const recentVisibleSlides = 3;
+  const recentMaxIndex = Math.ceil(recentRecipes.length / recentVisibleSlides) - 1;
+
+  const handleRecentNext = () => {
+    setRecentCurrentSlide((prev) => Math.max(prev - 100, -100 * recentMaxIndex));
+  };
+
+  const handleRecentPrev = () => {
+    setRecentCurrentSlide((prev) => Math.min(prev + 100, 0));
+  };
+
+  // 페이지네이션 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 5; // 페이지당 레시피 수
   const totalRecipes = 20; // 전체 레시피 수
   const totalPages = Math.ceil(totalRecipes / recipesPerPage);
-
   const currentRecipes = [...Array(totalRecipes)].slice(
     (currentPage - 1) * recipesPerPage,
     currentPage * recipesPerPage
@@ -48,60 +69,55 @@ export default function Page() {
   };
 
   const moveToPage = () => {
-    router.push("/recipes/create")
-  }
+    router.push("/recipes/create");
+  };
 
   return (
     <RecipeList>
-      <Tag></Tag>
+      <Tag />
       <CreateBtn onClick={moveToPage}>+</CreateBtn>
+
       <SubTitle>Top. 10</SubTitle>
       <RecipeSlideContainer>
-        <SlideButton className="left" onClick={handlePrev}>
+        <SlideButton className="left" onClick={handleTopPrev} disabled={topCurrentSlide === 0}>
           ◀
         </SlideButton>
-        <SlideTrack position={currentSlide}>
-          {[...Array(slideCount)].map((_, index) => (
+        <SlideTrack position={topCurrentSlide}>
+          {[...Array(topSlideCount)].map((_, index) => (
             <SlideWrapper key={index}>
-              <RecipeCardSlide id={"2"}>{`레시피 ${
-                index + 1
-              }`}</RecipeCardSlide>
+              <RecipeCardSlide id={`${index + 1}`}>{`레시피 ${index + 1}`}</RecipeCardSlide>
             </SlideWrapper>
           ))}
         </SlideTrack>
-        <SlideButton className="right" onClick={handleNext}>
+        <SlideButton className="right" onClick={handleTopNext} disabled={topCurrentSlide <= -100 * topMaxIndex}>
           ▶
         </SlideButton>
       </RecipeSlideContainer>
 
-      <SubTitle>총 1000개의 레시피가 있습니다.</SubTitle>
+      <SubTitle>총 {totalRecipes}개의 레시피가 있습니다.</SubTitle>
       <RecipeContainer>
         {currentRecipes.map((_, index) => (
-          <RecipeCard key={index} id={"2"}>
+          <RecipeCard key={index} id={`${(currentPage - 1) * recipesPerPage + index + 1}`}>
             레시피 {(currentPage - 1) * recipesPerPage + index + 1}
           </RecipeCard>
         ))}
       </RecipeContainer>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
 
       <SubTitle>최근 본 레시피</SubTitle>
       <RecipeContainer>
         <RecipeSlideContainer>
-          <SlideButton className="left" onClick={handlePrev}>
+          <SlideButton className="left" onClick={handleRecentPrev} disabled={recentCurrentSlide === 0}>
             ◀
           </SlideButton>
-          <SlideTrack position={currentSlide}>
-            {[...Array(slideCount)].map((_, index) => (
-              <SlideWrapper key={index}>
-                <RecipeCard>{`레시피 ${index + 1}`}</RecipeCard>
+          <SlideTrack position={recentCurrentSlide}>
+            {recentRecipes.map((recipe) => (
+              <SlideWrapper key={recipe.id}>
+                <RecipeCard id={`${recipe.id}`}>{recipe.title}</RecipeCard>
               </SlideWrapper>
             ))}
           </SlideTrack>
-          <SlideButton className="right" onClick={handleNext}>
+          <SlideButton className="right" onClick={handleRecentNext} disabled={recentCurrentSlide <= -100 * recentMaxIndex}>
             ▶
           </SlideButton>
         </RecipeSlideContainer>
