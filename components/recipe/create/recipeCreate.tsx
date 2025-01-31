@@ -12,7 +12,8 @@ import {
   InputContainer,
   ImageUploadContainer,
   RecipeForm,
-  PreviewImage
+  PreviewImage,
+  ButtonStyle
 } from "./recipeCreate.style";
 import { useRouter } from "next/navigation";
 import { RecipeStepsAndImage } from "./recipeStepsAndImage";
@@ -106,7 +107,7 @@ const RecipeCreate = () => {
             />
             <IngredientInput
               type="text"
-              placeholder="분류"
+              placeholder="사용량"
               value={ingredient.quantity}
               onChange={(e) =>
                 handleIngredientChange(index, "quantity", e.target.value)
@@ -124,7 +125,7 @@ const RecipeCreate = () => {
 
       <RecipeStepsAndImage></RecipeStepsAndImage>
 
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+      <ButtonStyle>
         <Button type="submit">업로드</Button>
         <Button
           type="button"
@@ -135,7 +136,7 @@ const RecipeCreate = () => {
         >
           취소
         </Button>
-      </div>
+      </ButtonStyle>
     </FormContainer>
   );
 };

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const RecipeForm = styled.div`
   display: flex;
   align-items: center;
@@ -19,7 +18,7 @@ export const PreviewImage = styled.p`
   color: #fff;
   width: 100%;
   font-size: 12px;
-`
+`;
 
 export const FormContainer = styled.form`
   display: flex;
@@ -79,4 +78,11 @@ export const IngredientInput = styled.input`
   border-radius: 4px;
   flex: 1;
   outline: none;
+`;
+
+export const ButtonStyle = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: flex-end;
 `;
