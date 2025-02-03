@@ -4,12 +4,12 @@ import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImage
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeImageRepository implements RecipeImageRepository {
-  async findAllByRecipeId(id: number): Promise<RecipeImage[]> {
+  async findAllByRecipeId(recipeId: number): Promise<RecipeImage[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_image")
       .select("*")
-      .eq("recipe_id", id);
+      .eq("id", recipeId);
 
     if (error) {
       console.error(error);
@@ -18,12 +18,12 @@ export class SbRecipeImageRepository implements RecipeImageRepository {
     return data || [];
   }
 
-  async findDefaultImageByRecipeId(id: number): Promise<RecipeImage> {
+  async findDefaultImageByRecipeId(recipeId: number): Promise<RecipeImage> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_image")
       .select("*")
-      .eq("recipe_id", id)
+      .eq("id", recipeId)
       .single();
 
     if (error) {

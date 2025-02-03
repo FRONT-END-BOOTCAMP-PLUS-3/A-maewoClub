@@ -3,11 +3,13 @@ import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCom
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeCommentRepository implements RecipeCommentRepository {
-  async count(): Promise<number> {
+  async count(recipeId: number): Promise<number> {
     const supabase = await createClient();
     const { count, error } = await supabase
-      .from("recipe_comment_image")
-      .select("*", { count: "exact", head: true });
+      .from("recipe_comment")
+      .select("*", { count: "exact", head: true })
+      .eq("recipe_id", recipeId)
+
 
     if (error) {
       throw new Error(error.message);
@@ -19,12 +21,14 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
   async findAll(
     keyword: number,
     from: number,
-    to: number
+    to: number,
+    recipeId: number
   ): Promise<RecipeComment[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from("recipe_comment_image")
+      .from("recipe_comment")
       .select("*")
+      .eq("recipe_id", recipeId)
       .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
       .range(from, to);

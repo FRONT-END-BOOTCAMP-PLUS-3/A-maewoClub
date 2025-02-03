@@ -35,7 +35,6 @@ export class SbRecipeRepository implements RecipeRepository {
         id: recipe.id,
         userId: recipe.user_id,
         title: recipe.title,
-        instruction: recipe.instruction,
         tagId: recipe.tag_id,
         createdAt: recipe.created_at,
         updatedAt: recipe.updated_at,
