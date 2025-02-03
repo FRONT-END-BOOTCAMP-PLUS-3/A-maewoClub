@@ -6,7 +6,7 @@ import { RecipeImage } from "@/domain/entities/recipes/RecipeImage";
 import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
 import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
 
-export class DfMenuListUsecase {
+export class DfRecipeListUsecase {
   constructor(
     private repository: RecipeRepository,
     private recipeImageRepository: RecipeImageRepository
