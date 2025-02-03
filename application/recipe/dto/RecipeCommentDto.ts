@@ -1,4 +1,4 @@
-export interface RecipeReview {
+export interface RecipeCommentDto {
   id: number;
   recipeId: number;
   userId: number;

@@ -1,8 +1,8 @@
-import { RecipeReview } from "@/domain/entities/RecipeReview";
-import { RecipeReviewRepository } from "@/domain/repositories/RecipeReviewRepository";
+import { RecipeComment } from "@/domain/entities/recipes/RecipeComment";
+import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
 import { createClient } from "@/utils/supabase/server";
 
-export class SbRecipeReviewRepository implements RecipeReviewRepository {
+export class SbRecipeCommentRepository implements RecipeCommentRepository {
   async count(): Promise<number> {
     const supabase = await createClient();
     const { count, error } = await supabase
@@ -20,7 +20,7 @@ export class SbRecipeReviewRepository implements RecipeReviewRepository {
     keyword: number,
     from: number,
     to: number
-  ): Promise<RecipeReview[]> {
+  ): Promise<RecipeComment[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment")
@@ -34,19 +34,19 @@ export class SbRecipeReviewRepository implements RecipeReviewRepository {
       throw new Error("Failed to fetch menus");
     }
 
-    const RecipeReview: RecipeReview[] = data.map(
-      (recipeReview): RecipeReview => {
+    const RecipeComment: RecipeComment[] = data.map(
+      (recipeComment): RecipeComment => {
         return {
-          id: recipeReview.id,
-          recipeId: recipeReview.recipe_id,
-          userId: recipeReview.user_id,
-          title: recipeReview.title,
-          content: recipeReview.content,
-          createdAt: recipeReview.created_at,
-          updatedAt: recipeReview.updated_at,
+          id: recipeComment.id,
+          recipeId: recipeComment.recipe_id,
+          userId: recipeComment.user_id,
+          title: recipeComment.title,
+          content: recipeComment.content,
+          createdAt: recipeComment.created_at,
+          updatedAt: recipeComment.updated_at,
         };
       }
     );
-    return RecipeReview || [];
+    return RecipeComment || [];
   }
 }
