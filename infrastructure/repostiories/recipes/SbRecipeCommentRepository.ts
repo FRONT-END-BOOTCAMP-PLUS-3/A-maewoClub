@@ -6,7 +6,7 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
   async count(): Promise<number> {
     const supabase = await createClient();
     const { count, error } = await supabase
-      .from("recipe")
+      .from("recipe_comment_image")
       .select("*", { count: "exact", head: true });
 
     if (error) {
@@ -23,7 +23,7 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
   ): Promise<RecipeComment[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from("recipe_comment")
+      .from("recipe_comment_image")
       .select("*")
       .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
