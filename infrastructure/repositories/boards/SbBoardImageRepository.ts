@@ -9,7 +9,7 @@ export class SbBoardImageRepository implements BoardImageRepository {
     const { data, error } = await supabase
       .from("board_image")
       .select("*")
-      .eq("board_post.id", id);
+      .eq("id", id);
 
     if (error) {
       console.error(error);
@@ -23,7 +23,7 @@ export class SbBoardImageRepository implements BoardImageRepository {
     const { data, error } = await supabase
       .from("board_image")
       .select("*")
-      .eq("board_post.id", id)
+      .eq("id", id)
       .eq("is_default", true)
       .single();
 
