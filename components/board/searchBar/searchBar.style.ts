@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 
 const SearchForm = styled.div`
-  position: absolute;
+  position: relative;
   width: 215px;
   top: 16px;
   right: 10px;
