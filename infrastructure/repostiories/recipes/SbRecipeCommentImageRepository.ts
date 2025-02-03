@@ -1,12 +1,11 @@
-
-import { RecipeReviewImage } from "@/domain/entities/recipes/RecipeReviewImage";
-import { RecipeReviewImageRepository } from "@/domain/repositories/RecipeReviewImageRepository";
+import { RecipeCommentImage } from "@/domain/entities/recipes/RecipeCommentImage";
+import { RecipeCommentImageRepository } from "@/domain/repositories/recipes/RecipeCommentImageRepository";
 import { createClient } from "@/utils/supabase/server";
 
-export class SbRecipeReviewImageRepository
-  implements RecipeReviewImageRepository
+export class SbRecipeCommentImageRepository
+  implements RecipeCommentImageRepository
 {
-  async findAllByRecipeId(id: number): Promise<RecipeReviewImage[]> {
+  async findAllByRecipeId(id: number): Promise<RecipeCommentImage[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment_image")
@@ -20,7 +19,7 @@ export class SbRecipeReviewImageRepository
     return data || [];
   }
 
-  async findDefaultImageByRecipeId(id: number): Promise<RecipeReviewImage> {
+  async findDefaultImageByRecipeId(id: number): Promise<RecipeCommentImage> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment_image")
