@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-const SearchBarContainer = styled.div`
-  width: 100%;
-  height: 80px;
-  position: relative;
-`;
-
 const SearchForm = styled.div`
   position: absolute;
   width: 215px;
@@ -38,4 +32,4 @@ const SearchIcon = styled(Image)`
   cursor: pointer;
 `;
 
-export { SearchBarContainer, SearchForm, SearchInput, SearchIcon };
+export { SearchForm, SearchInput, SearchIcon };
