@@ -6,5 +6,4 @@ export interface RecipeReviewDto {
   content: string;
   createdAt: Date;
   updatedAt: Date;
-  likeCount: number;
 }
