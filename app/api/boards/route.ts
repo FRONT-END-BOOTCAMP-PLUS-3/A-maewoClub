@@ -3,7 +3,7 @@ import { BoardRepository } from "@/domain/repositories/boards/BoardRepository";
 import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepostory";
 import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
 import { SbBoardImageRepository } from "@/infrastructure/repositories/boards/SbBoardImageRepository";
-import { DfBoardsListUsecase } from "@/application/boards/DfBoardsListUsecase";
+import { DfBoardsListUsecase } from "@/application/boards/DfBoardListUsecase";
 import { BoardListDto } from "@/application/boards/dto/BoardListDto";
 
 // recipes/route
