@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 export const Picosisimo = styled.p`
   text-align: center;
-  font-size: 14rem;
-  font-weight: 1000;
-  line-height: 400px;
-  letter-spacing: -8px;
+  font-size: 12rem;
+  font-weight: 800;
+  letter-spacing: -10px;
 
   background: linear-gradient(
     90deg,
@@ -27,7 +26,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 100vw;
+  width: 100%;
   height: 700px;
 
   background-color: black;
@@ -38,27 +37,26 @@ export const InfoWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 80%;
+  width: 100%;
   height: 500px;
 `;
 
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
 
   gap: 30px;
 `;
 
 export const Title = styled.p`
-  font-size: 40px;
+  font-size: 2.5rem;
   font-weight: 700;
 
   color: white;
 `;
 
 export const Content = styled.p`
-  font-size: 30px;
+  font-size: 1.8rem;
   font-weight: 700;
   line-height: normal;
 
@@ -66,8 +64,6 @@ export const Content = styled.p`
 `;
 
 export const InfoImage = styled.img`
-  flex: 1;
-
   width: 570px;
   height: 400px;
   margin: 40px 20px;
