@@ -25,7 +25,6 @@ export class SbRecipeCommentImageRepository
       .from("recipe_comment_image")
       .select("*")
       .eq("user_id", id)
-      .eq("is_default", true)
       .single();
 
     if (error) {
