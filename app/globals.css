@@ -4,6 +4,7 @@
   --darkRed: #600000;
   --black: #000000;
   background-color: var(--black);
+  padding: 0 20%;
 }
 
 *,

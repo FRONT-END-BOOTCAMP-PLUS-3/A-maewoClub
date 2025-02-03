@@ -26,10 +26,12 @@ const SubPage = () => {
                 <Title>{page.title}</Title>
                 <Content>{page.content}</Content>
               </ContentWrapper>
-              <InfoImage
-                src={page.image}
-                alt={page.title}
-              />
+              {page.image ? (
+                <InfoImage
+                  src={page.image}
+                  alt={page.title}
+                />
+              ) : null}
             </InfoWrapper>
           </Container>
         ))}
