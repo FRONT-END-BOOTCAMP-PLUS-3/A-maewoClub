@@ -16,7 +16,7 @@ const SubPage = () => {
   return (
     <>
       <Wrapper>
-        <Container style={{ justifyContent: "end" }}>
+        <Container>
           <Picosisimo>picosisimo</Picosisimo>
         </Container>
         {pages.map((page) => (
