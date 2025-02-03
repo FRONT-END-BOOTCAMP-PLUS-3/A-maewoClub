@@ -1,4 +1,4 @@
-import { Board } from "@/domain/entities/Board";
+import { Board } from "@/domain/entities/boards/Board";
 import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { createClient } from "@/utils/supabase/server";
 

@@ -1,4 +1,4 @@
-import { BoardImage } from "@/domain/entities/BoardImage";
+import { BoardImage } from "@/domain/entities/boards/BoardImage";
 import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 import { createClient } from "@/utils/supabase/server";
 

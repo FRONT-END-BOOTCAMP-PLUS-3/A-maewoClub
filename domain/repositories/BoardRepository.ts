@@ -1,4 +1,4 @@
-import { Board } from "../entities/Board";
+import { Board } from "../entities/boards/Board";
 
 export interface BoardRepository {
   count(): number | PromiseLike<number>;

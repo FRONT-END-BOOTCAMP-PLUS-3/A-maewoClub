@@ -1,9 +1,9 @@
 import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { BoardListDto } from "./dto/BoardListDto";
-import { Board } from "@/domain/entities/Board";
+import { Board } from "@/domain/entities/boards/Board";
 import { BoardDto } from "./dto/BoardDto";
 import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
-import { BoardImage } from "@/domain/entities/BoardImage";
+import { BoardImage } from "@/domain/entities/boards/BoardImage";
 
 export class DfMenuListUsecase {
   //  이름 메뉴로 가도 좋을지?
