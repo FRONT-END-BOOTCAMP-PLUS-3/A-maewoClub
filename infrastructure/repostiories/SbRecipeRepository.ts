@@ -21,7 +21,7 @@ export class SbRecipeRepository implements RecipeRepository {
     const { data, error } = await supabase
       .from("recipe")
       .select("*")
-      .ilike("title", `%${keyword}%`) 
+      .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
       .range(from, to);
 

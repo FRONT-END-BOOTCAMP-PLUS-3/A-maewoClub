@@ -1,8 +1,9 @@
 export interface RecipeReview {
   id: number;
+  recipeId: number;
   userId: number;
-  point: number;
-  reviewDescription: string;
-  recipeReviewImg: string;
+  title: string;
+  content: string;
   createdAt: Date;
+  updatedAt: Date;
 }

@@ -5,11 +5,11 @@ export class SubmitReviewUseCase {
   constructor(private reviewRepository: RecipeReviewRepository) {}
 
   async execute(
-    reviewDescription: string,
-    point: number,
+    title: string,
+    content: string,
     image: File | null,
-    userId: number,
-    recipeId: number
+    user_id: number,
+    recipe_id: number
   ): Promise<void> {
     let recipeReviewImg = "";
 
@@ -17,10 +17,11 @@ export class SubmitReviewUseCase {
       recipeReviewImg = await this.reviewRepository.uploadImage(image);
     }
 
-    const newReview: Omit<RecipeReview, "id" | "createdAt"> = {
-      userId,
-      point,
-      reviewDescription,
+    const newReview: Omit<RecipeReview, "id" | "created_at" | "updated_at"> = {
+      recipe_id,
+      user_id,
+      title,
+      content,
       recipeReviewImg,
     };
 

@@ -4,7 +4,7 @@ import { RecipeReviewRepository } from "@/domain/repositories/RecipeReviewReposi
 
 export class SbRecipeRepository implements RecipeReviewRepository {
   async submitReview(
-    review: Omit<RecipeReview, "id" | "createdAt">
+    review: Omit<RecipeReview, "id" | "created_at" | "updated_at">
   ): Promise<void> {
     const supabase = await createClient();
     const { error } = await supabase.from("recipe_reviews").insert(review);
