@@ -12,7 +12,7 @@ export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
 
-  margin: 30px 0;
+  margin: 20px 0;
   gap: 18px;
 `;
 
@@ -23,9 +23,22 @@ export const CategoryTitle = styled.div`
 `;
 
 export const TableContainer = styled.div`
+  height: 70vh;
   overflow-x: auto;
-  padding: 0 5rem 2rem 5rem;
+  overflow-y: auto;
   color: #a0a0a0;
+  padding: 0 10px;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+  }
 `;
 
 export const StyledTable = styled.table`
