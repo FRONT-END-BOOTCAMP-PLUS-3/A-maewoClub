@@ -2,16 +2,18 @@
 
 import React from "react";
 import {
-  SearchBarContainer,
   SearchInput,
   SearchIcon,
   SearchForm,
-} from "./searchBar.style";
+} from "../searchBar/searchBar.style";
+import TextForm from "../textForm/textForm";
+import OverviewContainer from "./overview.style";
 
-const SearchBar = () => {
+const Overview = () => {
   const SearchIconSvg = "/search.svg";
   return (
-    <SearchBarContainer>
+    <OverviewContainer>
+      <TextForm />
       <SearchForm>
         {SearchIconSvg && (
           <SearchIcon
@@ -23,8 +25,8 @@ const SearchBar = () => {
         )}
         <SearchInput type="text" placeholder="검색..." />
       </SearchForm>
-    </SearchBarContainer>
+    </OverviewContainer>
   );
 };
 
-export default SearchBar;
+export default Overview;
