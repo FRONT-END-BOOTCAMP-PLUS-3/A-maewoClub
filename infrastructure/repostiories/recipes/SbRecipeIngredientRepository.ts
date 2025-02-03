@@ -23,7 +23,6 @@ export class SbRecipeIngredientRepository implements RecipeIngredientRepository{
          .from("recipe_ingredient")
          .select("*")
          .eq("recipe_id", recipeId)
-         .eq("is_default", true)
          .single();
    
        if (error) {

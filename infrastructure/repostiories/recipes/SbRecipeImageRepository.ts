@@ -24,7 +24,6 @@ export class SbRecipeImageRepository implements RecipeImageRepository {
       .from("recipe_image")
       .select("*")
       .eq("recipe_id", id)
-      .eq("is_default", true)
       .single();
 
     if (error) {
