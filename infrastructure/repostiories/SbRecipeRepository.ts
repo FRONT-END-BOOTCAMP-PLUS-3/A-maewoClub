@@ -1,4 +1,4 @@
-import { Recipe } from "@/domain/entities/Recipe";
+import { Recipe } from "@/domain/entities/recipes/Recipe";
 import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
 import { createClient } from "@/utils/supabase/server";
 

@@ -1,14 +1,14 @@
-import { RecipeImage } from "@/domain/entities/recipes/RecipeImage";
-import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
+import { BoardImage } from "@/domain/entities/boards/BoardImage";
+import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 import { createClient } from "@/utils/supabase/server";
 
-export class SbRecipeImageRepository implements RecipeImageRepository {
-  async findAllByRecipeId(id: number): Promise<RecipeImage[]> {
+export class SbBoardImageRepository implements BoardImageRepository {
+  async findAllByBoardId(id: number): Promise<BoardImage[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from("recipe_image")
+      .from("board_image")
       .select("*")
-      .eq("recipe_id", id);
+      .eq("board_post.id", id);
 
     if (error) {
       console.error(error);
@@ -17,12 +17,12 @@ export class SbRecipeImageRepository implements RecipeImageRepository {
     return data || [];
   }
 
-  async findDefaultImageByRecipeId(id: number): Promise<RecipeImage> {
+  async findDefaultImageByBoardId(id: number): Promise<BoardImage> {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from("recipe_image")
+      .from("board_image")
       .select("*")
-      .eq("recipe_id", id)
+      .eq("board_post.id", id)
       .eq("is_default", true)
       .single();
 

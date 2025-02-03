@@ -1,6 +1,6 @@
-import { Recipe } from "../entities/Recipe";
+import { Recipe } from "../entities/recipes/Recipe";
 
 export interface RecipeRepository {
-    count(): number | PromiseLike<number>;
-    findAll(keyword: number, from: number, to: number): Promise<Recipe[]>;
+  count(): number | PromiseLike<number>;
+  findAll(keyword: number, from: number, to: number): Promise<Recipe[]>;
 }
