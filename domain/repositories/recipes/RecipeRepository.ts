@@ -1,4 +1,5 @@
-import { Recipe } from "../entities/recipes/Recipe";
+import { Recipe } from "@/domain/entities/recipes/Recipe";
+
 
 export interface RecipeRepository {
   count(): number | PromiseLike<number>;

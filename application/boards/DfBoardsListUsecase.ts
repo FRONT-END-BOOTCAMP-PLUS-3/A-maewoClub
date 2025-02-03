@@ -2,8 +2,9 @@ import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { BoardListDto } from "./dto/BoardListDto";
 import { Board } from "@/domain/entities/boards/Board";
 import { BoardDto } from "./dto/BoardDto";
-import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
+
 import { BoardImage } from "@/domain/entities/boards/BoardImage";
+import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
 
 export class DfBoardsListUsecase {
   constructor(

@@ -61,7 +61,7 @@ const Page = () => {
           </div>
           <ImageBox onUpdate={handleFileUpdate} />
         </div>
-        <div style={{ display: "flex", justifyContent: "end" }}>
+        <div style={{ display: "flex", justifyContent: "end" }} onClick={handleSubmit}>
           <Button>등록</Button>
         </div>
       </div>

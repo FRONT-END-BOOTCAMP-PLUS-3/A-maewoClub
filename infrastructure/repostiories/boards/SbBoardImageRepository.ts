@@ -1,5 +1,6 @@
 import { BoardImage } from "@/domain/entities/boards/BoardImage";
-import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
+import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
+
 import { createClient } from "@/utils/supabase/server";
 
 export class SbBoardImageRepository implements BoardImageRepository {

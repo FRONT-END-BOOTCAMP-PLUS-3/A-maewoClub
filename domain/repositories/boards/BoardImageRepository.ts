@@ -1,4 +1,5 @@
-import { BoardImage } from "../entities/boards/BoardImage";
+import { BoardImage } from "@/domain/entities/boards/BoardImage";
+
 
 export interface BoardImageRepository {
   findAllByBoardId(BoardId: number): Promise<BoardImage[]>;

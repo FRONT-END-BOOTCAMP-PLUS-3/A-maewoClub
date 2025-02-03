@@ -1,4 +1,5 @@
-import { RecipeReviewImage } from "@/domain/entities/RecipeReviewImage";
+
+import { RecipeReviewImage } from "@/domain/entities/recipes/RecipeReviewImage";
 import { RecipeReviewImageRepository } from "@/domain/repositories/RecipeReviewImageRepository";
 import { createClient } from "@/utils/supabase/server";
 
