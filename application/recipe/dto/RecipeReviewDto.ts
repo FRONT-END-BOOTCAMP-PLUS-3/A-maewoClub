@@ -1,10 +1,9 @@
-export interface Recipe {
+export interface RecipeReviewDto {
   id: number;
+  recipeId: number;
   userId: number;
   title: string;
-  instruction: string;
-  tagId: number;
+  content: string;
   createdAt: Date;
   updatedAt: Date;
-  likeCount: number;
 }
