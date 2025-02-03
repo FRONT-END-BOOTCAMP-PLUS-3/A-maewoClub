@@ -45,9 +45,12 @@ const Table = <T,>({
   return (
     <>
       <TableContainer>
-        <TitleContainer>
-          <BackButton onClick={() => router.push("/admin")} />
-          <CategoryTitle>{category}</CategoryTitle>
+        <TitleContainer style={{ justifyContent: "space-between" }}>
+          <TitleContainer>
+            <BackButton onClick={() => router.push("/admin")} />
+            <CategoryTitle>{category}</CategoryTitle>
+          </TitleContainer>
+          <SearchBar />
         </TitleContainer>
         <StyledTable>
           <thead>
