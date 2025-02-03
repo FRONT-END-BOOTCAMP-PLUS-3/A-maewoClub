@@ -1,5 +1,6 @@
 "use client";
 
+import SearchBar from "@/components/board/searchBar/searchBar";
 import {
   BackButton,
   CategoryTitle,
@@ -60,7 +61,9 @@ const Table = <T,>({
             {data.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {columns.map((col) => (
-                  <TableData key={col.key}>{row[col.key]}</TableData>
+                  <TableData key={col.key}>
+                    {String(row[col.key as keyof T])}
+                  </TableData>
                 ))}
                 <TableData>
                   <ButtonContainer>
