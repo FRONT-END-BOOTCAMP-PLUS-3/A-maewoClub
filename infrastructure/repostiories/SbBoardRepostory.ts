@@ -26,8 +26,8 @@ export class SbBoardRepository implements BoardRepository {
       .range(from, to);
 
     if (error) {
-      console.error("Error fetching menus:", error.message);
-      throw new Error("Failed to fetch menus");
+      console.error("Error fetching boards:", error.message);
+      throw new Error("Failed to fetch boards");
     }
 
     const boards: Board[] = data.map((board): Board => {

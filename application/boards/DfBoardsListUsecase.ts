@@ -16,10 +16,10 @@ export class DfBoardsListUsecase {
     const from = (page - 1) * 8;
     const to = page * 8 - 1;
 
-    const menus: Board[] = await this.repository.findAll(id, from, to);
+    const boards: Board[] = await this.repository.findAll(id, from, to);
 
     const boardDtos: BoardDto[] = await Promise.all(
-      menus.map(async (board: Board) => {
+      boards.map(async (board: Board) => {
         const image: BoardImage | null =
           await this.boardImageRepository.findDefaultImageByBoardId(board.id);
 
