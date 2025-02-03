@@ -5,9 +5,7 @@ import { BoardDto } from "./dto/BoardDto";
 import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 import { BoardImage } from "@/domain/entities/boards/BoardImage";
 
-export class DfMenuListUsecase {
-  //  이름 메뉴로 가도 좋을지?
-  // entities 파일 분리하지 않아도 되는지 확인
+export class DfBoardsListUsecase {
   constructor(
     private repository: BoardRepository,
     private boardImageRepository: BoardImageRepository
