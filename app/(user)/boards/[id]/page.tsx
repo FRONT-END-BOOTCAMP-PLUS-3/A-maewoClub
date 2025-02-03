@@ -5,7 +5,7 @@ import Post from "@/components/board/detail/post/post";
 const Page = () => {
   return (
     <>
-      <div style={{ padding: "0 20%" }}>
+      <div>
         <Post />
       </div>
     </>

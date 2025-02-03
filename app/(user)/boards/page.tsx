@@ -2,10 +2,10 @@
 import React from "react";
 import CardPostListItemTest from "@/components/board/main/cardPost/cardPost";
 import FilterBar from "@/components/board/filterBar/filterBar";
-import SearchBar from "@/components/board/searchBar/searchBar";
 import Button from "@/components/board/button/button";
 import { useRouter } from "next/navigation";
 import FilterButtonGroup from "@/components/board/optionButton/optionButton";
+import Overview from "@/components/board/overview/overview";
 
 const Page = () => {
   const router = useRouter();
@@ -16,7 +16,7 @@ const Page = () => {
 
   return (
     <>
-      <SearchBar />
+      <Overview />
       <FilterBar />
 
       <div style={{ display: "flex", gap: "15px" }}>

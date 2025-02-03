@@ -29,16 +29,22 @@ const FilterButtonGroup = () => {
 
   return (
     <div style={{ display: "flex", gap: "8px", overflowX: "auto" }}>
-      {["전체", "마라맛", "엽떡", "매운맛 1단계", "매운맛 2단계"].map(
-        (label) => (
-          <FilterToggleButton
-            key={label}
-            label={label}
-            isActive={selected === label}
-            onClick={() => handleButtonClick(label)}
-          />
-        )
-      )}
+      {[
+        "맛집 추천",
+        "일상",
+        "반려동물",
+        "생활정보",
+        "번개",
+        "취미생활",
+        "기타",
+      ].map((label) => (
+        <FilterToggleButton
+          key={label}
+          label={label}
+          isActive={selected === label}
+          onClick={() => handleButtonClick(label)}
+        />
+      ))}
     </div>
   );
 };

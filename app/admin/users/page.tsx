@@ -130,7 +130,7 @@ const userColumns = [
   { key: "public_status", header: "공개 상태" },
 ];
 
-const AdminUserList = () => {
+const AdminUsers = () => {
   const handleDelete = (user: User) => {
     alert("삭제");
   };
@@ -152,4 +152,4 @@ const AdminUserList = () => {
   );
 };
 
-export default AdminUserList;
+export default AdminUsers;

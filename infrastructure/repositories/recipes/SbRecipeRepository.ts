@@ -1,5 +1,5 @@
-import { Recipe } from "@/domain/entities/Recipe";
-import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
+import { Recipe } from "@/domain/entities/recipes/Recipe";
+import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeRepository implements RecipeRepository {
@@ -21,7 +21,7 @@ export class SbRecipeRepository implements RecipeRepository {
     const { data, error } = await supabase
       .from("recipe")
       .select("*")
-      .ilike("title", `%${keyword}%`) 
+      .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
       .range(from, to);
 
@@ -35,7 +35,6 @@ export class SbRecipeRepository implements RecipeRepository {
         id: recipe.id,
         userId: recipe.user_id,
         title: recipe.title,
-        instruction: recipe.instruction,
         tagId: recipe.tag_id,
         createdAt: recipe.created_at,
         updatedAt: recipe.updated_at,
