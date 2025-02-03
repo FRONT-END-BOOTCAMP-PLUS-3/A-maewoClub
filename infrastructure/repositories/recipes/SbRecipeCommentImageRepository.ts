@@ -5,12 +5,12 @@ import { createClient } from "@/utils/supabase/server";
 export class SbRecipeCommentImageRepository
   implements RecipeCommentImageRepository
 {
-  async findAllByRecipeId(id: number): Promise<RecipeCommentImage[]> {
+  async findAllByRecipeId(recipeCommentId: number): Promise<RecipeCommentImage[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment_image")
       .select("*")
-      .eq("user_id", id);
+      .eq("id", recipeCommentId);
 
     if (error) {
       console.error(error);
@@ -19,12 +19,12 @@ export class SbRecipeCommentImageRepository
     return data || [];
   }
 
-  async findDefaultImageByRecipeId(id: number): Promise<RecipeCommentImage> {
+  async findDefaultImageByRecipeId(recipeCommentId: number): Promise<RecipeCommentImage> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment_image")
       .select("*")
-      .eq("user_id", id)
+      .eq("id", recipeCommentId)
       .single();
 
     if (error) {

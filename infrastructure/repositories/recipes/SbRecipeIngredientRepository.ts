@@ -3,12 +3,12 @@ import { RecipeIngredientRepository } from "@/domain/repositories/recipes/Recipe
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeIngredientRepository implements RecipeIngredientRepository{
-  async findAllByRecipeId(recipeId: number): Promise<RecipeIngredient[]> {
+  async findAllByRecipeId(id: number): Promise<RecipeIngredient[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_ingredient")
       .select("*")
-      .eq("recipe_id", recipeId);
+      .eq("recipe_id", id);
 
     if (error) {
       console.error(error);
@@ -17,12 +17,12 @@ export class SbRecipeIngredientRepository implements RecipeIngredientRepository{
     return data || [];
   }
 
-  async findDefaultIngredientByRecipeId(recipeId: number): Promise<RecipeIngredient> {
+  async findDefaultIngredientByRecipeId(id: number): Promise<RecipeIngredient> {
     const supabase = await createClient();
        const { data, error } = await supabase
          .from("recipe_ingredient")
          .select("*")
-         .eq("recipe_id", recipeId)
+         .eq("recipe_id", id)
          .single();
    
        if (error) {

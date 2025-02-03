@@ -1,8 +1,8 @@
 import { RecipeListDto } from "@/application/recipe/dto/RecipeListDto";
 import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
 import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
-import { SbRecipeImageRepository } from "@/infrastructure/repostiories/recipes/SbRecipeImageRepository";
-import { SbRecipeRepository } from "@/infrastructure/repostiories/recipes/SbRecipeRepository";
+import { SbRecipeImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeImageRepository";
+import { SbRecipeRepository } from "@/infrastructure/repositories/recipes/SbRecipeRepository";
 import { DfRecipeListUsecase } from "@/application/recipe/DfRecipeListUsecase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -17,7 +17,7 @@ export async function GET(){
 }
 
 export async function POST(){
-  
+
 
   return NextRequest.toString();
 }
