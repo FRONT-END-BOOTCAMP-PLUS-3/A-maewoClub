@@ -1,4 +1,4 @@
-import { BoardRepository } from "@/domain/repositories/BoardRepository";
+import { BoardRepository } from "@/domain/repositories/boards/BoardRepository";
 import { BoardListDto } from "./dto/BoardListDto";
 import { Board } from "@/domain/entities/boards/Board";
 import { BoardDto } from "./dto/BoardDto";
