@@ -6,7 +6,7 @@ import { BoardDto } from "./dto/BoardDto";
 import { BoardImage } from "@/domain/entities/boards/BoardImage";
 import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
 
-export class DfBoardsListUsecase {
+export class DfBoardListUsecase {
   constructor(
     private repository: BoardRepository,
     private boardImageRepository: BoardImageRepository
@@ -41,5 +41,22 @@ export class DfBoardsListUsecase {
       hasNextPage: page < Math.ceil(totalCount / 8),
       pages: Array.from({ length: Math.ceil(totalCount / 8) }, (_, i) => i + 1),
     };
+  }
+
+  async addImageToBoard(
+    boardId: number,
+    userId: number,
+    images: BoardImage[]
+  ): Promise<BoardImage[]> {
+    const newImages: BoardImage[] = images.map((image) => ({
+      ...image,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }));
+
+    await Promise.all(
+      newImages.map((image) => this.boardImageRepository.save(image))
+    );
+    return newImages;
   }
 }
