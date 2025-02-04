@@ -8,7 +8,7 @@ import {
   PostText,
   PostTitle,
 } from "./cardPost.style";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 interface Post {
   image: string;
@@ -25,33 +25,19 @@ interface PostListItemProps {
   post: Post;
 }
 
-const mock: Post = {
-  image:
-    "https://blog.kakaocdn.net/dn/93m8M/btsEEGoFOG2/eKqSbvDh3anRKecus98YRk/img.jpg",
-  title: "뜩뻑이 믁어염",
-  content:
-    "매운맛이 아니라 고통의 맛을 판매하는 거라면 성공적! 하지만 나의 평화로운 식사.",
-  nickname: "빨떡1짱",
-  id: 3,
-  comment: 33,
-  view: 33,
-  heart: 33,
-};
+const PostListItem = ({ post }: PostListItemProps) => {
+  // const router = useRouter();
 
-const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
-  const router = useRouter();
-
-  const handleDetail = () => {
-    router.push(`boards/${post.id}`);
-  };
+  // const handleDetail = () => {
+  //   router.push(`boards/${post.id}`);
+  // };
 
   return (
-    <PostStyle onClick={handleDetail}>
+    <PostStyle
+    // onClick={handleDetail}
+    >
       <PostImage>
-        <img
-          src={post.image}
-          alt={post.title}
-        />
+        <img src={post.image} alt={post.title} />
       </PostImage>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <PostContent>
@@ -69,8 +55,4 @@ const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
   );
 };
 
-const CardPostListItemTest = () => {
-  return <PostListItem post={mock} />;
-};
-
-export default CardPostListItemTest;
+export default PostListItem;
