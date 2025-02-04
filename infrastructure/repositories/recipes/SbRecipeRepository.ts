@@ -3,6 +3,25 @@ import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeRepository implements RecipeRepository {
+  async findOne(id: number): Promise<Recipe | null> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("recipe")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+  
+    if (error) {
+      throw new Error(error.message);
+    }
+  
+    return data ?? null;
+  }
+
+  get(): Promise<Recipe[]> {
+    throw new Error("Method not implemented.");
+  }
+  
   async count(): Promise<number> {
     const supabase = await createClient();
     const { count, error } = await supabase

@@ -9,17 +9,16 @@ import { NextRequest, NextResponse } from "next/server";
 // recipes/route
 export async function GET() {
   const recipeRepository: RecipeRepository = new SbRecipeRepository();
-  const recipeImageRepository: RecipeImageRepository =
-    new SbRecipeImageRepository();
+  const recipeImageRepository: RecipeImageRepository = new SbRecipeImageRepository();
   const recipeImageUsecase: DfRecipeListUsecase = new DfRecipeListUsecase(
     recipeRepository,
     recipeImageRepository
   );
   const recipeListDto: RecipeListDto = await recipeImageUsecase.execute();
 
-  return NextResponse.json(recipeListDto);
+  return NextResponse.json(recipeListDto)
 }
 
-export async function POST() {
+export async function POST(){
   return NextRequest.toString();
 }
