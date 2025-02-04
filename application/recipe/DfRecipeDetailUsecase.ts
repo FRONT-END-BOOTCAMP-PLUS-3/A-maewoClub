@@ -4,8 +4,6 @@ import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository
 export class DfRecipeDetailUsecase {
   constructor(
     private recipeRepository: RecipeRepository,
-    private recipeImageRepository: RecipeImageRepository,
+    private recipeImageRepository: RecipeImageRepository
   ) {}
-
-  
 }

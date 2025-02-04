@@ -6,4 +6,5 @@ export interface RecipeComment {
   content: string;
   createdAt: Date;
   updatedAt: Date;
+  score: number;
 }

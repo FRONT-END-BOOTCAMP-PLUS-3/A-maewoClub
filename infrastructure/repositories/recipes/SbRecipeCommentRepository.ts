@@ -8,8 +8,7 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     const { count, error } = await supabase
       .from("recipe_comment")
       .select("*", { count: "exact", head: true })
-      .eq("recipe_id", recipeId)
-
+      .eq("recipe_id", recipeId);
 
     if (error) {
       throw new Error(error.message);
@@ -32,7 +31,6 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
       .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
       .range(from, to);
-
     if (error) {
       console.error("Error fetching menus:", error.message);
       throw new Error("Failed to fetch menus");
@@ -48,6 +46,7 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
           content: recipeComment.content,
           createdAt: recipeComment.created_at,
           updatedAt: recipeComment.updated_at,
+          score: recipeComment.score,
         };
       }
     );
