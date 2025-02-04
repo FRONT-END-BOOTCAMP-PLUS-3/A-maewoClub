@@ -16,8 +16,7 @@ export const ListContainer = styled.ul`
   justify-content: center;
   align-items: center;
   gap: 13px;
-  width: 80%;
-  max-width: 1080px;
+  width: 100%;
   background-color: var(--black);
   border-radius: 25px;
   box-shadow: 3px 3px 20px 0px rgba(255, 255, 255, 0.25),
