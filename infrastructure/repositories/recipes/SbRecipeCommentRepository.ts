@@ -78,7 +78,6 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
   }
 
   async addRecipeComment(recipeComment: {
-    id: number;
     recipeId: number;
     content: string;
     createdAt: Date;
@@ -96,6 +95,25 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     }
 
     return data.id;
+  }
+
+  async updateRecipeComment(recipeComment: {
+    id: number;
+    recipeId: number;
+    content: string;
+    updatedAt: Date;
+    score: number;
+  }): Promise<number> {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_comment")
+      .update(recipeComment)
+      .eq("id", recipeComment.id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return recipeComment.id;
   }
 
   async deleteByCommentId(id: number): Promise<void> {

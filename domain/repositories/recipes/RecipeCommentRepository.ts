@@ -10,10 +10,17 @@ export interface RecipeCommentRepository {
   ): Promise<RecipeComment[]>;
 
   addRecipeComment(recipeComment: {
-    id: number;
     recipeId: number;
     content: string;
     createdAt: Date;
+    score: number;
+  }): Promise<number>;
+
+  updateRecipeComment(recipeComment: {
+    id: number;
+    recipeId: number;
+    content: string;
+    updatedAt: Date;
     score: number;
   }): Promise<number>;
 

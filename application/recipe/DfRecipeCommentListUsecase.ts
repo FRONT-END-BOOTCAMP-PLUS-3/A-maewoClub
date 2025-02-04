@@ -11,11 +11,11 @@ export class DfRecipeCommentListUsecase {
     private recipeCommentRepository: RecipeCommentRepository,
     private recipeCommentImageRepository: RecipeCommentImageRepository
   ) {}
+
   async getRecipeComment(id: number) {
     return await this.recipeCommentRepository.findOne(id);
   }
   async deleteRecipeCommentImage(id: number) {
-    // image, comment 둘다 삭제
     await this.recipeCommentRepository.deleteByCommentId(id);
     await this.recipeCommentImageRepository.deleteByImageId(id);
   }
