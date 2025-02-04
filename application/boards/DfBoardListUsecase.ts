@@ -42,4 +42,21 @@ export class DfBoardListUsecase {
       pages: Array.from({ length: Math.ceil(totalCount / 8) }, (_, i) => i + 1),
     };
   }
+
+  async addImageToBoard(
+    boardId: number,
+    userId: number,
+    images: BoardImage[]
+  ): Promise<BoardImage[]> {
+    const newImages: BoardImage[] = images.map((image) => ({
+      ...image,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }));
+
+    await Promise.all(
+      newImages.map((image) => this.boardImageRepository.save(image))
+    );
+    return newImages;
+  }
 }
