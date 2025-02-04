@@ -32,4 +32,15 @@ export class SbRecipeIngredientRepository implements RecipeIngredientRepository{
        return data || null;
   }
 
+  async addIngredient(recipeId: number, ingredient: { name: string; amount: string }){
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_ingredient")
+      .insert([{ recipe_id: recipeId, ...ingredient }]);
+  
+    if (error) {
+      throw new Error(error.message);
+    }
+  }
+
 }

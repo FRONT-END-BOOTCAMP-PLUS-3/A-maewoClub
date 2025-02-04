@@ -31,4 +31,15 @@ export class SbRecipeStepRepository implements RecipeStepRepository {
 
     return data || null;
   }
+
+  async addStep(recipeId: number, stepNumber: number, description: string) {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_step")
+      .insert([{ recipe_id: recipeId, step_number: stepNumber, description }]);
+  
+    if (error) {
+      throw new Error(error.message);
+    }
+  }
 }
