@@ -5,10 +5,36 @@ import {
   ModalOverlay,
   ModalContainer,
   ModalCloseButton,
+  LoginBox,
+  SocialName,
 } from "./login.style";
+import { RiKakaoTalkFill } from "react-icons/ri";
 
 type LoginModalProps = {
   onClose: () => void;
+};
+
+const googleLogin = () => {
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/auth`;
+
+  console.log(process.env.NEXT_PUBLIC_SITE_URL);
+  console.log(redirectUri);
+
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20profile%20email`;
+
+  window.location.href = authUrl;
+  localStorage.setItem("provider", "google");
+};
+
+const KakaoLogin = () => {
+  const restApi = process.env.NEXT_PUBLIC_KAKAO_REST_API;
+  const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/auth`;
+
+  const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${restApi}&redirect_uri=${redirectUri}&response_type=code`;
+
+  window.location.href = authUrl;
+  localStorage.setItem("provider", "kakao");
 };
 
 export const Login = ({ onClose }: LoginModalProps) => {
@@ -16,7 +42,23 @@ export const Login = ({ onClose }: LoginModalProps) => {
     <>
       <ModalContainer>
         <h2>로그인 / 회원가입</h2>
-        <p>여기부분에 소셜 로그인 넣을것임.</p>
+        <LoginBox
+          style={{ backgroundColor: "#FEE500" }}
+          onClick={KakaoLogin}
+        >
+          <RiKakaoTalkFill style={{ fontSize: "24px" }} />
+          <SocialName>카카오로 시작하기</SocialName>
+        </LoginBox>
+        <LoginBox
+          style={{ boxShadow: "3px 3px 10px rgba(0, 0, 0, 0.1)" }}
+          onClick={googleLogin}
+        >
+          <img
+            src='/google_logo.svg'
+            style={{ width: "26px", height: "26px" }}
+          />
+          <SocialName>구글로 시작하기</SocialName>
+        </LoginBox>
         <ModalCloseButton onClick={onClose}>닫기</ModalCloseButton>
       </ModalContainer>
       <ModalOverlay onClick={onClose} />
