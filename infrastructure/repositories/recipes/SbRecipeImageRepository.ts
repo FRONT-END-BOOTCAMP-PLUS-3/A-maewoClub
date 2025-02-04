@@ -32,4 +32,15 @@ export class SbRecipeImageRepository implements RecipeImageRepository {
 
     return data || null;
   }
+  
+  async addRecipeImage(recipeId: number, imageUrl: string) {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_image")
+      .insert([{ recipe_id: recipeId, image_url: imageUrl }]);
+  
+    if (error) {
+      throw new Error(error.message);
+    }
+  }
 }

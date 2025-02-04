@@ -3,7 +3,7 @@ import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeRepository implements RecipeRepository {
-  async findOne(id: number): Promise<Recipe | null> {
+  async findOne(id: number): Promise<Recipe> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe")
@@ -48,7 +48,6 @@ export class SbRecipeRepository implements RecipeRepository {
       console.error("Error fetching menus:", error.message);
       throw new Error("Failed to fetch menus");
     }
-
     const recipes: Recipe[] = data.map((recipe): Recipe => {
       return {
         id: recipe.id,
@@ -62,4 +61,20 @@ export class SbRecipeRepository implements RecipeRepository {
     });
     return recipes || [];
   }
+
+  async createRecipe(recipe: { title: string; description: string; authorId: string }): Promise<number> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("recipe")
+      .insert([recipe])
+      .select("id")
+      .single();
+  
+    if (error) {
+      throw new Error(error.message);
+    }
+  
+    return data.id; // 생성된 레시피 ID 반환
+  }
+
 }
