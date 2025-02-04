@@ -16,7 +16,29 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
 
     return count || 0;
   }
+  async findOne(id: number): Promise<RecipeComment> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("recipe_comment")
+      .select("*")
+      .eq("id", id)
+      .single();
 
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return {
+      id: data.id,
+      recipeId: data.recipe_id,
+      userId: data.user_id,
+      title: data.title,
+      content: data.content,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+      score: data.score,
+    };
+  }
   async findAll(
     keyword: number,
     from: number,
@@ -53,5 +75,38 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
       }
     );
     return RecipeComment || [];
+  }
+
+  async addRecipeComment(recipeComment: {
+    id: number;
+    recipeId: number;
+    content: string;
+    createdAt: Date;
+    score: number;
+  }): Promise<number> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("recipe_comment")
+      .insert([recipeComment])
+      .select("id")
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data.id;
+  }
+
+  async deleteByCommentId(id: number): Promise<void> {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_comment")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
   }
 }
