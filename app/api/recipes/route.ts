@@ -9,7 +9,6 @@ import { NextRequest, NextResponse } from "next/server";
 // recipes/route
 export async function GET() {
   const recipeRepository: RecipeRepository = new SbRecipeRepository();
-
   const recipeImageRepository: RecipeImageRepository =
     new SbRecipeImageRepository();
   const recipeImageUsecase: DfRecipeListUsecase = new DfRecipeListUsecase(
