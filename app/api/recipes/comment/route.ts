@@ -122,11 +122,10 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const savedRecipeComment = await recipeCommentImageUsecase.getRecipeComment(
-      updateRecipeCommentId
-    );
+    const createRecipeComment =
+      await recipeCommentImageUsecase.getRecipeComment(updateRecipeCommentId);
 
-    return NextResponse.json(savedRecipeComment, { status: 200 });
+    return NextResponse.json(createRecipeComment, { status: 200 });
   } catch (error) {
     console.error("Error creating recipe:", error);
     return NextResponse.json(
