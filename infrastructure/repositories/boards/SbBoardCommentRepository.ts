@@ -2,7 +2,7 @@ import { BoardComment } from "@/domain/entities/boards/BoardComment";
 import { BoardCommentRepository } from "@/domain/repositories/boards/BoardCommentRepository";
 import { createClient } from "@/utils/supabase/server";
 
-export class SbBoardImageRepository implements BoardCommentRepository {
+export class SbBoardCommentRepository implements BoardCommentRepository {
   async findAllByBoardId(id: number): Promise<BoardComment[]> {
     const supabase = await createClient();
     const { data, error } = await supabase

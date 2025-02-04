@@ -6,7 +6,7 @@ import { BoardDto } from "./dto/BoardDto";
 import { BoardImage } from "@/domain/entities/boards/BoardImage";
 import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
 
-export class DfBoardsListUsecase {
+export class DfBoardListUsecase {
   constructor(
     private repository: BoardRepository,
     private boardImageRepository: BoardImageRepository
