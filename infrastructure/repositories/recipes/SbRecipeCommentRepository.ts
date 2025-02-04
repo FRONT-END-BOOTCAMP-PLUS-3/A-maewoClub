@@ -31,6 +31,8 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
       .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
       .range(from, to);
+    // order ("score",{ ascending: false});
+
     if (error) {
       console.error("Error fetching menus:", error.message);
       throw new Error("Failed to fetch menus");
