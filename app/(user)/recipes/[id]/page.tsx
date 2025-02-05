@@ -31,10 +31,6 @@ const RecipeDetailPage = () => {
   const [reviewShowAll, setReviewShowAll] = useState(false);
   const [sortType, setSortType] = useState("points");
 
-  // data
-  const [listData, setListData] = useState([]);
-
-
   // 모달 관련 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFire, setSelectedFire] = useState<number | null>(null);
@@ -42,19 +38,82 @@ const RecipeDetailPage = () => {
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
 
+  // GET
   useEffect(() => {
-    const fetchComments = async () => {
-      try{      
-        const response = await fetch(`/api/recipe-comments/id=${1}`);
+      const getComments = async () => {
+        try {
+          const response = await fetch(`/api/recipe-comments`);
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+  },[])
+  
+  // POST
+  useEffect(() => {
+    const postComments = async () => {
+      try {
+        const response = await fetch(`/api/recipe-comments`, {
+          method: 'POST',
+          body: JSON.stringify({
+            score: 5,
+            userId: 1,
+            content: "맛있어요",
+            recipeId: 1,
+            image: ["image1", "image2"]
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
         const data = await response.json();
-        setListData(data);
         console.log(data);
       } catch (error) {
         console.log(error);
       }
     }
-    fetchComments();
   },[])
+  // PUT
+  useEffect(() => {
+    const putComments = async () => {
+      try {
+        const response = await fetch(`/api/recipe-comments/1`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            score: 5,
+            userId: 1,
+            content: "맛있어요",
+            recipeId: 1,
+            image: ["image1", "image2"]
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },[])
+  // Delete
+  useEffect(() => {
+    const deleteComments = async () => {
+      try {
+        const response = await fetch(`/api/recipe-comments/1`, {
+          method: 'DELETE',
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },[])
+
 
 
   const handleReview = () => {
