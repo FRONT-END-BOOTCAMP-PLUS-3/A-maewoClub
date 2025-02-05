@@ -62,7 +62,7 @@ export class SbRecipeRepository implements RecipeRepository {
     return recipes || [];
   }
 
-  async createRecipe(recipe: { title: string; description: string; authorId: string }): Promise<number> {
+  async addRecipe(recipe: { title: string; description: string; userId: string }): Promise<number> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe")
