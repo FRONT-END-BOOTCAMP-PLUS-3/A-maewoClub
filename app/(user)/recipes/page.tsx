@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   SubTitle,
   RecipeList,
@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 export default function Page() {
   const router = useRouter();
 
-  // Top 10 레시피
+  // Top 10 레시피 -> controller 분리 usecase 에 함수 분리 필요함. 
   const [topCurrentSlide, setTopCurrentSlide] = useState(0);
   const topSlideCount = 10; // Top 10 슬라이드 개수
   const topVisibleSlides = 3; // 한 번에 보여줄 개수

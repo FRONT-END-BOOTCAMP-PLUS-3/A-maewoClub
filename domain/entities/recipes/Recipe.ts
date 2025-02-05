@@ -6,4 +6,9 @@ export interface Recipe {
   createdAt: Date;
   updatedAt: Date;
   likeCount: number;
+  //viewCount?: number;
+}
+
+export interface TopRecipe extends Recipe {
+  likeCount: number;
 }
