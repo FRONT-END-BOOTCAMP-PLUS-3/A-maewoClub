@@ -1,6 +1,5 @@
-// import { DfRecipeCommentListUsecase } from "@/application/recipe/DfRecipeCommentListUsecase";
-// import { RecipeCommentListDto } from "@/application/recipe/dto/RecipeCommentListDto";
 import { DfRecipeCommentListUsecase } from "@/application/recipes/DfRecipeCommentListUsecase";
+import { RecipeCommentListDto } from "@/application/recipes/dto/RecipeCommentListDto";
 import { RecipeCommentImageRepository } from "@/domain/repositories/recipes/RecipeCommentImageRepository";
 import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
