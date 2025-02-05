@@ -1,6 +1,6 @@
-import { DfRecipeDetailUsecase } from "@/application/recipes/DfRecipeDetailUsecase";
-import { RecipeDto } from "@/application/recipes/dto/RecipeDto";
-import { RecipeIngredientCreateDto } from "@/application/recipes/dto/RecipeIngredientDto";
+import { DfRecipeDetailUsecase } from "@/application/recipe/DfRecipeDetailUsecase";
+import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
+import { RecipeIngredientCreateDto } from "@/application/recipe/dto/RecipeIngredientDto";
 import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
 import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
 import { RecipeIngredientRepository } from "@/domain/repositories/recipes/RecipeIngredientRepository";
@@ -12,19 +12,6 @@ import { SbRecipeIngredientRepository } from "@/infrastructure/repositories/reci
 import { SbRecipeRepository } from "@/infrastructure/repositories/recipes/SbRecipeRepository"
 import { SbRecipeStepRepository } from "@/infrastructure/repositories/recipes/SbRecipeStepRepository";
 import { NextRequest, NextResponse } from "next/server";
-
-// recipes/route
-// export async function GET() {
-//   const recipeRepository: RecipeRepository = new SbRecipeRepository();
-//   const recipeImageRepository: RecipeImageRepository = new SbRecipeImageRepository();
-//   const recipeImageUsecase: DfRecipeListUsecase = new DfRecipeListUsecase(
-//     recipeRepository,
-//     recipeImageRepository
-//   );
-//   const recipeListDto: RecipeListDto = await recipeImageUsecase.execute();
-
-//   return NextResponse.json(recipeListDto)
-// }
 
 // recipes/route/[id]
 export async function GET(id: number){

@@ -1,4 +1,4 @@
-import { RecipeImage } from "@/domain/entities/recipes/RecipeImage";
+import { RecipeImage } from "@/domain/entities/RecipeImage";
 
 
 export interface RecipeImageRepository {

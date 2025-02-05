@@ -1,5 +1,5 @@
-import { RecipeTag } from "@/domain/entities/recipes/RecipeTag";
-import { RecipeTagRepository } from "@/domain/repositories/recipes/RecipeTagRepository";
+import { RecipeTag } from "@/domain/entities/RecipeTag";
+import { RecipeTagRepository } from "@/domain/repositories/RecipeTagRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeTagRepository implements RecipeTagRepository {

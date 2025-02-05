@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import { TagContainer, TagStyle } from "./tag.style";
-import { RecipeTag } from "@/domain/entities/recipes/RecipeTag";
+import { RecipeTag } from "@/domain/entities/RecipeTag";
 
 const Tag = () => {
   /*TODO: Error fetching menus: SyntaxError: Failed to execute 'json' on 'Response': Unexpected end of JSON input

@@ -13,7 +13,7 @@ import {
 } from "./recipeCard.style";
 import { Tag, TagContainer } from "../tag/tag.style";
 import { useEffect, useState } from "react";
-import { RecipeDto } from "@/application/recipes/dto/RecipeDto";
+import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
 
 type RecipeCardProps = {
   children: React.ReactNode;

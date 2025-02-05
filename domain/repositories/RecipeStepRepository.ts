@@ -1,4 +1,4 @@
-import { RecipeStep } from "@/domain/entities/recipes/RecipeStep";
+import { RecipeStep } from "@/domain/entities/RecipeStep";
 
 export interface RecipeStepRepository {
   findAllByRecipeId(recipeId: number): Promise<RecipeStep[]>;

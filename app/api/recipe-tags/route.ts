@@ -1,4 +1,4 @@
-import { RecipeTag } from "@/domain/entities/recipes/RecipeTag";
+import { RecipeTag } from "@/domain/entities/RecipeTag";
 import { RecipeTagRepository } from "@/domain/repositories/recipes/RecipeTagRepository";
 import { SbRecipeTagRepository } from "@/infrastructure/repositories/recipes/SbRecipeTagRepository";
 import { NextResponse } from "next/server";
