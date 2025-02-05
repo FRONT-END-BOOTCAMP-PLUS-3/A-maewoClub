@@ -1,11 +1,11 @@
 import { DfRecipeDetailUsecase } from "@/application/recipe/DfRecipeDetailUsecase";
 import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
 import { RecipeIngredientCreateDto } from "@/application/recipe/dto/RecipeIngredientDto";
-import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
-import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
-import { RecipeIngredientRepository } from "@/domain/repositories/recipes/RecipeIngredientRepository";
-import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
-import { RecipeStepRepository } from "@/domain/repositories/recipes/RecipeStepRepository";
+import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
+import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
+import { RecipeIngredientRepository } from "@/domain/repositories/RecipeIngredientRepository";
+import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
+import { RecipeStepRepository } from "@/domain/repositories/RecipeStepRepository";
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { SbRecipeImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeImageRepository";
 import { SbRecipeIngredientRepository } from "@/infrastructure/repositories/recipes/SbRecipeIngredientRepository";

@@ -1,8 +1,8 @@
-import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
-import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
-import { RecipeIngredientRepository } from "@/domain/repositories/recipes/RecipeIngredientRepository";
-import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
-import { RecipeStepRepository } from "@/domain/repositories/recipes/RecipeStepRepository";
+import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
+import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
+import { RecipeIngredientRepository } from "@/domain/repositories/RecipeIngredientRepository";
+import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
+import { RecipeStepRepository } from "@/domain/repositories/RecipeStepRepository";
 
 export class DfRecipeDetailUsecase {
   constructor(

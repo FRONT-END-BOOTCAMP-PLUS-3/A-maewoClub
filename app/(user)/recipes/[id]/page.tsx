@@ -17,7 +17,7 @@ import {
   CookReview,
   reviewTestData,
 } from "@/components/recipe/recipeDetail/recipeReview/cookReview";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReviewModal } from "@/components/recipe/recipeDetail/reviewModal/reviewModal";
 import {
   SortButtonContainer,
@@ -31,6 +31,10 @@ const RecipeDetailPage = () => {
   const [reviewShowAll, setReviewShowAll] = useState(false);
   const [sortType, setSortType] = useState("points");
 
+  // data
+  const [listData, setListData] = useState([]);
+
+
   // 모달 관련 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFire, setSelectedFire] = useState<number | null>(null);
@@ -38,9 +42,25 @@ const RecipeDetailPage = () => {
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
 
+  useEffect(() => {
+    const fetchComments = async () => {
+      try{      
+        const response = await fetch(`/api/recipe-comments/id=${1}`);
+        const data = await response.json();
+        setListData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchComments();
+  },[])
+
+
   const handleReview = () => {
     setReviewShowAll(true);
   };
+
 
   const handleShowMoreSteps = () => {
     setShowAllSteps(true);
