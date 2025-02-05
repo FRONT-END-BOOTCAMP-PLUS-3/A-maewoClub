@@ -17,9 +17,10 @@ type RecipeCardProps = {
 };
 
 const RecipeCardSlide = ({ children, id }: RecipeCardProps) => {
+
   const router = useRouter();
-  const imageUrl = '/recipe.jpg'; 
-  const profileUrl = '/Dfprofile.png'
+  const imageUrl = '/recipe.jpg';
+  const profileUrl = '/Dfprofile.png';
 
   const handleCardClick = () => {
     router.push(`/recipes/${id}`);

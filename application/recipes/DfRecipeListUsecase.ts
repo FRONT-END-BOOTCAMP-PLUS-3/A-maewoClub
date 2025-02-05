@@ -9,7 +9,8 @@ import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository
 export class DfRecipeListUsecase {
   constructor(
     private repository: RecipeRepository,
-    private recipeImageRepository: RecipeImageRepository
+    private recipeImageRepository: RecipeImageRepository,
+    // private userRepository: UserRepository
   ) {}
 
   // execute();
@@ -17,14 +18,16 @@ export class DfRecipeListUsecase {
     const from = (page - 1) * 8;
     const to = page * 8 - 1;
 
-    const menus: Recipe[] = await this.repository.findAll(id, from, to);
+    const recipes: Recipe[] = await this.repository.findAll(id, from, to);
 
     const recipeDtos: RecipeDto[] = await Promise.all(
-      menus.map(async (recipe: Recipe) => {
+      recipes.map(async (recipe: Recipe) => {
         const image: RecipeImage | null =
           await this.recipeImageRepository.findDefaultImageByRecipeId(
             recipe.id
           );
+          // TODO: 해당 recipe 에 맞는 유저를 받아올 수 있도록 함. ->  return RecipeDto
+          //  await this.userRepository.findAllByRecipeId(recipe.id)
 
         return {
           ...recipe,
@@ -37,6 +40,7 @@ export class DfRecipeListUsecase {
 
     return {
       recipes: recipeDtos,
+
       totalCount,
       totalPages: Math.ceil(totalCount / 8),
       hasPreviousPage: page > 1,
