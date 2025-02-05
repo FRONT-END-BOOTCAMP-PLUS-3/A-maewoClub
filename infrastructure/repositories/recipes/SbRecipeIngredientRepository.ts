@@ -1,5 +1,5 @@
-import { RecipeIngredient } from "@/domain/entities/recipes/RecipeIngredient";
-import { RecipeIngredientRepository } from "@/domain/repositories/recipes/RecipeIngredientRepository";
+import { RecipeIngredient } from "@/domain/entities/RecipeIngredient";
+import { RecipeIngredientRepository } from "@/domain/repositories/RecipeIngredientRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeIngredientRepository implements RecipeIngredientRepository{

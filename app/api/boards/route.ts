@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BoardRepository } from "@/domain/repositories/boards/BoardRepository";
+import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepostory";
-import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
+import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 import { SbBoardImageRepository } from "@/infrastructure/repositories/boards/SbBoardImageRepository";
-import { DfBoardListUsecase } from "@/application/boards/DfBoardListUsecase";
-import { BoardListDto } from "@/application/boards/dto/BoardListDto";
+import { DfBoardListUsecase } from "@/application/board/DfBoardListUsecase";
+import { BoardListDto } from "@/application/board/dto/BoardListDto";
 
 // recipes/route
 export async function GET() {
@@ -15,6 +15,7 @@ export async function GET() {
     boardRepository,
     boardImageRepository
   );
+
   const BoardListDto: BoardListDto = await boardImageUsecase.execute();
 
   return NextResponse.json(BoardListDto);

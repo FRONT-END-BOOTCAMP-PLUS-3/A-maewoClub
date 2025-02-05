@@ -1,9 +1,10 @@
-import { BoardRepository } from "@/domain/repositories/boards/BoardRepository";
+import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { BoardListDto } from "./dto/BoardListDto";
-import { Board } from "@/domain/entities/boards/Board";
+import { Board } from "@/domain/entities/Board";
 import { BoardDto } from "./dto/BoardDto";
-import { BoardImage } from "@/domain/entities/boards/BoardImage";
-import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
+
+import { BoardImage } from "@/domain/entities/BoardImage";
+import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 
 export class DfBoardListUsecase {
   constructor(
@@ -59,3 +60,5 @@ export class DfBoardListUsecase {
     return newImages;
   }
 }
+
+// find all 함수를 구현하는 usecase가 존재하지 않아요요

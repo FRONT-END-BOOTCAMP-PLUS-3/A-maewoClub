@@ -1,31 +1,32 @@
+"use client"
+import { useEffect, useState } from "react";
 import { TagContainer, TagStyle } from "./tag.style";
-
-type Tag = {
-  id: number;
-  text: string;
-  type: string;
-};
-
-const tagData: Tag[] = [
-  { id: 1, text: "#매운맛 1호점", type: "spicy" },
-  { id: 2, text: "#달콤한 디저트", type: "sweet" },
-  { id: 3, text: "#건강한 샐러드", type: "healthy" },
-  { id: 4, text: "#한국의 맛", type: "traditional" },
-  { id: 5, text: "#매운맛 1호점", type: "spicy" },
-  { id: 6, text: "#달콤한 디저트", type: "sweet" },
-  { id: 7, text: "#건강한 샐러드", type: "healthy" },
-  { id: 8, text: "#한국의 맛", type: "traditional" },
-  { id: 9, text: "#매운맛 1호점", type: "spicy" },
-  { id: 10, text: "#달콤한 디저트", type: "sweet" },
-  { id: 11, text: "#건강한 샐러드", type: "healthy" },
-  { id: 12, text: "#한국의 맛", type: "traditional" },
-]
+import { RecipeTag } from "@/domain/entities/RecipeTag";
 
 const Tag = () => {
+  /*TODO: Error fetching menus: SyntaxError: Failed to execute 'json' on 'Response': Unexpected end of JSON input
+   at RecipeCard.useEffect.fetchRecipesd
+    이 에러해결 볼것*/
+  const [tagData, setTagData] = useState<RecipeTag[]>();
+
+  useEffect(() => {
+    const fetchTag = async () => {
+      try {
+        const res = await fetch("/api/recipe-tags");
+        const data = await res.json();
+
+        setTagData(data);
+      } catch (error) {
+        console.error("fetch 에러:", error);
+      }
+    };
+    fetchTag();
+  }, []);
+  
   return (
     <TagContainer>
-      {tagData.map((tag) => (
-        <TagStyle key={tag.id}>{tag.text}</TagStyle>
+      {tagData?.map((tag) => (
+        <TagStyle key={tag.id}>{tag.content}</TagStyle>
       ))}
     </TagContainer>
   );

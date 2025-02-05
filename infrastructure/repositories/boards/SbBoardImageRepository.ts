@@ -1,5 +1,5 @@
-import { BoardImage } from "@/domain/entities/boards/BoardImage";
-import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
+import { BoardImage } from "@/domain/entities/BoardImage";
+import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 
 import { createClient } from "@/utils/supabase/server";
 
@@ -22,7 +22,7 @@ export class SbBoardImageRepository implements BoardImageRepository {
       console.error(error);
     }
 
-    return data || [];
+    return data || [] || null;
   }
   async findAllByBoardId(id: number): Promise<BoardImage[]> {
     const supabase = await createClient();
@@ -44,11 +44,11 @@ export class SbBoardImageRepository implements BoardImageRepository {
       .from("board_image")
       .select("*")
       .eq("id", id)
-      .eq("is_default", true)
-      .single();
-
+      // .eq("is_default", true)
+      .maybeSingle();
     if (error) {
       console.error(error);
+      throw new Error("Failed to fetch default image");
     }
 
     return data || null;

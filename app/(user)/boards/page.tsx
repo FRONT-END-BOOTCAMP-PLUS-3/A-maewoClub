@@ -5,8 +5,8 @@ import Button from "@/components/board/button/button";
 import { useRouter } from "next/navigation";
 import FilterButtonGroup from "@/components/board/optionButton/optionButton";
 import Overview from "@/components/board/overview/overview";
-import { BoardDto } from "@/application/boards/dto/BoardDto";
 import PostListItem from "@/components/board/main/cardPost/cardPostItem";
+import { BoardDto } from "@/application/board/dto/BoardDto";
 
 const Page = () => {
   const router = useRouter();
@@ -18,9 +18,13 @@ const Page = () => {
     const fetchBoards = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch("/api/boards");
+        const res = await fetch("/api/boards", {
+          method: "GET",
+        });
         const data = await res.json();
-        setBoardData(data.data);
+        console.log(data);
+        setBoardData(data.boards);
+        console.log(boardData);
       } catch (error) {
         console.error("Error fetching boards:", error);
       } finally {

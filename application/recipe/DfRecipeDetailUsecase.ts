@@ -18,7 +18,7 @@ export class DfRecipeDetailUsecase {
     return await this.recipeRepository.findOne(id);
   }
 
-  // . 레시피 재료 가져오기 
+  // . 레시피 재료 가져오기
   async getRecipeIngredient(recipeId: number) {
     return await this.recipeIngredientRepository.findAllByRecipeId(recipeId);
   }

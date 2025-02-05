@@ -1,5 +1,5 @@
-import { Recipe } from "@/domain/entities/recipes/Recipe";
-import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
+import { Recipe } from "@/domain/entities/Recipe";
+import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeRepository implements RecipeRepository {
@@ -62,7 +62,7 @@ export class SbRecipeRepository implements RecipeRepository {
     return recipes || [];
   }
 
-  async createRecipe(recipe: { title: string; description: string; authorId: string }): Promise<number> {
+  async addRecipe(recipe: { title: string; description: string; userId: string }): Promise<number> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe")
@@ -73,8 +73,8 @@ export class SbRecipeRepository implements RecipeRepository {
     if (error) {
       throw new Error(error.message);
     }
-  
-    return data.id; // 생성된 레시피 ID 반환
-  }
+    console.log("recipe data의 id 입니다 :", data.id);
 
+    return data.id || 0;
+  }
 }
