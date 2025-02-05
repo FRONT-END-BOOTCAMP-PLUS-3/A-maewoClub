@@ -73,8 +73,6 @@ export class SbRecipeRepository implements RecipeRepository {
     if (error) {
       throw new Error(error.message);
     }
-  
-    return data.id; // 생성된 레시피 ID 반환
+    console.log("recipe data의 id 입니다 :", data.id);
   }
-
 }
