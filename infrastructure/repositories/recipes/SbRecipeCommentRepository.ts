@@ -27,12 +27,10 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     if (error) {
       throw new Error(error.message);
     }
-
     return {
       id: data.id,
       recipeId: data.recipe_id,
       userId: data.user_id,
-      title: data.title,
       content: data.content,
       createdAt: data.created_at,
       updatedAt: data.updated_at,
@@ -66,7 +64,6 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
           id: recipeComment.id,
           recipeId: recipeComment.recipe_id,
           userId: recipeComment.user_id,
-          title: recipeComment.title,
           content: recipeComment.content,
           createdAt: recipeComment.created_at,
           updatedAt: recipeComment.updated_at,
@@ -77,7 +74,14 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     return RecipeComment || [];
   }
 
-  async addRecipeComment(recipeComment: RecipeComment): Promise<RecipeComment> {
+  async addRecipeComment(recipeComment: {
+    recipeId: number;
+    userId: number;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
+    score: number;
+  }): Promise<number> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment")
@@ -88,7 +92,6 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     if (error) {
       throw new Error(error.message);
     }
-
     return data.id;
   }
 

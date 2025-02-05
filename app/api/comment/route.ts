@@ -16,6 +16,7 @@ export async function GET(id: number) {
     recipeCommentRepository,
     recipeCommentImageRepository
   );
+
   const recipeCommentListDto: RecipeCommentListDto =
     await recipeCommentListUsecase.execute(id);
 
@@ -44,11 +45,12 @@ export async function POST(req: NextRequest) {
     const createRecipeCommentId =
       await recipeCommentRepository.addRecipeComment({
         recipeId: body.recipeId,
+        userId: body.userId,
         content: body.content,
         createdAt: new Date(),
+        updatedAt: new Date(),
         score: body.score,
       });
-
     if (body.image?.length) {
       await Promise.all(
         body.image.map((imageUrl: string) => {
@@ -60,14 +62,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // user ID
-    // 레포지토리 따로 분리해서 저장 함수
+    const createdRecipeComment =
+      await recipeCommentImageUsecase.getRecipeComment(createRecipeCommentId);
 
-    const savedRecipeComment = await recipeCommentImageUsecase.getRecipeComment(
-      createRecipeCommentId
-    );
-
-    return NextResponse.json(savedRecipeComment, { status: 200 });
+    return NextResponse.json(createdRecipeComment, { status: 200 });
   } catch (error) {
     console.error("Error creating recipe:", error);
     return NextResponse.json(

@@ -2,6 +2,7 @@ import { RecipeComment } from "@/domain/entities/recipes/RecipeComment";
 
 export interface RecipeCommentRepository {
   count(id: number): number | PromiseLike<number>;
+
   findAll(
     keyword: number,
     from: number,
@@ -11,8 +12,10 @@ export interface RecipeCommentRepository {
 
   addRecipeComment(recipeComment: {
     recipeId: number;
+    userId: number;
     content: string;
     createdAt: Date;
+    updatedAt: Date;
     score: number;
   }): Promise<number>;
 
