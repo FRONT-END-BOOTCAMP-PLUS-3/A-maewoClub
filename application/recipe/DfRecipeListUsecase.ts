@@ -1,8 +1,8 @@
 import { RecipeListDto } from "./dto/RecipeListDto";
-import { Recipe } from "@/domain/entities/recipes/Recipe";
+import { Recipe } from "@/domain/entities/Recipe";
 import { RecipeDto } from "./dto/RecipeDto";
 
-import { RecipeImage } from "@/domain/entities/recipes/RecipeImage";
+import { RecipeImage } from "@/domain/entities/RecipeImage";
 import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
 import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
 

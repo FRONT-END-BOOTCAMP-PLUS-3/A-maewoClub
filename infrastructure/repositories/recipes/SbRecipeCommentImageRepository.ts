@@ -1,5 +1,5 @@
-import { RecipeCommentImage } from "@/domain/entities/recipes/RecipeCommentImage";
-import { RecipeCommentImageRepository } from "@/domain/repositories/recipes/RecipeCommentImageRepository";
+import { RecipeCommentImage } from "@/domain/entities/RecipeCommentImage";
+import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeCommentImageRepository

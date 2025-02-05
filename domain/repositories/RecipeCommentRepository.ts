@@ -1,4 +1,4 @@
-import { RecipeComment } from "@/domain/entities/recipes/RecipeComment";
+import { RecipeComment } from "@/domain/entities/RecipeComment";
 
 export interface RecipeCommentRepository {
   count(id: number): number | PromiseLike<number>;

@@ -1,7 +1,7 @@
-import { DfRecipeCommentListUsecase } from "@/application/recipes/DfRecipeCommentListUsecase";
-import { RecipeCommentListDto } from "@/application/recipes/dto/RecipeCommentListDto";
-import { RecipeCommentImageRepository } from "@/domain/repositories/recipes/RecipeCommentImageRepository";
-import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
+import { DfRecipeCommentListUsecase } from "@/application/recipe-comment/DfRecipeCommentListUsecase";
+import { RecipeCommentListDto } from "@/application/recipe-comment/dto/RecipeCommentListDto";
+import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
+import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { NextRequest, NextResponse } from "next/server";
@@ -16,6 +16,7 @@ export async function GET(id: number) {
     recipeCommentRepository,
     recipeCommentImageRepository
   );
+
   const recipeCommentListDto: RecipeCommentListDto =
     await recipeCommentListUsecase.execute(id);
 
@@ -50,7 +51,6 @@ export async function POST(req: NextRequest) {
         updatedAt: new Date(),
         score: body.score,
       });
-
     if (body.image?.length) {
       await Promise.all(
         body.image.map((imageUrl: string) => {

@@ -1,5 +1,5 @@
-import { RecipeImage } from "@/domain/entities/recipes/RecipeImage";
-import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
+import { RecipeImage } from "@/domain/entities/RecipeImage";
+import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeImageRepository implements RecipeImageRepository {

@@ -1,5 +1,5 @@
-import { BoardComment } from "@/domain/entities/boards/BoardComment";
-import { BoardCommentRepository } from "@/domain/repositories/boards/BoardCommentRepository";
+import { BoardComment } from "@/domain/entities/BoardComment";
+import { BoardCommentRepository } from "@/domain/repositories/BoardCommentRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbBoardCommentRepository implements BoardCommentRepository {

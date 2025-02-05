@@ -1,5 +1,5 @@
-import { RecipeStep } from "@/domain/entities/recipes/RecipeStep";
-import { RecipeStepRepository } from "@/domain/repositories/recipes/RecipeStepRepository";
+import { RecipeStep } from "@/domain/entities/RecipeStep";
+import { RecipeStepRepository } from "@/domain/repositories/RecipeStepRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeStepRepository implements RecipeStepRepository {

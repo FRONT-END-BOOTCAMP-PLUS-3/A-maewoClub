@@ -1,10 +1,10 @@
-import { BoardRepository } from "@/domain/repositories/boards/BoardRepository";
+import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { BoardListDto } from "./dto/BoardListDto";
-import { Board } from "@/domain/entities/boards/Board";
+import { Board } from "@/domain/entities/Board";
 import { BoardDto } from "./dto/BoardDto";
 
-import { BoardImage } from "@/domain/entities/boards/BoardImage";
-import { BoardImageRepository } from "@/domain/repositories/boards/BoardImageRepository";
+import { BoardImage } from "@/domain/entities/BoardImage";
+import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 
 export class DfBoardListUsecase {
   constructor(

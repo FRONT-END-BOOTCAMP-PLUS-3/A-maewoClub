@@ -1,4 +1,4 @@
-import { Recipe } from "@/domain/entities/recipes/Recipe";
+import { Recipe } from "@/domain/entities/Recipe";
 
 export interface RecipeRepository {
   get(): Promise<Recipe[]>;

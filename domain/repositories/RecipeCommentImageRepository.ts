@@ -1,4 +1,4 @@
-import { RecipeCommentImage } from "@/domain/entities/recipes/RecipeCommentImage";
+import { RecipeCommentImage } from "@/domain/entities/RecipeCommentImage";
 
 export interface RecipeCommentImageRepository {
   findAllByRecipeId(recipeId: number): Promise<RecipeCommentImage[]>;

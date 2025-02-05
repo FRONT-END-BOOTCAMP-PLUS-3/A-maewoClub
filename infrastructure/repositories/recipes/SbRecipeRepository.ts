@@ -1,5 +1,5 @@
-import { Recipe } from "@/domain/entities/recipes/Recipe";
-import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
+import { Recipe } from "@/domain/entities/Recipe";
+import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeRepository implements RecipeRepository {
@@ -74,5 +74,7 @@ export class SbRecipeRepository implements RecipeRepository {
       throw new Error(error.message);
     }
     console.log("recipe data의 id 입니다 :", data.id);
+
+    return data.id || 0;
   }
 }

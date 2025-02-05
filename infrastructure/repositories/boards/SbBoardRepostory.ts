@@ -1,5 +1,5 @@
-import { Board } from "@/domain/entities/boards/Board";
-import { BoardRepository } from "@/domain/repositories/boards/BoardRepository";
+import { Board } from "@/domain/entities/Board";
+import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbBoardRepository implements BoardRepository {
