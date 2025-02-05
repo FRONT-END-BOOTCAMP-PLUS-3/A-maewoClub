@@ -1,5 +1,5 @@
-import { DfRecipeCommentListUsecase } from "@/application/recipe/DfRecipeCommentListUsecase";
-import { RecipeCommentListDto } from "@/application/recipe/dto/RecipeCommentListDto";
+import { DfRecipeCommentListUsecase } from "@/application/recipes/DfRecipeCommentListUsecase";
+import { RecipeCommentListDto } from "@/application/recipes/dto/RecipeCommentListDto";
 import { RecipeCommentImageRepository } from "@/domain/repositories/recipes/RecipeCommentImageRepository";
 import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
@@ -62,14 +62,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // user ID
-    // 레포지토리 따로 분리해서 저장 함수
-    // create 로 변경하기
-    const savedRecipeComment = await recipeCommentImageUsecase.getRecipeComment(
-      createRecipeCommentId
-    );
+    const createdRecipeComment =
+      await recipeCommentImageUsecase.getRecipeComment(createRecipeCommentId);
 
-    return NextResponse.json(savedRecipeComment, { status: 200 });
+    return NextResponse.json(createdRecipeComment, { status: 200 });
   } catch (error) {
     console.error("Error creating recipe:", error);
     return NextResponse.json(
@@ -98,9 +94,9 @@ export async function PUT(req: NextRequest) {
       recipeCommentImageRepository
     );
 
-    await recipeCommentRepository.deleteByCommentId(body.id);
+    await recipeCommentRepository.findOne(body.id);
     if (body.image?.length) {
-      await recipeCommentImageRepository.deleteByImageId(body.id);
+      await recipeCommentImageRepository.findOne(body.id);
     }
 
     const updateRecipeCommentId =
