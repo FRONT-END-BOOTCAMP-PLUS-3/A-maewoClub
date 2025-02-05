@@ -1,5 +1,6 @@
-import { DfRecipeCommentListUsecase } from "@/application/recipe/DfRecipeCommentListUsecase";
-import { RecipeCommentListDto } from "@/application/recipe/dto/RecipeCommentListDto";
+// import { DfRecipeCommentListUsecase } from "@/application/recipe/DfRecipeCommentListUsecase";
+// import { RecipeCommentListDto } from "@/application/recipe/dto/RecipeCommentListDto";
+import { DfRecipeCommentListUsecase } from "@/application/recipes/DfRecipeCommentListUsecase";
 import { RecipeCommentImageRepository } from "@/domain/repositories/recipes/RecipeCommentImageRepository";
 import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
@@ -94,9 +95,9 @@ export async function PUT(req: NextRequest) {
       recipeCommentImageRepository
     );
 
-    await recipeCommentRepository.deleteByCommentId(body.id);
+    await recipeCommentRepository.findOne(body.id);
     if (body.image?.length) {
-      await recipeCommentImageRepository.deleteByImageId(body.id);
+      await recipeCommentImageRepository.findOne(body.id);
     }
 
     const updateRecipeCommentId =

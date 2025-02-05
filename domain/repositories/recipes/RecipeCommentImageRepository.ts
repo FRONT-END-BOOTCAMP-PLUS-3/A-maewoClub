@@ -8,4 +8,5 @@ export interface RecipeCommentImageRepository {
     imageUrl: string
   ): Promise<void>;
   deleteByImageId(id: number): Promise<void>;
+  findOne(id: number): Promise<RecipeCommentImage>;
 }
