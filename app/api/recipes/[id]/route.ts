@@ -9,37 +9,55 @@ import { RecipeStepRepository } from "@/domain/repositories/recipes/RecipeStepRe
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { SbRecipeImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeImageRepository";
 import { SbRecipeIngredientRepository } from "@/infrastructure/repositories/recipes/SbRecipeIngredientRepository";
-import { SbRecipeRepository } from "@/infrastructure/repositories/recipes/SbRecipeRepository"
+import { SbRecipeRepository } from "@/infrastructure/repositories/recipes/SbRecipeRepository";
 import { SbRecipeStepRepository } from "@/infrastructure/repositories/recipes/SbRecipeStepRepository";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(id: number){
-  const recipeRepository:RecipeRepository = new SbRecipeRepository();
-  const recipeIngredientRepository: RecipeIngredientRepository = new SbRecipeIngredientRepository();
-  const recipeStepRepository:RecipeStepRepository = new SbRecipeStepRepository();
-  const recipeCommentRepository: RecipeCommentRepository = new SbRecipeCommentRepository;
-  const recipeImageRepository: RecipeImageRepository = new SbRecipeImageRepository; 
+export async function GET(id: number) {
+  const recipeRepository: RecipeRepository = new SbRecipeRepository();
+  const recipeIngredientRepository: RecipeIngredientRepository =
+    new SbRecipeIngredientRepository();
+  const recipeStepRepository: RecipeStepRepository =
+    new SbRecipeStepRepository();
+  const recipeCommentRepository: RecipeCommentRepository =
+    new SbRecipeCommentRepository();
+  const recipeImageRepository: RecipeImageRepository =
+    new SbRecipeImageRepository();
 
-  const recipeDetailUsecase = new DfRecipeDetailUsecase(recipeRepository, recipeImageRepository, recipeIngredientRepository, recipeStepRepository, recipeCommentRepository);
+  const recipeDetailUsecase = new DfRecipeDetailUsecase(
+    recipeRepository,
+    recipeImageRepository,
+    recipeIngredientRepository,
+    recipeStepRepository,
+    recipeCommentRepository
+  );
 
-  const recipeDetailDto: RecipeDto =  await recipeDetailUsecase.getRecipeDetail(id);
+  const recipeDetailDto: RecipeDto = await recipeDetailUsecase.getRecipeDetail(
+    id
+  );
 
   return NextResponse.json(recipeDetailDto);
 }
 
-export async function POST(req: NextRequest){
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     // 필수 데이터 체크
     if (!body.title || !body.description || !body.authorId) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
     }
 
     // Repository 인스턴스 생성
     const recipeRepository: RecipeRepository = new SbRecipeRepository();
-    const recipeIngredientRepository: RecipeIngredientRepository = new SbRecipeIngredientRepository();
-    const recipeStepRepository: RecipeStepRepository = new SbRecipeStepRepository();
-    const recipeImageRepository: RecipeImageRepository = new SbRecipeImageRepository();
+    const recipeIngredientRepository: RecipeIngredientRepository =
+      new SbRecipeIngredientRepository();
+    const recipeStepRepository: RecipeStepRepository =
+      new SbRecipeStepRepository();
+    const recipeImageRepository: RecipeImageRepository =
+      new SbRecipeImageRepository();
 
     // Usecase 인스턴스 생성
     const recipeDetailUsecase = new DfRecipeDetailUsecase(
@@ -90,6 +108,9 @@ export async function POST(req: NextRequest){
     return NextResponse.json(savedRecipe, { status: 201 });
   } catch (error) {
     console.error("Error creating recipe:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
