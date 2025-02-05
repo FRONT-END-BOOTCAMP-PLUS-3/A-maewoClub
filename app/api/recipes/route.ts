@@ -100,9 +100,9 @@ export async function POST(req: NextRequest){
     }
 
     // 5️⃣ 저장된 레시피 반환
-    const savedRecipe = await recipeDetailUsecase.getRecipeDetail(createRecipeId);
+    const createRecipe = await recipeDetailUsecase.getRecipeDetail(createRecipeId);
 
-    return NextResponse.json(savedRecipe, { status: 200 });
+    return NextResponse.json(createRecipe, { status: 200 });
   } catch (error) {
     console.error("Error creating recipe:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
