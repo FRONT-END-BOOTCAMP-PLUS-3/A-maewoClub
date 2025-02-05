@@ -9,16 +9,15 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(id: number) {
   const recipeCommentRepository: RecipeCommentRepository =
     new SbRecipeCommentRepository();
-
   const recipeCommentImageRepository: RecipeCommentImageRepository =
     new SbRecipeCommentImageRepository();
 
-  const recipeCommentImageUsecase = new DfRecipeCommentListUsecase(
+  const recipeCommentListUsecase = new DfRecipeCommentListUsecase(
     recipeCommentRepository,
     recipeCommentImageRepository
   );
   const recipeCommentListDto: RecipeCommentListDto =
-    await recipeCommentImageUsecase.execute(id);
+    await recipeCommentListUsecase.execute(id);
 
   return NextResponse.json(recipeCommentListDto);
 }

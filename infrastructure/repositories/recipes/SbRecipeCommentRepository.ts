@@ -77,12 +77,7 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     return RecipeComment || [];
   }
 
-  async addRecipeComment(recipeComment: {
-    recipeId: number;
-    content: string;
-    createdAt: Date;
-    score: number;
-  }): Promise<number> {
+  async addRecipeComment(recipeComment: RecipeComment): Promise<RecipeComment> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment")
