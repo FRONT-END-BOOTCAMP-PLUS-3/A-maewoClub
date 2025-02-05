@@ -28,5 +28,6 @@ export interface RecipeCommentRepository {
   }): Promise<number>;
 
   findOne(id: number): Promise<RecipeComment>;
+
   deleteByCommentId(id: number): Promise<void>;
 }
