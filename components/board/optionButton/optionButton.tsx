@@ -4,17 +4,17 @@ import { OptionButton } from "./optionButton.style";
 
 interface OptionButtonProps {
   label: string;
-  isActive: boolean;
+  $isActive: boolean;
   onClick: () => void;
 }
 
 const FilterToggleButton = ({
   label,
-  isActive,
+  $isActive,
   onClick,
 }: OptionButtonProps) => {
   return (
-    <OptionButton isActive={isActive} onClick={onClick}>
+    <OptionButton $isActive={$isActive} onClick={onClick}>
       {label}
     </OptionButton>
   );
@@ -41,7 +41,7 @@ const FilterButtonGroup = () => {
         <FilterToggleButton
           key={label}
           label={label}
-          isActive={selected === label}
+          $isActive={selected === label}
           onClick={() => handleButtonClick(label)}
         />
       ))}

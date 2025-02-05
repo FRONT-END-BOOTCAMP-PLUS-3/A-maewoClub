@@ -19,7 +19,6 @@ const Page = () => {
       setIsLoading(true);
       try {
         const res = await fetch("/api/boards");
-        console.log(res);
         const data = await res.json();
         setBoardData(data.data);
       } catch (error) {
@@ -51,12 +50,23 @@ const Page = () => {
       ) : (
         // 데이터가 로딩이 완료되면 boards 리스트를 출력
         <ul>
-          {boardData.map((board, index) => (
-            <li key={index}>
-              <PostListItem id={board.id} />
-              {/* 예시로 title을 출력, 실제 API의 데이터 구조에 맞게 수정 */}
-            </li>
-          ))}
+          {boardData &&
+            boardData.map((board, index) => (
+              <li key={index}>
+                <PostListItem
+                  id={board.id}
+                  userId={board.userId}
+                  title={board.title}
+                  description={board.description}
+                  tagId={board.tagId}
+                  createdAt={board.createdAt}
+                  updatedAt={board.updatedAt}
+                  likeCount={board.likeCount}
+                  viewCount={board.viewCount}
+                />
+                {/* 예시로 title을 출력, 실제 API의 데이터 구조에 맞게 수정 */}
+              </li>
+            ))}
         </ul>
       )}
 
