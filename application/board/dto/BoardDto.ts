@@ -6,4 +6,6 @@ export interface BoardDto {
   tagId: number;
   createdAt: Date;
   updatedAt: Date;
+  likeCount: number;
+  viewCount: number;
 }

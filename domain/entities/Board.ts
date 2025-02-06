@@ -7,4 +7,5 @@ export interface Board {
   createdAt: Date;
   updatedAt: Date;
   likeCount: number;
+  viewCount: number;
 }

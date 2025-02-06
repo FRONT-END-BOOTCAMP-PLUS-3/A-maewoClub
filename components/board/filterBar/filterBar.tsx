@@ -11,19 +11,19 @@ const FilterBar = () => {
   return (
     <FilterBarContainer>
       <FilterButton
-        isActive={activeButton === "button1"}
+        $isActive={activeButton === "button1"}
         onClick={() => handleButtonClick("button1")}
       >
         인기순
       </FilterButton>
       <FilterButton
-        isActive={activeButton === "button2"}
+        $isActive={activeButton === "button2"}
         onClick={() => handleButtonClick("button2")}
       >
         팔로잉
       </FilterButton>
       <FilterButton
-        isActive={activeButton === "button3"}
+        $isActive={activeButton === "button3"}
         onClick={() => handleButtonClick("button3")}
       >
         My 피드

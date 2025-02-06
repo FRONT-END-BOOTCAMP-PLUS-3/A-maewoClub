@@ -15,6 +15,7 @@ export async function GET() {
     boardRepository,
     boardImageRepository
   );
+
   const BoardListDto: BoardListDto = await boardImageUsecase.execute();
 
   return NextResponse.json(BoardListDto);

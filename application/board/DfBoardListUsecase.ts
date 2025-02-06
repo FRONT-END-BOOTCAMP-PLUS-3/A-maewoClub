@@ -14,8 +14,8 @@ export class DfBoardListUsecase {
 
   // execute();
   async execute(id: number = 1, page: number = 1): Promise<BoardListDto> {
-    const from = (page - 1) * 8;
-    const to = page * 8 - 1;
+    const from = (page - 1) * 10;
+    const to = page * 10 - 1;
 
     const boards: Board[] = await this.repository.findAll(id, from, to);
 
