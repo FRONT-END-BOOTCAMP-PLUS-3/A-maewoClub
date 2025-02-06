@@ -32,14 +32,27 @@ export class SbRecipeStepRepository implements RecipeStepRepository {
     return data || null;
   }
 
-  async addStep(recipeId: number, stepNumber: number, description: string) {
+  async addStep(recipeId: number, stepNumber: number, steps: RecipeStep) {
     const supabase = await createClient();
     const { error } = await supabase
       .from("recipe_step")
-      .insert([{ recipe_id: recipeId, step_number: stepNumber, description }]);
+      .insert([{ id: stepNumber, recipe_id: recipeId, steps }]);
   
     if (error) {
       throw new Error(error.message);
     }
+  }
+
+  async deleteStepsByRecipeId(recipeId: number): Promise<void> {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_step")
+      .delete()
+      .eq("id", recipeId)
+  
+    if (error) {
+      throw new Error("step delete 중에 에러입니다~~" + error.message);
+    }
+    
   }
 }

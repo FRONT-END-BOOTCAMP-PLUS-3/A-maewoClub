@@ -1,13 +1,10 @@
 import { Recipe } from "@/domain/entities/Recipe";
 
 export interface RecipeRepository {
-  get(): Promise<Recipe[]>;
   count(): number | PromiseLike<number>;
   findOne(id: number): Promise<Recipe>;
   findAll(keyword: number, from: number, to: number): Promise<Recipe[]>;
-  addRecipe(recipe: {
-    title: string;
-    description: string;
-    userId: string;
-  }): Promise<number>;
+  addRecipe(recipe: Recipe[]): Promise<number>;
+  deleteRecipe(recipeId: number): void;
+  updateRecipe(recipeId:number, { title, description, userId }: Recipe):Promise<number>;
 }

@@ -18,7 +18,6 @@ export const Container = styled.div`
   cursor: pointer;
 `
 
-
 export const TextContainer = styled.div`
   padding: 5px 10px;
   background-color: #fff;

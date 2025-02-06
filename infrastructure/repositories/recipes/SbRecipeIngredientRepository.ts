@@ -17,7 +17,7 @@ export class SbRecipeIngredientRepository implements RecipeIngredientRepository{
     return data || [];
   }
 
-  async findDefaultIngredientByRecipeId(id: number): Promise<RecipeIngredient> {
+  async findDefaultByRecipeId(id: number): Promise<RecipeIngredient> {
     const supabase = await createClient();
        const { data, error } = await supabase
          .from("recipe_ingredient")
@@ -32,7 +32,7 @@ export class SbRecipeIngredientRepository implements RecipeIngredientRepository{
        return data || null;
   }
 
-  async addIngredient(recipeId: number, ingredient: { name: string; amount: string }){
+  async addIngredient(recipeId: number, ingredient: RecipeIngredient){
     const supabase = await createClient();
     const { error } = await supabase
       .from("recipe_ingredient")
@@ -40,6 +40,18 @@ export class SbRecipeIngredientRepository implements RecipeIngredientRepository{
   
     if (error) {
       throw new Error(error.message);
+    }
+  }
+
+  async deleteIngredientsByRecipeId(recipeId: number): Promise<void> {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_ingredient")
+      .delete()
+      .eq("id", recipeId)
+  
+    if (error) {
+      throw new Error("ingredient delete 중에 error 입니다~" + error.message);
     }
   }
 

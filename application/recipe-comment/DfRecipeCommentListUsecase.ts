@@ -3,8 +3,8 @@ import { RecipeCommentDto } from "./dto/RecipeCommentDto";
 import { RecipeCommentListDto } from "./dto/RecipeCommentListDto";
 
 import { RecipeComment } from "@/domain/entities/RecipeComment";
-import { RecipeCommentImageRepository } from "@/domain/repositories/recipes/RecipeCommentImageRepository";
-import { RecipeCommentRepository } from "@/domain/repositories/recipes/RecipeCommentRepository";
+import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
+import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
 
 export class DfRecipeCommentListUsecase {
   constructor(

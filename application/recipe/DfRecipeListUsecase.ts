@@ -3,17 +3,15 @@ import { Recipe } from "@/domain/entities/Recipe";
 import { RecipeDto } from "./dto/RecipeDto";
 
 import { RecipeImage } from "@/domain/entities/RecipeImage";
-import { RecipeImageRepository } from "@/domain/repositories/recipes/RecipeImageRepository";
-import { RecipeRepository } from "@/domain/repositories/recipes/RecipeRepository";
+import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
+import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
 
 export class DfRecipeListUsecase {
   constructor(
     private repository: RecipeRepository,
     private recipeImageRepository: RecipeImageRepository,
-    // private userRepository: UserRepository
   ) {}
 
-  // execute();
   async execute(id: number = 1, page: number = 1): Promise<RecipeListDto> {
     const from = (page - 1) * 8;
     const to = page * 8 - 1;
@@ -26,9 +24,7 @@ export class DfRecipeListUsecase {
           await this.recipeImageRepository.findDefaultImageByRecipeId(
             recipe.id
           );
-          // TODO: 해당 recipe 에 맞는 유저를 받아올 수 있도록 함. ->  return RecipeDto
-          //  await this.userRepository.findAllByRecipeId(recipe.id)
-
+         
         return {
           ...recipe,
           img: image ? image.photoUrl : "default.svg",

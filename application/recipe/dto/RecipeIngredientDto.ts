@@ -4,8 +4,3 @@ export interface RecipeIngredientDto {
   ingredientName: string,
   ingredientAmount: string,
 }
-
-export interface RecipeIngredientCreateDto {
-  name: string,
-  amount: string,
-}
