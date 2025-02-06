@@ -7,12 +7,14 @@ import FilterButtonGroup from "@/components/board/optionButton/optionButton";
 import Overview from "@/components/board/overview/overview";
 import PostListItem from "@/components/board/main/cardPost/cardPostItem";
 import { BoardDto } from "@/application/board/dto/BoardDto";
+import Pagination from "@/components/recipe/cardPaging/cardPaging";
 
 const Page = () => {
   const router = useRouter();
-
   const [boardData, setBoardData] = useState<BoardDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(8);
 
   useEffect(() => {
     const fetchBoards = async () => {
@@ -33,6 +35,16 @@ const Page = () => {
     fetchBoards();
   }, []);
 
+  // 페이지네이션 로직
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = boardData.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(boardData.length / postsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   const handleCreate = () => {
     router.push("/boards/create");
   };
@@ -41,7 +53,6 @@ const Page = () => {
     <>
       <Overview />
       <FilterBar />
-
       <div style={{ display: "flex", gap: "15px" }}>
         <FilterButtonGroup />
       </div>
@@ -49,10 +60,10 @@ const Page = () => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <ul>
-          {boardData &&
-            boardData.map((board, index) => (
-              <li key={index}>
+        <>
+          <ul>
+            {currentPosts.map((board, index) => (
+              <li key={board.id || index}>
                 <PostListItem
                   id={board.id}
                   userId={board.userId}
@@ -66,7 +77,14 @@ const Page = () => {
                 />
               </li>
             ))}
-        </ul>
+          </ul>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
 
       <div
