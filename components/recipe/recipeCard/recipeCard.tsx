@@ -19,34 +19,6 @@ type RecipeCardProps = {
 };
 
 const RecipeCard = ({ children, id }: RecipeCardProps) => {
-  // const [listData, setListData] = useState<RecipeDto[]>();
-  // const [isLoading, setIsLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const fetchRecipes = async () => {
-  //     setIsLoading(true);
-
-  //     try {
-  //       const res = await fetch("/api/recipes", {
-  //         method: "GET",
-  //       })
-  //       const data = await res.json();
-  //       setListData(data);
-  //       console.log("recipe card data: ", data);
-
-  //     } catch (error) {
-  //       console.error("Error fetching recipes:", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   fetchRecipes();
-  // }, []);
-
-  // if(isLoading)(
-  //   <div>loading 중입니다...</div>
-  // )
-
   const router = useRouter();
   const imageUrl = "/recipe.jpg";
   const profileUrl = "/Dfprofile.png";

@@ -32,7 +32,10 @@ export async function POST(req: NextRequest){
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const { recipeRepository, recipeIngredientRepository, recipeStepRepository, recipeImageRepository } = createRepositories();
+    const recipeRepository:RecipeRepository = new SbRecipeRepository;
+    const recipeIngredientRepository:RecipeIngredientRepository = new SbRecipeIngredientRepository;
+    const recipeStepRepository:RecipeStepRepository = new SbRecipeStepRepository;
+    const  recipeImageRepository:RecipeImageRepository = new SbRecipeImageRepository;
 
     const recipeDetailUsecase = new DfRecipeDetailUsecase(
       recipeRepository,
@@ -41,7 +44,8 @@ export async function POST(req: NextRequest){
       recipeStepRepository
     );
 
-    const createRecipeId = await recipeRepository.addRecipe(recipe: Recipe[]);
+    const createRecipeId = await recipeRepository.addRecipe(id);
+
     if (body.ingredients?.length) {
       await Promise.all(
         body.ingredients.map((ingredient: RecipeIngredientDto) =>
