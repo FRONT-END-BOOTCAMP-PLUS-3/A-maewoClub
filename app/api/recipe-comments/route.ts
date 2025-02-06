@@ -1,4 +1,5 @@
 import { DfRecipeCommentListUsecase } from "@/application/recipe-comment/DfRecipeCommentListUsecase";
+import { RecipeCommentDto } from "@/application/recipe-comment/dto/RecipeCommentDto";
 import { RecipeCommentListDto } from "@/application/recipe-comment/dto/RecipeCommentListDto";
 import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
 import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
@@ -6,7 +7,8 @@ import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/re
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(id: number) {
+// recipe-comments/route/[id]
+export async function GET(id : number) {
   const recipeCommentRepository: RecipeCommentRepository =
     new SbRecipeCommentRepository();
   const recipeCommentImageRepository: RecipeCommentImageRepository =
@@ -17,8 +19,12 @@ export async function GET(id: number) {
     recipeCommentImageRepository
   );
 
-  const recipeCommentListDto: RecipeCommentListDto =
-    await recipeCommentListUsecase.execute(id);
+  // const recipeCommentListDto: RecipeCommentListDto =
+  //   await recipeCommentListUsecase.execute(id);
+  
+  // TODO : 임시
+  const recipeCommentListDto: RecipeCommentDto = 
+    await recipeCommentListUsecase.getRecipeAllCommentListTest(id);
 
   return NextResponse.json(recipeCommentListDto);
 }
@@ -137,6 +143,7 @@ export async function Delete(id: number) {
     new SbRecipeCommentRepository();
   const recipeCommentImageRepository: RecipeCommentImageRepository =
     new SbRecipeCommentImageRepository();
+
   const recipeCommentImageUsecase: DfRecipeCommentListUsecase =
     new DfRecipeCommentListUsecase(
       recipeCommentRepository,

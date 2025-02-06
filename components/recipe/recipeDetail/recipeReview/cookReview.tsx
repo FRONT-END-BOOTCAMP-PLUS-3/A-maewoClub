@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   CookReviewContainer,
   CookReviewCard,
@@ -7,51 +8,40 @@ import {
 
 import CookReviewUserDetails from "./cookReviewUserDetails";
 
-export const reviewTestData = [
-  {
-    userName: "순대위장",
-    createdAt: "2023-10-01 03:15:30",
-    points: 5.0,
-    description:
-      "이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!이 요리는 정말 맛있어요!",
-  },
-  {
-    userName: "아짱매워",
-    createdAt: "2023-10-02 12:45:00",
-    points: 4.5,
-    description: "헐 매워요!",
-  },
-  {
-    userName: "아짱매워",
-    createdAt: "2023-10-03 12:45:00",
-    points: 3.5,
-    description: "와우 매워요!",
-  },
-  {
-    userName: "아짱매워",
-    createdAt: "2023-10-03 12:45:00",
-    points: 3.5,
-    description: "정말 매워요!",
-  },
-];
-
-type ReviewData = {
-  userName: string;
-  createdAt: string;
-  points: number;
-  description: string;
-};
-
-interface CookReviewProps {
-  review: ReviewData[];
+type CookReviewProps = {
+  recipeId: number;
 }
 
-export const CookReview = ({ review }: CookReviewProps) => {
+
+export const CookReview = ({ recipeId }: CookReviewProps) => {
+  const [reviewData, setReviewData] = useState([]);
+
   const userImgUrl = "/Dfprofile.png";
+
+
+
+  // GET
+  useEffect(() => {
+  const getComments = async (id: number) => {
+    try {
+      const res = await fetch(`/api/recipe-comments?recipeId=${id}`);
+      const data = await res.json();
+      console.log("comment : ", data);
+      setReviewData(data.recipeComments);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  getComments(recipeId);
+  }, [recipeId]);
+
+
+  
 
   return (
     <>
-      {review.map((data, index) => (
+     {reviewData.map((data, index) => (
         <CookReviewContainer key={index}>
           <CookReviewCardContainer>
             <CookReviewCard>
@@ -65,15 +55,16 @@ export const CookReview = ({ review }: CookReviewProps) => {
               )}
 
               <CookReviewUserDetails
-                userName={data.userName}
+                userName={data.userId}
                 createdAt={data.createdAt}
-                points={data.points}
-                description={data.description}
+                points={data.score}
+                description={data.content}
               />
             </CookReviewCard>
           </CookReviewCardContainer>
         </CookReviewContainer>
       ))}
+     
     </>
   );
 };

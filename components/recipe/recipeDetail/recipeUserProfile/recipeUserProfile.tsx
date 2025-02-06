@@ -18,6 +18,7 @@ export const RecipeUserProfile = () => {
   const cardTitle = "순쾌위파 떡볶이 만들기";
   const userDescription =
     "순간의 쾌락을 위해 위장을 파괴해보자! 떡볶이와 불닭소스 그리고 청양닭소스 그리고 청양고닭소스 그리고 청양고고추";
+  
 
   return (
     <ProfileContainer>

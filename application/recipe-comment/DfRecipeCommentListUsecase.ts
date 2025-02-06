@@ -1,4 +1,3 @@
-// 댓글, 댓글 이미지, 페이지네이션 처리
 import { RecipeCommentDto } from "./dto/RecipeCommentDto";
 import { RecipeCommentListDto } from "./dto/RecipeCommentListDto";
 
@@ -12,6 +11,7 @@ export class DfRecipeCommentListUsecase {
     private recipeCommentImageRepository: RecipeCommentImageRepository
   ) {}
 
+  
   async getRecipeComment(id: number) {
     return await this.recipeCommentRepository.findOne(id);
   }
@@ -20,10 +20,16 @@ export class DfRecipeCommentListUsecase {
     await this.recipeCommentImageRepository.deleteByImageId(id);
   }
 
+  async getRecipeAllCommentListTest(id: number) {
+    await this.recipeCommentRepository.findCommentAll(id);
+    await this.recipeCommentImageRepository.findAllByRecipeId(id);
+  }
+
   async execute(
     id: number = 1,
     page: number = 1
   ): Promise<RecipeCommentListDto> {
+
     const from = (page - 1) * 8;
     const to = page * 8 - 1;
 

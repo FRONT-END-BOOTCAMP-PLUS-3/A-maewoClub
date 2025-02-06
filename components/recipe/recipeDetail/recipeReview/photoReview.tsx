@@ -4,7 +4,6 @@ import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
-
 import {
   PhotoReviewContainer,
   PhotoContainer,
@@ -24,7 +23,9 @@ export const PhotoReview: React.FC<PhotoReviewProps> = ({
   nextPhotos,
   prevPhotos,
 }) => {
+
   const photoUrl = "/recipe.jpg";
+
 
   return (
     <PhotoReviewContainer>
@@ -32,9 +33,8 @@ export const PhotoReview: React.FC<PhotoReviewProps> = ({
         <MdKeyboardDoubleArrowLeft color="white" />
       </NavigationButton>
       <PhotoContainer>
-        {Array.from({ length: 10 }).map((_, index) => (
+   
           <PhotoWrapper
-            key={index}
             style={{
               transform: `translateX(-${currentPage * 100}%)`,
               transition: "transform 0.3s ease-in-out",
@@ -42,12 +42,12 @@ export const PhotoReview: React.FC<PhotoReviewProps> = ({
           >
             <Photo
               src={photoUrl}
-              alt={`foodPhoto${index + 1}`}
+              alt={`foodPhoto`}
               fill
               sizes="10rem"
             />
           </PhotoWrapper>
-        ))}
+    
       </PhotoContainer>
       <NavigationButton onClick={nextPhotos}>
         <MdKeyboardDoubleArrowRight color="white" />
