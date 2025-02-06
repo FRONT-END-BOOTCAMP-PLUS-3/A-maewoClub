@@ -9,19 +9,17 @@ import {
   PostTitle,
 } from "./cardPost.style";
 import { BoardDto } from "@/application/board/dto/BoardDto";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const PostListItem = (post: BoardDto) => {
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const handleDetail = () => {
-  //   router.push(`boards/${post.id}`);
-  // };
+  const handleDetail = () => {
+    router.push(`boards/${post.id}`);
+  };
 
   return (
-    <PostStyle
-    // onClick={handleDetail}
-    >
+    <PostStyle onClick={handleDetail}>
       <PostImage>{/* <img src={post.image} alt={post.title} /> */}</PostImage>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <PostContent>
