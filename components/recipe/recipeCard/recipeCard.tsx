@@ -11,9 +11,7 @@ import {
   UserContainer,
   UserProfileImage,
 } from "./recipeCard.style";
-import { Tag, TagContainer } from "../tag/tag.style";
-import { useEffect, useState } from "react";
-import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
+import { TagContainer, Tag } from "../tag/tag.style";
 
 type RecipeCardProps = {
   children: React.ReactNode;
@@ -21,30 +19,37 @@ type RecipeCardProps = {
 };
 
 const RecipeCard = ({ children, id }: RecipeCardProps) => {
-  const [listData, setListData] = useState<RecipeDto>();
-  const [isLoading, setIsLoading] = useState(true);
+  // const [listData, setListData] = useState<RecipeDto[]>();
+  // const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      setIsLoading(true);
+  // useEffect(() => {
+  //   const fetchRecipes = async () => {
+  //     setIsLoading(true);
 
-      try {
-        const res = await fetch("/api/recipes");
-        const data = await res.json();
-        setListData(data);
-      } catch (error) {
-        console.error("Error fetching menus:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchRecipes();
-  }, []);
+  //     try {
+  //       const res = await fetch("/api/recipes", {
+  //         method: "GET",
+  //       })
+  //       const data = await res.json();
+  //       setListData(data);
+  //       console.log("recipe card data: ", data);
+
+  //     } catch (error) {
+  //       console.error("Error fetching recipes:", error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchRecipes();
+  // }, []);
+
+  // if(isLoading)(
+  //   <div>loading 중입니다...</div>
+  // )
 
   const router = useRouter();
   const imageUrl = "/recipe.jpg";
   const profileUrl = "/Dfprofile.png";
-  const tag = "#매운 음식 1단계";
 
   const handleCardClick = () => {
     router.push(`/recipes/${id}`);
@@ -52,14 +57,12 @@ const RecipeCard = ({ children, id }: RecipeCardProps) => {
 
   return (
     <Container onClick={handleCardClick}>
-      {/* TODO: recipe DTO 정제 부분 다시 수정해야함.  */}
       {imageUrl && (
         <FoodImage src={imageUrl} alt="Avatar" width={100} height={100} />
       )}
       <TextContainer>
         <TagContainer>
-          {/* -- 해당 태그만 가져오는 로직 넣을 것 -- */}
-          <Tag></Tag>
+          <Tag key={id}>{id}</Tag>
         </TagContainer>
         <Description>{children}</Description>
         <UserContainer>

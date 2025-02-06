@@ -45,7 +45,7 @@ export class DfBoardListUsecase {
 
   async addImageToBoard(
     boardId: number,
-    userId: number,
+    userId: string,
     images: BoardImage[]
   ): Promise<BoardImage[]> {
     const newImages: BoardImage[] = images.map((image) => ({

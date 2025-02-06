@@ -3,17 +3,23 @@ import { RecipeTagRepository } from "@/domain/repositories/RecipeTagRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeTagRepository implements RecipeTagRepository {
-  //TODO: api 요청 에러 res.json 부분 에러임. -> 고치자.
   async findAll(): Promise<RecipeTag[]> {
-   const supabase = await createClient();  
-   const { data, error } = await supabase
-    .from('recipe_tag')
-    .select('*')
+    const supabase = await createClient();
+    console.log("Supabase Client 연결 확인 :", supabase);
+    const { data, error } = await supabase
+      .from("recipe_tag")
+      .select("*");
 
-   if (error) {
-    console.error(error);
-   }
+    console.log("Fetched Data 확인용:", data);
 
-    return data || [];
+    if (error) {
+      console.error("Supabase 에러:", {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+      });
+    }
+
+    return data || ['h'];
   }
 }
