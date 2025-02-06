@@ -9,6 +9,7 @@ import {
   SocialName,
 } from "./login.style";
 import { RiKakaoTalkFill } from "react-icons/ri";
+import LoginForm from "./loginBox/loginForm";
 
 type LoginModalProps = {
   onClose: () => void;
@@ -17,9 +18,6 @@ type LoginModalProps = {
 const googleLogin = () => {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/auth`;
-
-  console.log(process.env.NEXT_PUBLIC_SITE_URL);
-  console.log(redirectUri);
 
   const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20profile%20email`;
 
@@ -42,6 +40,7 @@ export const Login = ({ onClose }: LoginModalProps) => {
     <>
       <ModalContainer>
         <h2>로그인 / 회원가입</h2>
+        <LoginForm />
         <LoginBox
           style={{ backgroundColor: "#FEE500" }}
           onClick={KakaoLogin}
