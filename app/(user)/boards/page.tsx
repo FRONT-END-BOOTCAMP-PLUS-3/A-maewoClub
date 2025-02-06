@@ -22,9 +22,7 @@ const Page = () => {
           method: "GET",
         });
         const data = await res.json();
-        console.log(data);
         setBoardData(data.boards);
-        console.log(boardData);
       } catch (error) {
         console.error("Error fetching boards:", error);
       } finally {
@@ -48,11 +46,9 @@ const Page = () => {
         <FilterButtonGroup />
       </div>
 
-      {/* 로딩 상태일 경우 로딩 텍스트 출력 */}
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        // 데이터가 로딩이 완료되면 boards 리스트를 출력
         <ul>
           {boardData &&
             boardData.map((board, index) => (
@@ -68,7 +64,6 @@ const Page = () => {
                   likeCount={board.likeCount}
                   viewCount={board.viewCount}
                 />
-                {/* 예시로 title을 출력, 실제 API의 데이터 구조에 맞게 수정 */}
               </li>
             ))}
         </ul>

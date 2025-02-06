@@ -60,5 +60,3 @@ export class DfBoardListUsecase {
     return newImages;
   }
 }
-
-// find all 함수를 구현하는 usecase가 존재하지 않아요요

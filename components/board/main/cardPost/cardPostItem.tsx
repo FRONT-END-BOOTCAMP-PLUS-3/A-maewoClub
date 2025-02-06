@@ -8,7 +8,7 @@ import {
   PostText,
   PostTitle,
 } from "./cardPost.style";
-import { BoardDto } from "@/application/boards/dto/BoardDto";
+import { BoardDto } from "@/application/board/dto/BoardDto";
 // import { useRouter } from "next/navigation";
 
 const PostListItem = (post: BoardDto) => {
