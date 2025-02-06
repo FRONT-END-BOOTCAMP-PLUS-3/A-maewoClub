@@ -6,11 +6,14 @@ export class SbBoardRepository implements BoardRepository {
   async count(): Promise<number> {
     const supabase = await createClient();
     const { count, error } = await supabase
-      .from("board")
+      .from("board_post")
       .select("*", { count: "exact", head: true });
 
     if (error) {
-      throw new Error(error.message);
+      console.error("유저 생성 중 오류 발생:", {
+        message: error.message,
+        code: error.code,
+      });
     }
 
     return count || 0;
@@ -19,9 +22,9 @@ export class SbBoardRepository implements BoardRepository {
   async findAll(keyword: number, from: number, to: number): Promise<Board[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from("board")
+      .from("board_post")
       .select("*")
-      .ilike("title", `%${keyword}%`)
+      // .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
       .range(from, to);
 
@@ -40,6 +43,7 @@ export class SbBoardRepository implements BoardRepository {
         createdAt: board.created_at,
         updatedAt: board.updated_at,
         likeCount: board.like_count,
+        viewCount: board.view_count,
       };
     });
     return boards || [];

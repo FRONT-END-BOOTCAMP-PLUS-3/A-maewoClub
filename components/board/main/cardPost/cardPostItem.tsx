@@ -8,37 +8,10 @@ import {
   PostText,
   PostTitle,
 } from "./cardPost.style";
+import { BoardDto } from "@/application/board/dto/BoardDto";
 import { useRouter } from "next/navigation";
 
-interface Post {
-  image: string;
-  title: string;
-  content: string;
-  nickname: string;
-  id: number;
-  comment: number;
-  view: number;
-  heart: number;
-}
-
-interface PostListItemProps {
-  post: Post;
-}
-
-const mock: Post = {
-  image:
-    "https://blog.kakaocdn.net/dn/93m8M/btsEEGoFOG2/eKqSbvDh3anRKecus98YRk/img.jpg",
-  title: "뜩뻑이 믁어염",
-  content:
-    "매운맛이 아니라 고통의 맛을 판매하는 거라면 성공적! 하지만 나의 평화로운 식사.",
-  nickname: "빨떡1짱",
-  id: 3,
-  comment: 33,
-  view: 33,
-  heart: 33,
-};
-
-const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
+const PostListItem = (post: BoardDto) => {
   const router = useRouter();
 
   const handleDetail = () => {
@@ -47,30 +20,21 @@ const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
 
   return (
     <PostStyle onClick={handleDetail}>
-      <PostImage>
-        <img
-          src={post.image}
-          alt={post.title}
-        />
-      </PostImage>
+      <PostImage>{/* <img src={post.image} alt={post.title} /> */}</PostImage>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <PostContent>
           <PostTitle>{post.title}</PostTitle>
-          <PostPhrase>{post.content}</PostPhrase>
-          <PostText>{post.nickname}</PostText>
+          <PostPhrase>{post.description}</PostPhrase>
+          <PostText>{post.userId}</PostText>
         </PostContent>
         <PostText style={{ marginTop: "52px", marginBottom: "11px" }}>
-          <span>댓글: {post.comment}</span>
-          <span>조회수: {post.view}</span>
-          <span>하트: {post.heart} </span>
+          {/* <span>댓글: {post.comment}</span> */}
+          <span>조회수: {post.likeCount}</span>
+          <span>하트: {post.viewCount} </span>
         </PostText>
       </div>
     </PostStyle>
   );
 };
 
-const CardPostListItemTest = () => {
-  return <PostListItem post={mock} />;
-};
-
-export default CardPostListItemTest;
+export default PostListItem;

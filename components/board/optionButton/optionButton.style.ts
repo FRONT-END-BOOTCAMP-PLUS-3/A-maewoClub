@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const OptionButton = styled.button<{ isActive: boolean }>`
+const OptionButton = styled.button<{ $isActive: boolean }>`
   display: flex;
   padding: 5px 10px;
   flex-direction: column;
@@ -16,9 +16,9 @@ const OptionButton = styled.button<{ isActive: boolean }>`
   width: auto;
   min-width: 55px;
 
-  background: ${({ isActive }) =>
-    isActive ? "var(--point_red, #E50913)" : "#FFF"};
-  color: ${({ isActive }) => (isActive ? "#FFF" : "#000")};
+  background: ${({ $isActive }) =>
+    $isActive ? "var(--point_red, #E50913)" : "#FFF"};
+  color: ${({ $isActive }) => ($isActive ? "#FFF" : "#000")};
   &:hover {
     opacity: 0.8;
   }
