@@ -1,7 +1,8 @@
 import { DfRecipeDetailUsecase } from "@/application/recipe/DfRecipeDetailUsecase";
 import { DfRecipeListUsecase } from "@/application/recipe/DfRecipeListUsecase";
+import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
 import { RecipeIngredientDto } from "@/application/recipe/dto/RecipeIngredientDto";
-import { RecipeListDto } from "@/application/recipe/dto/RecipeListDto";
+import { RecipeUpdateDto } from "@/application/recipe/dto/RecipeUpdateDto";
 import { RecipeStep } from "@/domain/entities/RecipeStep";
 import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
 import { RecipeIngredientRepository } from "@/domain/repositories/RecipeIngredientRepository";
@@ -20,22 +21,23 @@ export async function GET(){
 
   const recipeListUsecase = new DfRecipeListUsecase(recipeRepository, recipeImageRepository );
 
-  const recipeListDto: RecipeListDto =  await recipeListUsecase.execute();
-  return NextResponse.json(recipeListDto);
+  const { recipes }: { recipes: RecipeDto[] } = await recipeListUsecase.findAllRecipes();
+  return NextResponse.json(recipes);
 }
 
-export async function POST(req: NextRequest){
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+
     // 필수 데이터 체크
     if (!body.title || !body.description || !body.userId) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const recipeRepository:RecipeRepository = new SbRecipeRepository;
-    const recipeIngredientRepository:RecipeIngredientRepository = new SbRecipeIngredientRepository;
-    const recipeStepRepository:RecipeStepRepository = new SbRecipeStepRepository;
-    const  recipeImageRepository:RecipeImageRepository = new SbRecipeImageRepository;
+    const recipeRepository: RecipeRepository = new SbRecipeRepository();
+    const recipeIngredientRepository: RecipeIngredientRepository = new SbRecipeIngredientRepository();
+    const recipeStepRepository: RecipeStepRepository = new SbRecipeStepRepository();
+    const recipeImageRepository: RecipeImageRepository = new SbRecipeImageRepository();
 
     const recipeDetailUsecase = new DfRecipeDetailUsecase(
       recipeRepository,
@@ -44,8 +46,14 @@ export async function POST(req: NextRequest){
       recipeStepRepository
     );
 
-    const createRecipeId = await recipeRepository.addRecipe(id);
+    // createRecipe
+    const createRecipeId = await recipeRepository.addRecipe({
+      title: body.title,
+      description: body.description,
+      userId: body.userId,
+    });
 
+    // addIngredients
     if (body.ingredients?.length) {
       await Promise.all(
         body.ingredients.map((ingredient: RecipeIngredientDto) =>
@@ -53,6 +61,8 @@ export async function POST(req: NextRequest){
         )
       );
     }
+
+    // addStep
     if (body.steps?.length) {
       await Promise.all(
         body.steps.map((step: RecipeStep, index: number) =>
@@ -60,6 +70,8 @@ export async function POST(req: NextRequest){
         )
       );
     }
+
+    // create Image
     if (body.images?.length) {
       await Promise.all(
         body.images.map((photoUrl: string) =>
@@ -67,6 +79,8 @@ export async function POST(req: NextRequest){
         )
       );
     }
+
+    // 생성된 레시피 상세 정보 반환
     const createRecipe = await recipeDetailUsecase.getRecipeDetail(createRecipeId);
 
     return NextResponse.json(createRecipe, { status: 200 });
@@ -78,7 +92,7 @@ export async function POST(req: NextRequest){
 
 export async function PUT(req: NextRequest) {
   try {
-    const body = await req.json();
+    const body: RecipeUpdateDto = await req.json();
     const { recipeId, title, description, userId, ingredients, steps, images, replaceData } = body;
     // 필수 값 있는지 확인. 
     if (!recipeId || !title || !description || !userId) {
@@ -96,17 +110,16 @@ export async function PUT(req: NextRequest) {
       recipeStepRepository
     );
 
-    // 🟢 레시피 기본 정보 업데이트
-    await recipeRepository.updateRecipe(recipeId, { title, description, userId });
-
-    // 기존 데이터 삭제 시에
+  // 레시피 기본 정보 업데이트
+await recipeRepository.updateRecipe(body);
+    // replace
     if (replaceData) {
       await recipeIngredientRepository.deleteIngredientsByRecipeId(recipeId);
       await recipeStepRepository.deleteStepsByRecipeId(recipeId);
       await recipeImageRepository.deleteImagesByRecipeId(recipeId);
     }
 
-    // 🟢 재료 추가
+    // addIngredients
     if (ingredients?.length) {
       await Promise.all(
         ingredients.map((ingredient: RecipeIngredientDto) =>
@@ -115,19 +128,20 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    // 🟢 조리 단계 추가
+    // addStep
     if (steps?.length) {
       const existingSteps = replaceData ? [] : await recipeStepRepository.getStepsByRecipeId(recipeId);
       const startIndex = existingSteps.length + 1;
 
       await Promise.all(
-        steps.map((step: string, index: number) =>
-          recipeStepRepository.addStep(recipeId, startIndex + index, step)
+        steps.map((steps: RecipeStep, index: number) =>
+          recipeStepRepository.addStep(recipeId, startIndex + index, steps)
         )
       );
     }
 
-    // 🟢 이미지 추가
+    // addImages
+    // 단일 이미지, 복수 이미지 여부를 special type으로 줌.
     if (images?.length) {
       await Promise.all(
         images.map((photoUrl: string) =>
@@ -136,7 +150,7 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    // ✅ 업데이트된 레시피 상세 정보 반환
+    // update recipe
     const updatedRecipe = await recipeDetailUsecase.getRecipeDetail(recipeId);
     return NextResponse.json(updatedRecipe, { status: 200 });
 

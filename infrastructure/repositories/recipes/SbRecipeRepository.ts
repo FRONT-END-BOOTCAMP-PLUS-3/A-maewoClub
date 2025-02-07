@@ -1,14 +1,36 @@
+import { RecipeCreateDto } from "@/application/recipe/dto/RecipeCreateDto";
+import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
+import { RecipeUpdateDto } from "@/application/recipe/dto/RecipeUpdateDto";
 import { Recipe } from "@/domain/entities/Recipe";
 import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
 import { createClient } from "@/utils/supabase/server";
 
-export class SbRecipeRepository implements RecipeRepository {
-  /*
-  get 함수 -> find로 명명
-  push 함수 -> add 로 명명
-  put 수정 -> update 로 명명
-  delete 삭제 -> delete 로 명명 
-  */
+export class SbRecipeRepository implements RecipeRepository{
+  async findAllRecipes(): Promise<RecipeDto[]> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+    .from("recipe")
+    .select("*")
+
+    if (error) {
+      console.error("Error fetching menus:", error.message);
+      throw new Error("Failed to fetch menus");
+    }
+    const recipes: Recipe[] = data.map((recipe): Recipe => {
+      return {
+        id: recipe.id,
+        userId: recipe.user_id,
+        title: recipe.title,
+        description: recipe.description,
+        tagId: recipe.tag_id,
+        createdAt: recipe.created_at,
+        updatedAt: recipe.updated_at,
+        likeCount: recipe.like_count,
+      };
+    });
+    return recipes || [];
+  }
+
 
   async findOne(id: number): Promise<Recipe> {
     const supabase = await createClient();
@@ -66,7 +88,7 @@ export class SbRecipeRepository implements RecipeRepository {
     return recipes || [];
   }
 
-  async addRecipe(recipe: Recipe[]): Promise<number> {
+  async addRecipe(recipe: RecipeCreateDto): Promise<number> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe")
@@ -82,13 +104,12 @@ export class SbRecipeRepository implements RecipeRepository {
     return data.id || 0;
   }
 
-  async updateRecipe(recipeId: number, { title, description, userId }: Recipe): Promise<number> {
+  async updateRecipe(recipe: RecipeUpdateDto): Promise<number> {
     const supabase = await createClient();
-  
     const { data, error } = await supabase
       .from("recipe")
-      .update({ title, description, userId })
-      .eq("id", recipeId)
+      .update([recipe])
+      .eq("id", recipe.recipeId)
       .select();
   
     if (error) {

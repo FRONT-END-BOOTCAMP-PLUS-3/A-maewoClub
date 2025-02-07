@@ -43,6 +43,19 @@ export class SbRecipeStepRepository implements RecipeStepRepository {
     }
   }
 
+  async getStepsByRecipeId(recipeId: number): Promise<RecipeStep[]>{
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("recipe_step")
+      .update(recipeId)
+      .eq("id", recipeId)
+  
+    if (error) {
+      throw new Error("step put 중에 에러입니다~~" + error.message);
+    }
+    return data || [];
+  }
+
   async deleteStepsByRecipeId(recipeId: number): Promise<void> {
     const supabase = await createClient();
     const { error } = await supabase
@@ -53,6 +66,5 @@ export class SbRecipeStepRepository implements RecipeStepRepository {
     if (error) {
       throw new Error("step delete 중에 에러입니다~~" + error.message);
     }
-    
   }
 }
