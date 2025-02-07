@@ -1,6 +1,5 @@
 import { DfRecipeCommentListUsecase } from "@/application/recipe-comment/DfRecipeCommentListUsecase";
-import { RecipeCommentDto } from "@/application/recipe-comment/dto/RecipeCommentDto";
-import { RecipeCommentListDto } from "@/application/recipe-comment/dto/RecipeCommentListDto";
+import { RecipeCommentWithImageDto } from "@/application/recipe-comment/dto/RecipeCommentWithImageDto";
 import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
 import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
@@ -8,7 +7,7 @@ import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes
 import { NextRequest, NextResponse } from "next/server";
 
 // recipe-comments/route/[id]
-export async function GET(id : number) {
+export async function GET(req: NextRequest) {
   const recipeCommentRepository: RecipeCommentRepository =
     new SbRecipeCommentRepository();
   const recipeCommentImageRepository: RecipeCommentImageRepository =
@@ -19,11 +18,11 @@ export async function GET(id : number) {
     recipeCommentImageRepository
   );
 
-  // const recipeCommentListDto: RecipeCommentListDto =
-  //   await recipeCommentListUsecase.execute(id);
-  
-  // TODO : 임시
-  const recipeCommentListDto: RecipeCommentDto = 
+  const url = new URL(req.url);
+  const recipeId = url.searchParams.get("recipeId"); 
+  const id = Number(recipeId);
+
+  const recipeCommentListDto:RecipeCommentWithImageDto[] = 
     await recipeCommentListUsecase.getRecipeAllCommentListTest(id);
 
   return NextResponse.json(recipeCommentListDto);
@@ -38,6 +37,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    
     const recipeCommentRepository: RecipeCommentRepository =
       new SbRecipeCommentRepository();
     const recipeCommentImageRepository: RecipeCommentImageRepository =

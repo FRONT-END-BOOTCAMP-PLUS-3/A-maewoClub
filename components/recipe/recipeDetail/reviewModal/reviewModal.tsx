@@ -14,6 +14,7 @@ import {
   ModalReview,
   ModalTitle,
 } from "./reviewModal.style";
+import { useEffect } from "react";
 
 interface ReviewModalProps {
   isOpen: boolean;
@@ -38,7 +39,35 @@ export const ReviewModal = ({
   handleImageChange,
   imageName,
 }: ReviewModalProps) => {
-  if (!isOpen) return null;
+
+  
+  
+  useEffect(() => {
+    const postComment = async (id:number) => {
+      if (!isOpen) return null;
+      try {
+        const res = await fetch(`/api/recipe-comments?recipeId=${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            recipeId: id,
+            content: reviewRef.current?.value,
+            score: selectedFire,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    postComment(1);
+  }, [isOpen, selectedFire, reviewRef]);
+
+  if (!isOpen) return null; 
+
 
   return (
     <ModalOverlay>

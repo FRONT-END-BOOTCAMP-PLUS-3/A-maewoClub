@@ -17,12 +17,11 @@ interface PhotoReviewProps {
   nextPhotos: () => void;
   prevPhotos: () => void;
 }
-
-export const PhotoReview: React.FC<PhotoReviewProps> = ({
+export const PhotoReview  = ({
   currentPage,
   nextPhotos,
   prevPhotos,
-}) => {
+}: PhotoReviewProps) => {
 
   const photoUrl = "/recipe.jpg";
 

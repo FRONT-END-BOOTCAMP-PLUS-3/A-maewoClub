@@ -5,20 +5,22 @@ import { createClient } from "@/utils/supabase/server";
 export class SbRecipeCommentRepository implements RecipeCommentRepository {
 
   async findCommentAll(id: number): Promise<RecipeComment[]> {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("recipe_comment")
-      .select("*")
-      .eq("recipe_id", id);
+    
+    try{
 
-    if (error) {
-      console.error("Error fetching menus:", error.message);
-      throw new Error("Failed to fetch menus");
-    }
+      const supabase = await createClient();
 
-    const RecipeComment: RecipeComment[] = data.map(
-      (recipeComment): RecipeComment => {
-        return {
+      const { data, error } = await supabase
+        .from("recipe_comment")
+        .select("*")
+        .eq("recipe_id", id);
+
+        if (error) {
+          console.error("Error fetching recipe comments:", error.message);
+          throw new Error("Failed to fetch recipe comments");
+        }
+
+        const RecipeComment: RecipeComment[] = data.map((recipeComment): RecipeComment => ({
           id: recipeComment.id,
           recipeId: recipeComment.recipe_id,
           userId: recipeComment.user_id,
@@ -26,10 +28,13 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
           createdAt: recipeComment.created_at,
           updatedAt: recipeComment.updated_at,
           score: recipeComment.score,
-        };
+        }));
+        return RecipeComment || [];
+
+      } catch (err) {
+        console.error("🔥 Unexpected error in findCommentAll:", err);
+        throw new Error("Failed to fetch recipe comments");
       }
-    );
-    return RecipeComment || [];
   }
 
   async count(recipeId: number): Promise<number> {

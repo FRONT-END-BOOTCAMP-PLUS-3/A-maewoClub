@@ -4,6 +4,7 @@ import { RecipeCommentListDto } from "./dto/RecipeCommentListDto";
 import { RecipeComment } from "@/domain/entities/RecipeComment";
 import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
 import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
+import { RecipeCommentWithImageDto } from "./dto/RecipeCommentWithImageDto";
 
 export class DfRecipeCommentListUsecase {
   constructor(
@@ -20,10 +21,28 @@ export class DfRecipeCommentListUsecase {
     await this.recipeCommentImageRepository.deleteByImageId(id);
   }
 
-  async getRecipeAllCommentListTest(id: number) {
-    await this.recipeCommentRepository.findCommentAll(id);
-    await this.recipeCommentImageRepository.findAllByRecipeId(id);
-  }
+  async getRecipeAllCommentListTest(id: number): Promise<RecipeCommentWithImageDto[]> {
+
+
+
+    const comments = await this.recipeCommentRepository.findCommentAll(id);
+    const images = await this.recipeCommentImageRepository.findAllByRecipeId(id);
+
+    const commentsWithImagesDto: RecipeCommentWithImageDto[] = await Promise.all(
+      comments.map(async (comment) => {
+        const image = images.find((img) => img.id === comment.id);
+        return {
+          ...comment,
+          imageUrl: image ? image.photoUrl : "",
+        };
+      })
+    );
+
+    console.log("✅ getRecipeAllCommentListTest - Final Result:", commentsWithImagesDto);
+    return commentsWithImagesDto;
+}
+
+
 
   async execute(
     id: number = 1,

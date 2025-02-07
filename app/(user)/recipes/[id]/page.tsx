@@ -35,8 +35,6 @@ const RecipeDetailPage = () => {
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
 
-  
-
 
   const handleReview = () => {
     setReviewShowAll(true);
@@ -73,6 +71,7 @@ const RecipeDetailPage = () => {
     handleCloseModal();
   };
 
+
   // 이미지 파일 이름 표시
   const handleImageChange = () => {
     const image = imageRef.current?.files?.[0];
@@ -83,8 +82,6 @@ const RecipeDetailPage = () => {
 
   // 레시피 상세페이지에서 보여줄 데이터
   const stepsToShow = showAllSteps ? testDatas : testDatas.slice(0, 2);
-
-
 
   const [currentPage, setCurrentPage] = useState(0);
   const photosPerPage = 5;

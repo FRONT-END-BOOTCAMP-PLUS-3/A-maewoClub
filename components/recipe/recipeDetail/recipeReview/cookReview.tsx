@@ -14,20 +14,27 @@ type CookReviewProps = {
 
 
 export const CookReview = ({ recipeId }: CookReviewProps) => {
-  const [reviewData, setReviewData] = useState([]);
+  type ReviewData = {
+    userId: string;
+    score: number;
+    content: string;
+    createdAt: string;
+    imageUrl?: string;
+  };
 
-  const userImgUrl = "/Dfprofile.png";
-
-
-
+  const [reviewData, setReviewData] = useState<ReviewData[]>([]);
+  
   // GET
   useEffect(() => {
   const getComments = async (id: number) => {
     try {
-      const res = await fetch(`/api/recipe-comments?recipeId=${id}`);
+      const res = await fetch(`/api/recipe-comments?recipeId=${id}`,
+        {
+          method: "GET",
+        });
       const data = await res.json();
       console.log("comment : ", data);
-      setReviewData(data.recipeComments);
+      setReviewData(data);
 
     } catch (error) {
       console.log(error);
@@ -45,9 +52,9 @@ export const CookReview = ({ recipeId }: CookReviewProps) => {
         <CookReviewContainer key={index}>
           <CookReviewCardContainer>
             <CookReviewCard>
-              {userImgUrl && (
+              {data.imageUrl && (
                 <CookReviewUserImg
-                  src={userImgUrl}
+                  src={data.imageUrl}
                   alt="Avatar"
                   width={40}
                   height={40}
