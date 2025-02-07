@@ -51,42 +51,52 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div style={{ height: "calc(100vh - 80px)" }}>
       <Overview />
       <FilterBar />
       <div style={{ display: "flex", gap: "15px" }}>
         <FilterButtonGroup />
       </div>
 
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <ul>
-            {currentPosts.map((board, index) => (
-              <li key={board.id || index}>
-                <PostListItem
-                  id={board.id}
-                  userId={board.userId}
-                  title={board.title}
-                  description={board.description}
-                  tagId={board.tagId}
-                  createdAt={board.createdAt}
-                  updatedAt={board.updatedAt}
-                  likeCount={board.likeCount}
-                  viewCount={board.viewCount}
-                />
-              </li>
-            ))}
-          </ul>
+      <div
+        style={{
+          height: "calc(100% - 200px)",
+          overflowY: "auto",
+          paddingBottom: "30px",
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
+        }}
+      >
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <ul>
+              {currentPosts.map((board, index) => (
+                <li key={board.id || index}>
+                  <PostListItem
+                    id={board.id}
+                    userId={board.userId}
+                    title={board.title}
+                    description={board.description}
+                    tagId={board.tagId}
+                    createdAt={board.createdAt}
+                    updatedAt={board.updatedAt}
+                    likeCount={board.likeCount}
+                    viewCount={board.viewCount}
+                  />
+                </li>
+              ))}
+            </ul>
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </>
-      )}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </>
+        )}
+      </div>
 
       <div
         style={{ position: "fixed", right: "30px", bottom: "30px" }}
@@ -94,7 +104,7 @@ const Page = () => {
       >
         <Button>+ 글쓰기</Button>
       </div>
-    </>
+    </div>
   );
 };
 
