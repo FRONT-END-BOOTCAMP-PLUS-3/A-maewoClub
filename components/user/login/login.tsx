@@ -9,6 +9,7 @@ import {
   SocialName,
 } from "./login.style";
 import { RiKakaoTalkFill } from "react-icons/ri";
+import LoginForm from "./loginBox/loginForm";
 
 type LoginModalProps = {
   onClose: () => void;
@@ -34,11 +35,14 @@ const KakaoLogin = () => {
   localStorage.setItem("provider", "kakao");
 };
 
+const handleChange = () => {};
+
 export const Login = ({ onClose }: LoginModalProps) => {
   return (
     <>
       <ModalContainer>
         <h2>로그인 / 회원가입</h2>
+        <LoginForm onUpdate={handleChange} />
         <LoginBox
           style={{ backgroundColor: "#FEE500" }}
           onClick={KakaoLogin}
