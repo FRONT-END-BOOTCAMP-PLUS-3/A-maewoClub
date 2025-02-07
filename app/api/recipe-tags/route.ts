@@ -4,7 +4,6 @@ import { RecipeTagRepository } from "@/domain/repositories/RecipeTagRepository";
 import { SbRecipeTagRepository } from "@/infrastructure/repositories/recipes/SbRecipeTagRepository";
 import { NextResponse } from "next/server";
 
-// recipe-tags
 export async function GET() {
   const recipeTagRepository: RecipeTagRepository = new SbRecipeTagRepository();
   const recipeTagUsecase = new DfRecipeTagUsecase(recipeTagRepository);

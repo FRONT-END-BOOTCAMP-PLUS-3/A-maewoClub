@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { OptionButton } from "./optionButton.style";
 import { BoardTag } from "@/domain/entities/BoardTag";
-// import { BoardTagDto } from "@/application/board/dto/BoardTagDto";
 
 interface OptionButtonProps {
   label: string;
