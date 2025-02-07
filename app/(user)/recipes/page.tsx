@@ -32,7 +32,6 @@ export default function Page() {
         });
         const data = await res.json();
         setListData(data);
-        console.log("recipe data 잘 나오는지 확인 ✅: ", data);
       } catch (error) {
         console.error("Error 패치 에러 recipes  ✅ :", error);
       } finally {
@@ -89,10 +88,12 @@ export default function Page() {
   const recipesPerPage = 5; // 페이지당 레시피 수
   const totalRecipes = 20; // 전체 레시피 수
   const totalPages = Math.ceil(totalRecipes / recipesPerPage);
+  /* -- 추가 작업 해야함. ---
   const currentRecipes = [...Array(totalRecipes)].slice(
     (currentPage - 1) * recipesPerPage,
     currentPage * recipesPerPage
   );
+  */
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -134,7 +135,7 @@ export default function Page() {
 
       <SubTitle>총 {totalRecipes}개의 레시피가 있습니다.</SubTitle>
       <RecipeContainer>
-        {currentRecipes.map((recipe) => (
+        {listData.map((recipe) => (
           <RecipeCard key={recipe.id} id={`${recipe.id}`}>
             {recipe.title}
           </RecipeCard>

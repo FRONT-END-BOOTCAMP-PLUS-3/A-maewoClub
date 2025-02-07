@@ -1,11 +1,12 @@
-import { RecipeDto } from "./RecipeDto";
-import { RecipeStepDto } from "./RecipeStepDto";
-import { RecipeIngredientDto } from "./RecipeIngredientDto";
 import { RecipeImageDto } from "./RecipeImageDto";
+import { RecipeIngredientDto } from "./RecipeIngredientDto";
+import { RecipeStepDto } from "./RecipeStepDto";
 
 export interface RecipeCreateDto {
-  recipes: RecipeDto[],
-  ingredients: RecipeIngredientDto[],
-  steps: RecipeStepDto[],
-  images: RecipeImageDto[],
+  title: string;
+  description: string;
+  userId: string;
+  ingredients?: RecipeIngredientDto[];
+  steps?: RecipeStepDto[];
+  images?: RecipeImageDto[];
 }

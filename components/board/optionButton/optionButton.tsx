@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { OptionButton } from "./optionButton.style";
+import { BoardTag } from "@/domain/entities/BoardTag";
 
 interface OptionButtonProps {
   label: string;
@@ -21,28 +22,40 @@ const FilterToggleButton = ({
 };
 
 const FilterButtonGroup = () => {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [tagData, setTagData] = useState<BoardTag[]>([]);
 
-  const handleButtonClick = (label: string) => {
-    setSelected(label);
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const res = await fetch("/api/board-tags", {
+          method: "GET",
+        });
+        if (!res.ok) {
+          throw new Error(`서버 응답 실패: ${res.status}`);
+        }
+        const data = await res.json();
+        console.log("태그 데이터:", data);
+        setTagData(data);
+      } catch (error) {
+        console.error("태그 데이터 가져오기 실패:", error);
+      }
+    };
+    fetchTags();
+  }, []);
+
+  const handleButtonClick = (id: number) => {
+    setSelected(id);
   };
 
   return (
     <div style={{ display: "flex", gap: "8px", overflowX: "auto" }}>
-      {[
-        "맛집 추천",
-        "일상",
-        "반려동물",
-        "생활정보",
-        "번개",
-        "취미생활",
-        "기타",
-      ].map((label) => (
+      {tagData?.map((tag) => (
         <FilterToggleButton
-          key={label}
-          label={label}
-          $isActive={selected === label}
-          onClick={() => handleButtonClick(label)}
+          key={tag.id}
+          label={tag.content}
+          $isActive={selected === tag.id}
+          onClick={() => handleButtonClick(tag.id)}
         />
       ))}
     </div>

@@ -4,5 +4,6 @@ export interface RecipeStepRepository {
   findAllByRecipeId(recipeId: number): Promise<RecipeStep[]>;
   findDefaultStepRecipeId(recipeId: number): Promise<RecipeStep>;
   addStep(recipeId: number, stepNumber: number, steps: RecipeStep):void;
-  deleteStepsByRecipeId(recipeId: number): void;
+  getStepsByRecipeId(recipeId: number):Promise<RecipeStep[]>;
+  deleteStepsByRecipeId(recipeId: number): Promise<void>;
 }

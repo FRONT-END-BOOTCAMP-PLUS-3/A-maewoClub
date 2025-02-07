@@ -12,7 +12,27 @@ export class DfRecipeListUsecase {
     private recipeImageRepository: RecipeImageRepository,
   ) {}
 
-  async execute(id: number = 1, page: number = 1): Promise<RecipeListDto> {
+  async findAllRecipes() {
+    const recipes: RecipeDto[] = await this.repository.findAllRecipes();
+    const recipeDtos: RecipeDto[] = await Promise.all(
+      recipes.map(async (recipe: Recipe) => {
+        const image: RecipeImage | null =
+          await this.recipeImageRepository.findDefaultImageByRecipeId(
+            recipe.id
+          );
+         
+        return {
+          ...recipe,
+          img: image ? image.photoUrl : "default.svg",
+        };
+      })
+    );
+    return {
+      recipes: recipeDtos,
+    };
+  }
+
+  async execute(id: number = 1, page: number = 1):Promise<RecipeListDto> {
     const from = (page - 1) * 8;
     const to = page * 8 - 1;
 
