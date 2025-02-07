@@ -9,6 +9,10 @@ interface OptionButtonProps {
   onClick: () => void;
 }
 
+interface FilterButtonGroupProps {
+  onFilterChange: (tagId: number | null) => void;
+}
+
 const FilterToggleButton = ({
   label,
   $isActive,
@@ -21,7 +25,7 @@ const FilterToggleButton = ({
   );
 };
 
-const FilterButtonGroup = () => {
+const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
   const [selected, setSelected] = useState<number | null>(null);
   const [tagData, setTagData] = useState<BoardTag[]>([]);
 
@@ -35,7 +39,6 @@ const FilterButtonGroup = () => {
           throw new Error(`서버 응답 실패: ${res.status}`);
         }
         const data = await res.json();
-        console.log("태그 데이터:", data);
         setTagData(data);
       } catch (error) {
         console.error("태그 데이터 가져오기 실패:", error);
@@ -45,7 +48,10 @@ const FilterButtonGroup = () => {
   }, []);
 
   const handleButtonClick = (id: number) => {
-    setSelected(id);
+    // 같은 태그를 다시 클릭하면 필터 해제
+    const newSelected = selected === id ? null : id;
+    setSelected(newSelected);
+    onFilterChange(newSelected);
   };
 
   return (
