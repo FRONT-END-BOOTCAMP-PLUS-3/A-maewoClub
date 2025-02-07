@@ -11,17 +11,10 @@ export class DfRecipeDetailUsecase {
     private recipeStepRepository: RecipeStepRepository
   ) {}
 
-  /*
-  get -> get 으로 명명
-  post -> set 으로 명명
-  update -> update 로 명명 
-  delete -> delete 로 명명
-  */
-
   async getRecipeDetail(id: number) {
     return await this.recipeRepository.findOne(id);
   }
-
+  
   async getRecipeIngredient(recipeId: number) {
     return await this.recipeIngredientRepository.findAllByRecipeId(recipeId);
   }

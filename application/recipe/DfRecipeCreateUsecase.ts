@@ -21,7 +21,7 @@ export class DfRecipeCreateUsecase {
 
   async addRecipe(data: RecipeCreateDto): Promise<void> {
     try {
-      const recipeId = await this.recipeRepository.addRecipe(data.recipes);
+      const recipeId = await this.recipeRepository.addRecipe(data);
 
       if (data.ingredients) {
         await Promise.all(
