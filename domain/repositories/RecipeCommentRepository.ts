@@ -10,6 +10,8 @@ export interface RecipeCommentRepository {
     id: number
   ): Promise<RecipeComment[]>;
 
+  findCommentAll(id: number): Promise<RecipeComment[]>;
+
   addRecipeComment(recipeComment: {
     recipeId: number;
     userId: number;

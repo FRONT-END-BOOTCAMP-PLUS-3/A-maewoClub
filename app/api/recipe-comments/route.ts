@@ -1,12 +1,12 @@
 import { DfRecipeCommentListUsecase } from "@/application/recipe-comment/DfRecipeCommentListUsecase";
-import { RecipeCommentListDto } from "@/application/recipe-comment/dto/RecipeCommentListDto";
+import { RecipeCommentWithImageDto } from "@/application/recipe-comment/dto/RecipeCommentWithImageDto";
 import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
 import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(id: number) {
+export async function GET(req: NextRequest) {
   const recipeCommentRepository: RecipeCommentRepository =
     new SbRecipeCommentRepository();
   const recipeCommentImageRepository: RecipeCommentImageRepository =
@@ -17,8 +17,12 @@ export async function GET(id: number) {
     recipeCommentImageRepository
   );
 
-  const recipeCommentListDto: RecipeCommentListDto =
-    await recipeCommentListUsecase.execute(id);
+  const url = new URL(req.url);
+  const recipeId = url.searchParams.get("recipeId"); 
+  const id = Number(recipeId);
+
+  const recipeCommentListDto:RecipeCommentWithImageDto[] = 
+    await recipeCommentListUsecase.getRecipeAllCommentListTest(id);
 
   return NextResponse.json(recipeCommentListDto);
 }
@@ -32,6 +36,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    
     const recipeCommentRepository: RecipeCommentRepository =
       new SbRecipeCommentRepository();
     const recipeCommentImageRepository: RecipeCommentImageRepository =
@@ -42,15 +47,20 @@ export async function POST(req: NextRequest) {
       recipeCommentImageRepository
     );
 
+    const url = new URL(req.url);
+    const recipeId = url.searchParams.get("recipeId"); 
+    const id = Number(recipeId)
+
     const createRecipeCommentId =
       await recipeCommentRepository.addRecipeComment({
-        recipeId: body.recipeId,
+        recipeId: id,
         userId: body.userId,
         content: body.content,
         createdAt: new Date(),
         updatedAt: new Date(),
         score: body.score,
       });
+
     if (body.image?.length) {
       await Promise.all(
         body.image.map((imageUrl: string) => {
@@ -137,6 +147,7 @@ export async function Delete(id: number) {
     new SbRecipeCommentRepository();
   const recipeCommentImageRepository: RecipeCommentImageRepository =
     new SbRecipeCommentImageRepository();
+
   const recipeCommentImageUsecase: DfRecipeCommentListUsecase =
     new DfRecipeCommentListUsecase(
       recipeCommentRepository,

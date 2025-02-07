@@ -47,6 +47,7 @@ interface CookingStepsProps {
 }
 
 export const CookingSteps = ({ steps }: CookingStepsProps) => {
+
   return (
     <>
       {steps.map((data) => (
