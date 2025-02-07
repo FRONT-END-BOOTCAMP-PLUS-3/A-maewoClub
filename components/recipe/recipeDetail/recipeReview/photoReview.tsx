@@ -25,7 +25,7 @@ export const PhotoReview  = ({
 
   const photoUrl = "/recipe.jpg";
 
-
+// TODO : 이미지 url 받아오기, Photo 상태관리 해당 페이지로 가져오기
   return (
     <PhotoReviewContainer>
       <NavigationButton onClick={prevPhotos}>

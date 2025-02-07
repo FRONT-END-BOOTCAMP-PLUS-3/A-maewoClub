@@ -39,8 +39,6 @@ export const ReviewModal = ({
   handleImageChange,
   imageName,
 }: ReviewModalProps) => {
-
-  
   
   useEffect(() => {
     const postComment = async (id:number) => {
@@ -52,7 +50,7 @@ export const ReviewModal = ({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            recipeId: id,
+            userId: id,
             content: reviewRef.current?.value,
             score: selectedFire,
           }),

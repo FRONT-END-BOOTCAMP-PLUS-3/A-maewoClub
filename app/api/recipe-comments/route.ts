@@ -6,7 +6,6 @@ import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/re
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { NextRequest, NextResponse } from "next/server";
 
-// recipe-comments/route/[id]
 export async function GET(req: NextRequest) {
   const recipeCommentRepository: RecipeCommentRepository =
     new SbRecipeCommentRepository();
@@ -48,15 +47,20 @@ export async function POST(req: NextRequest) {
       recipeCommentImageRepository
     );
 
+    const url = new URL(req.url);
+    const recipeId = url.searchParams.get("recipeId"); 
+    const id = Number(recipeId)
+
     const createRecipeCommentId =
       await recipeCommentRepository.addRecipeComment({
-        recipeId: body.recipeId,
+        recipeId: id,
         userId: body.userId,
         content: body.content,
         createdAt: new Date(),
         updatedAt: new Date(),
         score: body.score,
       });
+
     if (body.image?.length) {
       await Promise.all(
         body.image.map((imageUrl: string) => {

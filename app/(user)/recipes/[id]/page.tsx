@@ -40,7 +40,6 @@ const RecipeDetailPage = () => {
     setReviewShowAll(true);
   };
 
-
   const handleShowMoreSteps = () => {
     setShowAllSteps(true);
   };
@@ -70,7 +69,6 @@ const RecipeDetailPage = () => {
     console.log("ModalPoint:", selectedFire);
     handleCloseModal();
   };
-
 
   // 이미지 파일 이름 표시
   const handleImageChange = () => {
@@ -123,6 +121,8 @@ const RecipeDetailPage = () => {
         imageRef={imageRef}
         handleImageChange={handleImageChange}
         imageName={imageName}
+        // UerId 가져오기.
+        // userId={userId}
       />
 
       <TitleBox>
