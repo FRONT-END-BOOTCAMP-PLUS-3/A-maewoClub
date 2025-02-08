@@ -14,18 +14,18 @@ import {
   ModalReview,
   ModalTitle,
 } from "./reviewModal.style";
-import { useEffect } from "react";
 
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedFire: number | null;
   handleFireClick: (index: number) => void;
-  handleRegister: () => void;
   reviewRef: React.RefObject<HTMLTextAreaElement>;
   imageRef: React.RefObject<HTMLInputElement>;
   handleImageChange: () => void;
   imageName: string | null;
+  userId: string;
+  recipeId: number;
 }
 
 export const ReviewModal = ({
@@ -33,36 +33,50 @@ export const ReviewModal = ({
   onClose,
   selectedFire,
   handleFireClick,
-  handleRegister,
   reviewRef,
   imageRef,
   handleImageChange,
   imageName,
+  userId,
+  recipeId,
 }: ReviewModalProps) => {
-  
-  useEffect(() => {
-    const postComment = async (id:number) => {
-      if (!isOpen) return null;
-      try {
-        const res = await fetch(`/api/recipe-comments?recipeId=${id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: id,
-            content: reviewRef.current?.value,
-            score: selectedFire,
-          }),
-        });
-        const data = await res.json();
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
+
+  const postComment = async () => {
+    try {
+      const res = await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+        method: "POST",
+        body: JSON.stringify({
+          userId: userId,
+          content: reviewRef.current?.value,
+          score: selectedFire,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      onClose();
+    } catch (error) {
+      console.log(error);
     }
-    postComment(1);
-  }, [isOpen, selectedFire, reviewRef]);
+    // try {
+    //   const formData = new FormData();
+    //   formData.append("userId", userId);
+    //   formData.append("content", reviewRef.current?.value || "");
+    //   formData.append("score", selectedFire?.toString() || "");
+
+    //   const imageFile = imageRef.current?.files?.[0];
+    //   if (imageFile) {
+    //     formData.append("image", imageFile);
+    //   }
+    //     await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+    //       method: "POST",
+    //       body: formData,
+    //     });
+    //   onClose();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+  
 
   if (!isOpen) return null; 
 
@@ -102,7 +116,7 @@ export const ReviewModal = ({
           />
           <ButtonGroup>
             <ModalButton onClick={onClose}>취소</ModalButton>
-            <ModalButton onClick={handleRegister}>등록</ModalButton>
+            <ModalButton onClick={postComment}>등록</ModalButton>
           </ButtonGroup>
         </ModalButtonContainer>
         <ImageNameContainer>

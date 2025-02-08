@@ -23,8 +23,6 @@ export class DfRecipeCommentListUsecase {
 
   async getRecipeAllCommentListTest(id: number): Promise<RecipeCommentWithImageDto[]> {
 
-
-
     const comments = await this.recipeCommentRepository.findCommentAll(id);
     const images = await this.recipeCommentImageRepository.findAllByRecipeId(id);
 
@@ -33,7 +31,7 @@ export class DfRecipeCommentListUsecase {
         const image = images.find((img) => img.id === comment.id);
         return {
           ...comment,
-          imageUrl: image ? image.photoUrl : "",
+          imageUrl: image ? image.imageUrl : "",
         };
       })
     );
@@ -66,7 +64,7 @@ export class DfRecipeCommentListUsecase {
 
         return {
           ...recipeComment,
-          img: image ? image.photoUrl : "default.svg",
+          img: image ? image.imageUrl : "default.svg",
         };
       })
     );

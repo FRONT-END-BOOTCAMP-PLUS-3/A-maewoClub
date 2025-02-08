@@ -86,6 +86,7 @@ export async function POST(req: NextRequest) {
         )
       );
     }
+    
     // 생성된 레시피 상세 정보 반환
     const createRecipe = await recipeDetailUsecase.getRecipeDetail(createRecipeId);
 

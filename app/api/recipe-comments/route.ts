@@ -5,6 +5,7 @@ import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepo
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { NextRequest, NextResponse } from "next/server";
+import { RecipeCommentImageDto } from "@/application/recipe-comment/dto/RecipeCommentImageDto";
 
 export async function GET(req: NextRequest) {
   const recipeCommentRepository: RecipeCommentRepository =
@@ -18,8 +19,7 @@ export async function GET(req: NextRequest) {
   );
 
   const url = new URL(req.url);
-  const recipeId = url.searchParams.get("recipeId"); 
-  const id = Number(recipeId);
+  const id = Number(url.searchParams.get("recipeId"))
 
   const recipeCommentListDto:RecipeCommentWithImageDto[] = 
     await recipeCommentListUsecase.getRecipeAllCommentListTest(id);
@@ -30,17 +30,17 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+
     if (!body.score || !body.userId || !body.content) {
+      console.error("❌ Missing required fields", { score: body.score, userId: body.userId, content: body.content });
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
     
-    const recipeCommentRepository: RecipeCommentRepository =
-      new SbRecipeCommentRepository();
-    const recipeCommentImageRepository: RecipeCommentImageRepository =
-      new SbRecipeCommentImageRepository();
+    const recipeCommentRepository: RecipeCommentRepository = new SbRecipeCommentRepository();
+    const recipeCommentImageRepository: RecipeCommentImageRepository = new SbRecipeCommentImageRepository();
 
     const recipeCommentImageUsecase = new DfRecipeCommentListUsecase(
       recipeCommentRepository,
@@ -48,34 +48,51 @@ export async function POST(req: NextRequest) {
     );
 
     const url = new URL(req.url);
-    const recipeId = url.searchParams.get("recipeId"); 
-    const id = Number(recipeId)
+    const recipeId = Number(url.searchParams.get("recipeId")) 
 
-    const createRecipeCommentId =
-      await recipeCommentRepository.addRecipeComment({
-        recipeId: id,
-        userId: body.userId,
-        content: body.content,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        score: body.score,
-      });
-
-    if (body.image?.length) {
-      await Promise.all(
-        body.image.map((imageUrl: string) => {
-          recipeCommentImageRepository.addRecipeCommentImage(
-            createRecipeCommentId,
-            imageUrl
-          );
-        })
+    if (isNaN(recipeId)) {
+      console.error("❌ Invalid recipeId:", recipeId);
+      return NextResponse.json(
+        { error: "Invalid recipe ID" },
+        { status: 400 }
       );
     }
 
-    const createdRecipeComment =
-      await recipeCommentImageUsecase.getRecipeComment(createRecipeCommentId);
+    console.log("📌 Creating recipe comment with:", {
+      recipeId,
+      userId : body.userId,
+      content: body.content,
+      score: body.score,
+    });
+    
+    const createRecipeCommentId =
+    await recipeCommentRepository.addRecipeComment({
+      recipeId: recipeId,
+      userId: body.userId,
+      content: body.content,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      score: body.score,
+    });
+    
+    console.log("✅ Recipe comment created:", createRecipeCommentId);
 
-    return NextResponse.json(createdRecipeComment, { status: 200 });
+    if (body.images?.length) {
+      await Promise.all(
+        body.images.map((photoUrl: string) => {
+          recipeCommentImageRepository.addRecipeCommentImage(
+            createRecipeCommentId,
+            photoUrl
+          );
+        })
+      );
+      console.log("✅ Recipe comment images added:", body.image);
+    }
+
+    const recipeCommentComment = await recipeCommentImageUsecase.getRecipeComment(createRecipeCommentId);
+
+    return NextResponse.json(recipeCommentComment, { status: 200 });
+
   } catch (error) {
     console.error("Error creating recipe:", error);
     return NextResponse.json(
@@ -120,10 +137,10 @@ export async function PUT(req: NextRequest) {
 
     if (body.image?.length) {
       await Promise.all(
-        body.image.map((imageUrl: string) => {
+        body.image.map((image: RecipeCommentImageDto) => {
           recipeCommentImageRepository.addRecipeCommentImage(
             updateRecipeCommentId,
-            imageUrl
+            image.imageUrl
           );
         })
       );

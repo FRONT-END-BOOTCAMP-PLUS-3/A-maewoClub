@@ -1,7 +1,7 @@
 export interface RecipeCommentWithImageDto {
     id: number;
     recipeId: number;
-    userId: number;
+    userId: string;
     content: string;
     score: number;
     createdAt: Date;

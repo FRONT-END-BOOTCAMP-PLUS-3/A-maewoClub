@@ -54,12 +54,15 @@ export class SbRecipeCommentImageRepository
 
   async addRecipeCommentImage(
     recipeCommentId: number,
-    imageUrl: string
-  ): Promise<void> {
+    photoUrl: string
+  ) {
     const supabase = await createClient();
     const { error } = await supabase
       .from("recipe_comment_image")
-      .insert([{ id: recipeCommentId, imageUrl: imageUrl }]);
+      .insert([{ photo_url: photoUrl }])
+      .eq("id", recipeCommentId);
+
+    console.log("✅ addRecipeCommentImage - imageUrl:", photoUrl);
 
     if (error) {
       throw new Error(error.message);

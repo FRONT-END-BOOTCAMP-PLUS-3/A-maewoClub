@@ -1,7 +1,7 @@
 export interface RecipeCommentImage {
   id: number;
   userId: number;
-  photoUrl: string;
+  imageUrl: string;
   createdAt: Date;
   updatedAt: Date;
 }

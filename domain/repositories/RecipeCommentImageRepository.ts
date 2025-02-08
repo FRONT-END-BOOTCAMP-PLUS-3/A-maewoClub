@@ -5,8 +5,8 @@ export interface RecipeCommentImageRepository {
   findDefaultImageByRecipeId(recipeId: number): Promise<RecipeCommentImage>;
   addRecipeCommentImage(
     recipeCommentId: number,
-    imageUrl: string
-  ): Promise<void>;
+    photoUrl: string
+  ): void;
   deleteByImageId(id: number): Promise<void>;
   findOne(id: number): Promise<RecipeCommentImage>;
 }

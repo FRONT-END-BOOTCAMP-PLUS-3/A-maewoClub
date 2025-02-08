@@ -21,6 +21,7 @@ import {
   SortButton,
 } from "@/components/recipe/recipeDetail/recipeReview/cookReview.style";
 import { Ingredient } from "@/components/recipe/recipeDetail/recipeIngredient/ingredient";
+import { usePathname } from "next/navigation";
 
 const RecipeDetailPage = () => {
   // 리뷰 관련 상태
@@ -35,6 +36,12 @@ const RecipeDetailPage = () => {
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
 
+  const pathname = usePathname(); // 현재 경로 가져오기
+  const pathSegments = pathname.split("/"); // "/" 기준으로 분할
+  const recipeId = Number(pathSegments[pathSegments.length - 1]); // 마지막 요소가 ID
+
+// TODO : UserId
+  const userId = "12546258-59a4-4eb6-86cc-88e2d2421aa1";
 
   const handleReview = () => {
     setReviewShowAll(true);
@@ -60,15 +67,7 @@ const RecipeDetailPage = () => {
   const handleFireClick = (index: number) => {
     setSelectedFire(index);
   };
-  // 리뷰 등록
-  const handleRegister = () => {
-    const review = reviewRef.current?.value;
-    const image = imageRef.current?.files?.[0];
-    console.log("ModalReview:", review);
-    console.log("InputImage:", image);
-    console.log("ModalPoint:", selectedFire);
-    handleCloseModal();
-  };
+  
 
   // 이미지 파일 이름 표시
   const handleImageChange = () => {
@@ -116,14 +115,13 @@ const RecipeDetailPage = () => {
         onClose={handleCloseModal}
         selectedFire={selectedFire}
         handleFireClick={handleFireClick}
-        handleRegister={handleRegister}
         reviewRef={reviewRef}
         imageRef={imageRef}
         handleImageChange={handleImageChange}
         imageName={imageName}
-        // UerId 가져오기.
-        // userId={userId}
-      />
+        userId={userId}
+        recipeId={recipeId}
+      ></ReviewModal>
 
       <TitleBox>
         <SubTitle>포토리뷰</SubTitle>
@@ -147,7 +145,7 @@ const RecipeDetailPage = () => {
           최신순
         </SortButton>
       </SortButtonContainer>
-      <CookReview recipeId={1} />
+      <CookReview recipeId={recipeId} />
       {!reviewShowAll && (
         <ReviewMoreButton onClick={handleReview}>더보기</ReviewMoreButton>
       )}

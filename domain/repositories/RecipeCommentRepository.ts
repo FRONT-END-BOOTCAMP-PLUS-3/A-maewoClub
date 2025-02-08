@@ -1,3 +1,4 @@
+import { RecipeCommentCreateDto } from "@/application/recipe-comment/dto/RecipeCommentCreateDto";
 import { RecipeComment } from "@/domain/entities/RecipeComment";
 
 export interface RecipeCommentRepository {
@@ -12,14 +13,7 @@ export interface RecipeCommentRepository {
 
   findCommentAll(id: number): Promise<RecipeComment[]>;
 
-  addRecipeComment(recipeComment: {
-    recipeId: number;
-    userId: number;
-    content: string;
-    createdAt: Date;
-    updatedAt: Date;
-    score: number;
-  }): Promise<number>;
+  addRecipeComment(recipeComment:RecipeCommentCreateDto): Promise<number>;
 
   updateRecipeComment(recipeComment: {
     id: number;

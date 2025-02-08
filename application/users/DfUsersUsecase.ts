@@ -19,3 +19,4 @@ export class CreateUserUseCase {
 
 export const createUserUseCase = new CreateUserUseCase(new SbUserRepository());
 export const loginUserUseCase = new LoginUserUseCase(new SbUserRepository());
+ 

@@ -1,3 +1,4 @@
+import { RecipeCommentCreateDto } from "@/application/recipe-comment/dto/RecipeCommentCreateDto";
 import { RecipeComment } from "@/domain/entities/RecipeComment";
 import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
 import { createClient } from "@/utils/supabase/server";
@@ -5,11 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 export class SbRecipeCommentRepository implements RecipeCommentRepository {
 
   async findCommentAll(id: number): Promise<RecipeComment[]> {
-    
     try{
-
       const supabase = await createClient();
-
       const { data, error } = await supabase
         .from("recipe_comment")
         .select("*")
@@ -56,21 +54,14 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
       .from("recipe_comment")
       .select("*")
       .eq("id", id)
-      .single();
+      .maybeSingle();
 
     if (error) {
       throw new Error(error.message);
     }
-    return {
-      id: data.id,
-      recipeId: data.recipe_id,
-      userId: data.user_id,
-      content: data.content,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
-      score: data.score,
-    };
+    return data || null;
   }
+  
   async findAll(
     keyword: number,
     from: number,
@@ -108,25 +99,28 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     return RecipeComment || [];
   }
 
-  async addRecipeComment(recipeComment: {
-    recipeId: number;
-    userId: number;
-    content: string;
-    createdAt: Date;
-    updatedAt: Date;
-    score: number;
-  }): Promise<number> {
+  async addRecipeComment(recipeComment: RecipeCommentCreateDto): Promise<number> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment")
-      .insert([recipeComment])
+      .insert([
+        {
+          recipe_id: recipeComment.recipeId,
+          user_id: recipeComment.userId,
+          content: recipeComment.content,
+          created_at: recipeComment.createdAt,
+          updated_at: recipeComment.updatedAt,
+          score: recipeComment.score,
+        },
+      ])
       .select("id")
       .single();
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(`Failed to insert recipe comment: ${error.message}`); 
     }
-    return data.id;
+  
+    return data.id || 0;
   }
 
   async updateRecipeComment(recipeComment: {
