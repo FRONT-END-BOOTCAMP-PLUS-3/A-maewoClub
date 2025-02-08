@@ -55,3 +55,8 @@ export const LoginStyle = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const ProfileWrapper = styled.div`
+  width: 50px;
+  height: 50px;
+`;
