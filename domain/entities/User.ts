@@ -4,9 +4,10 @@ export interface User {
   level: number;
   role: string;
   email: string;
-  password: string;
-  photoUrl: string;
+  password?: string;
+  provider?: string;
+  photoUrl?: string;
   publicStatus: boolean;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
