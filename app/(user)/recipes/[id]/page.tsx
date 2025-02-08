@@ -13,10 +13,7 @@ import {
 } from "@/components/recipe/recipeDetail/cookingStep/cookingSteps";
 import { RecipeUserProfile } from "@/components/recipe/recipeDetail/recipeUserProfile/recipeUserProfile";
 import { PhotoReview } from "@/components/recipe/recipeDetail/recipeReview/photoReview";
-import {
-  CookReview,
-  reviewTestData,
-} from "@/components/recipe/recipeDetail/recipeReview/cookReview";
+import { CookReview } from "@/components/recipe/recipeDetail/recipeReview/cookReview";
 import { useRef, useState } from "react";
 import { ReviewModal } from "@/components/recipe/recipeDetail/reviewModal/reviewModal";
 import {
@@ -37,6 +34,7 @@ const RecipeDetailPage = () => {
   const [imageName, setImageName] = useState<string | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
+
 
   const handleReview = () => {
     setReviewShowAll(true);
@@ -82,19 +80,6 @@ const RecipeDetailPage = () => {
 
   // 레시피 상세페이지에서 보여줄 데이터
   const stepsToShow = showAllSteps ? testDatas : testDatas.slice(0, 2);
-  const reviewToShow = reviewShowAll
-    ? reviewTestData
-    : reviewTestData.slice(0, 2);
-
-  // 리뷰 정렬
-  const sortedReviews = [...reviewToShow].sort((a, b) => {
-    if (sortType === "points") {
-      return b.points - a.points;
-    } else if (sortType === "latest") {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    }
-    return 0;
-  });
 
   const [currentPage, setCurrentPage] = useState(0);
   const photosPerPage = 5;
@@ -136,6 +121,8 @@ const RecipeDetailPage = () => {
         imageRef={imageRef}
         handleImageChange={handleImageChange}
         imageName={imageName}
+        // UerId 가져오기.
+        // userId={userId}
       />
 
       <TitleBox>
@@ -160,7 +147,7 @@ const RecipeDetailPage = () => {
           최신순
         </SortButton>
       </SortButtonContainer>
-      <CookReview review={sortedReviews} />
+      <CookReview recipeId={1} />
       {!reviewShowAll && (
         <ReviewMoreButton onClick={handleReview}>더보기</ReviewMoreButton>
       )}

@@ -1,12 +1,13 @@
 export interface Recipe {
   id: number;
-  userId: number;
+  userId: string;
   title: string;
+  description: string,
   tagId: number;
   createdAt: Date;
   updatedAt: Date;
   likeCount: number;
-  //viewCount?: number;
+  //viewCount?: number; // optional 
 }
 
 export interface TopRecipe extends Recipe {

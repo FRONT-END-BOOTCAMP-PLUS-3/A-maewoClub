@@ -1,12 +1,12 @@
-import { RecipeTag } from "@/domain/entities/RecipeTag";
-import { RecipeTagRepository } from "@/domain/repositories/RecipeTagRepository";
+import { BoardTag } from "@/domain/entities/BoardTag";
+import { BoardTagRepository } from "@/domain/repositories/BoardTagRepository";
 import { createClient } from "@/utils/supabase/server";
 
-export class SbRecipeTagRepository implements RecipeTagRepository {
-  async findAll(): Promise<RecipeTag[]> {
+export class SbBoardTagRepostiory implements BoardTagRepository {
+  async findAll(): Promise<BoardTag[]> {
     const supabase = await createClient();
     console.log("Supabase Client 연결 확인 :", supabase);
-    const { data, error } = await supabase.from("recipe_tag").select("*");
+    const { data, error } = await supabase.from("board_tag").select("*");
 
     console.log("Fetched Data 확인용:", data);
 
@@ -18,6 +18,6 @@ export class SbRecipeTagRepository implements RecipeTagRepository {
       });
     }
 
-    return data || ["h"];
+    return data || [];
   }
 }

@@ -1,13 +1,14 @@
+import { RecipeCreateDto } from "@/application/recipe/dto/RecipeCreateDto";
+import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
+import { RecipeUpdateDto } from "@/application/recipe/dto/RecipeUpdateDto";
 import { Recipe } from "@/domain/entities/Recipe";
 
 export interface RecipeRepository {
-  get(): Promise<Recipe[]>;
   count(): number | PromiseLike<number>;
   findOne(id: number): Promise<Recipe>;
   findAll(keyword: number, from: number, to: number): Promise<Recipe[]>;
-  addRecipe(recipe: {
-    title: string;
-    description: string;
-    userId: string;
-  }): Promise<number>;
+  findAllRecipes(): Promise<RecipeDto[]>;
+  addRecipe(recipeId: RecipeCreateDto): Promise<number>;
+  deleteRecipe(recipeId: number): void;
+  updateRecipe(recipe: RecipeUpdateDto):Promise<number>;
 }
