@@ -35,8 +35,6 @@ export class DfRecipeCommentListUsecase {
         };
       })
     );
-
-    console.log("✅ getRecipeAllCommentListTest - Final Result:", commentsWithImagesDto);
     return commentsWithImagesDto;
 }
 

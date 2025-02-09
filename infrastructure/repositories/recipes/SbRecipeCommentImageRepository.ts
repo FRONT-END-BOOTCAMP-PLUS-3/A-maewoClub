@@ -1,3 +1,4 @@
+import { RecipeCommentImageDto } from "@/application/recipe-comment/dto/RecipeCommentImageDto";
 import { RecipeCommentImage } from "@/domain/entities/RecipeCommentImage";
 import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
 import { createClient } from "@/utils/supabase/server";
@@ -53,16 +54,19 @@ export class SbRecipeCommentImageRepository
   }
 
   async addRecipeCommentImage(
-    recipeCommentId: number,
-    photoUrl: string
+     recipeCommentImage: RecipeCommentImageDto
   ) {
     const supabase = await createClient();
     const { error } = await supabase
       .from("recipe_comment_image")
-      .insert([{ photo_url: photoUrl }])
-      .eq("id", recipeCommentId);
-
-    console.log("✅ addRecipeCommentImage - imageUrl:", photoUrl);
+      .insert([{ 
+        id: recipeCommentImage.id,
+        photo_url: recipeCommentImage.photoUrl,
+        created_at: recipeCommentImage.createdAt,
+        updated_at: recipeCommentImage.updatedAt,
+        user_id: recipeCommentImage.userId,
+       }])
+      .eq("id", recipeCommentImage.id);
 
     if (error) {
       throw new Error(error.message);

@@ -42,6 +42,7 @@ export const ReviewModal = ({
 }: ReviewModalProps) => {
 
   const postComment = async () => {
+    /* 
     try {
       const res = await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
         method: "POST",
@@ -56,25 +57,26 @@ export const ReviewModal = ({
       onClose();
     } catch (error) {
       console.log(error);
-    }
-    // try {
-    //   const formData = new FormData();
-    //   formData.append("userId", userId);
-    //   formData.append("content", reviewRef.current?.value || "");
-    //   formData.append("score", selectedFire?.toString() || "");
+    } 
+    */
+    try {
+      const formData = new FormData();
+      formData.append("userId", userId);
+      formData.append("content", reviewRef.current?.value || "");
+      formData.append("score", selectedFire?.toString() || "");
 
-    //   const imageFile = imageRef.current?.files?.[0];
-    //   if (imageFile) {
-    //     formData.append("image", imageFile);
-    //   }
-    //     await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
-    //       method: "POST",
-    //       body: formData,
-    //     });
-    //   onClose();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      if (imageRef.current?.files?.[0]) {
+        const file = imageRef.current.files[0];
+        formData.append("image", file);
+      }
+        await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+          method: "POST",
+          body: formData,
+        });
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
   };
   
 

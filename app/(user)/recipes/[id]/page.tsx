@@ -127,6 +127,7 @@ const RecipeDetailPage = () => {
         <SubTitle>포토리뷰</SubTitle>
       </TitleBox>
       <PhotoReview
+        recipeId={recipeId}
         currentPage={currentPage}
         nextPhotos={nextPhotos}
         prevPhotos={prevPhotos}

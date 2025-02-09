@@ -5,7 +5,6 @@ import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepo
 import { SbRecipeCommentImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentImageRepository";
 import { SbRecipeCommentRepository } from "@/infrastructure/repositories/recipes/SbRecipeCommentRepository";
 import { NextRequest, NextResponse } from "next/server";
-import { RecipeCommentImageDto } from "@/application/recipe-comment/dto/RecipeCommentImageDto";
 
 export async function GET(req: NextRequest) {
   const recipeCommentRepository: RecipeCommentRepository =
@@ -29,16 +28,31 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    // const body = await req.json();
+    const body = await req.formData();
 
-    if (!body.score || !body.userId || !body.content) {
+    const userId = body.get("userId") as string;
+    const content = body.get("content") as string;
+    const score = body.get("score");
+    const image = body.get("image")
+
+/*     if (!body.score || !body.userId || !body.content) {
       console.error("❌ Missing required fields", { score: body.score, userId: body.userId, content: body.content });
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
-    
+     */
+
+        if (!score || !userId || !content) {
+      console.error("❌ Missing required fields", { score, userId, content });
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
     const recipeCommentRepository: RecipeCommentRepository = new SbRecipeCommentRepository();
     const recipeCommentImageRepository: RecipeCommentImageRepository = new SbRecipeCommentImageRepository();
 
@@ -60,34 +74,38 @@ export async function POST(req: NextRequest) {
 
     console.log("📌 Creating recipe comment with:", {
       recipeId,
-      userId : body.userId,
-      content: body.content,
-      score: body.score,
+      userId,
+      content,  
+      score,
+      image,
     });
     
     const createRecipeCommentId =
     await recipeCommentRepository.addRecipeComment({
       recipeId: recipeId,
-      userId: body.userId,
-      content: body.content,
+      userId: userId,
+      content: content,
       createdAt: new Date(),
       updatedAt: new Date(),
-      score: body.score,
+      score: Number(score),
     });
     
     console.log("✅ Recipe comment created:", createRecipeCommentId);
 
-    if (body.images?.length) {
-      await Promise.all(
-        body.images.map((photoUrl: string) => {
-          recipeCommentImageRepository.addRecipeCommentImage(
-            createRecipeCommentId,
-            photoUrl
-          );
-        })
-      );
-      console.log("✅ Recipe comment images added:", body.image);
-    }
+    if (image) {
+      const buffer = await (image as File).arrayBuffer(); // 파일을 Buffer로 변환
+      const base64Image = Buffer.from(buffer).toString("base64"); // Base64로 변환
+      const mimeType = (image as File).type; // 이미지 MIME 타입 (예: image/png)
+      const photoUrl = `data:${mimeType};base64,${base64Image}`; // Base64 데이터 URL 생성
+    
+      await recipeCommentImageRepository.addRecipeCommentImage({
+        id: createRecipeCommentId,
+        photoUrl,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: userId,
+      });
+      }
 
     const recipeCommentComment = await recipeCommentImageUsecase.getRecipeComment(createRecipeCommentId);
 
@@ -104,8 +122,16 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const body = await req.json();
-    if (!body.score || !body.userId || !body.content || !body.id) {
+    // const body = await req.json();
+    const body = await req.formData();
+
+    const userId = body.get("userId") as string;
+    const content = body.get("content") as string;
+    const score = body.get("score");
+    const id = body.get("id")
+    const image = body.get("image")
+
+    if (!score || !userId || !content || !id) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -121,9 +147,9 @@ export async function PUT(req: NextRequest) {
       recipeCommentImageRepository
     );
 
-    await recipeCommentRepository.findOne(body.id);
-    if (body.image?.length) {
-      await recipeCommentImageRepository.findOne(body.id);
+    await recipeCommentRepository.findOne(id);
+    if (image) {
+      await recipeCommentImageRepository.findOne(id);
     }
 
     const updateRecipeCommentId =
