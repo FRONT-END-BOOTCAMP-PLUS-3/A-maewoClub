@@ -1,4 +1,5 @@
 import { RecipeCommentCreateDto } from "@/application/recipe-comment/dto/RecipeCommentCreateDto";
+import { RecipeCommentUpdateDto } from "@/application/recipe-comment/dto/RecipeCommentUpdateDto";
 import { RecipeComment } from "@/domain/entities/RecipeComment";
 
 export interface RecipeCommentRepository {
@@ -15,13 +16,12 @@ export interface RecipeCommentRepository {
 
   addRecipeComment(recipeComment:RecipeCommentCreateDto): Promise<number>;
 
-  updateRecipeComment(recipeComment: {
-    id: number;
-    recipeId: number;
-    content: string;
-    updatedAt: Date;
-    score: number;
-  }): Promise<number>;
+  getCommentIdByCreatedAt(createdAt: string): Promise<number>;
+
+  updateRecipeComment(recipeComment:
+    RecipeCommentUpdateDto
+  ): void
+
 
   findOne(id: number): Promise<RecipeComment>;
 

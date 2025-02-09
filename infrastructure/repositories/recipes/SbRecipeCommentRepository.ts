@@ -1,4 +1,5 @@
 import { RecipeCommentCreateDto } from "@/application/recipe-comment/dto/RecipeCommentCreateDto";
+import { RecipeCommentUpdateDto } from "@/application/recipe-comment/dto/RecipeCommentUpdateDto";
 import { RecipeComment } from "@/domain/entities/RecipeComment";
 import { RecipeCommentRepository } from "@/domain/repositories/RecipeCommentRepository";
 import { createClient } from "@/utils/supabase/server";
@@ -123,24 +124,43 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     return data.id || 0;
   }
 
-  async updateRecipeComment(recipeComment: {
-    id: number;
-    recipeId: number;
-    content: string;
-    updatedAt: Date;
-    score: number;
-  }): Promise<number> {
+  async getCommentIdByCreatedAt(createdAt: string): Promise<number> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("recipe_comment")
+      .select("id")
+      .eq("created_at", createdAt)
+      .single();
+
+    if (error) {
+      throw new Error(`Failed getCommentIdByCreatedAt: ${error.message}`);
+    }
+
+    return data.id || 0
+  }
+
+  async updateRecipeComment(recipeComment: RecipeCommentUpdateDto) {
     const supabase = await createClient();
     const { error } = await supabase
       .from("recipe_comment")
-      .update(recipeComment)
-      .eq("id", recipeComment.id);
+      .update([
+        {
+          user_id: recipeComment.userId,
+          content: recipeComment.content,
+          updated_at: recipeComment.updatedAt,
+          score: recipeComment.score
+        }
+      ])
+      .eq("id", recipeComment.id)
+      .select("id")
+      .single();
 
-    if (error) {
-      throw new Error(error.message);
-    }
-    return recipeComment.id;
+      if (error) {
+        throw new Error(`Failed recipe comment: ${error.message}`); 
+      }
   }
+
+
 
   async deleteByCommentId(id: number): Promise<void> {
     const supabase = await createClient();

@@ -1,4 +1,5 @@
 import { RecipeCommentImageDto } from "@/application/recipe-comment/dto/RecipeCommentImageDto";
+import { RecipeCommentImageUpdateDto } from "@/application/recipe-comment/dto/RecipeCommentImageUpdate";
 import { RecipeCommentImage } from "@/domain/entities/RecipeCommentImage";
 import { RecipeCommentImageRepository } from "@/domain/repositories/RecipeCommentImageRepository";
 import { createClient } from "@/utils/supabase/server";
@@ -66,6 +67,26 @@ export class SbRecipeCommentImageRepository
         updated_at: recipeCommentImage.updatedAt,
         user_id: recipeCommentImage.userId,
        }])
+      .eq("id", recipeCommentImage.id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async updateRecipeCommentImage(
+    recipeCommentImage: RecipeCommentImageUpdateDto
+  ) {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("recipe_comment_image")
+      .update({
+        id: recipeCommentImage.id,
+        photo_url: recipeCommentImage.photoUrl,
+        created_at: recipeCommentImage.createdAt,
+        updated_at: recipeCommentImage.updatedAt,
+        user_id: recipeCommentImage.userId,
+      })
       .eq("id", recipeCommentImage.id);
 
     if (error) {

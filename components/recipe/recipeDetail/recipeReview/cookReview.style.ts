@@ -90,3 +90,12 @@ export const SortButton = styled.button`
     background-color: #800000;
   }
 `;
+
+export const UpdateButton = styled.button`
+  margin-left: 1rem;
+  color: white;
+  padding: 5px 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: var(--mainRed); 
+`

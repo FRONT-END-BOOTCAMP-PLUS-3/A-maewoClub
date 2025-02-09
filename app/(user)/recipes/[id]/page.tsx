@@ -121,6 +121,7 @@ const RecipeDetailPage = () => {
         imageName={imageName}
         userId={userId}
         recipeId={recipeId}
+        isUpdate={false}
       ></ReviewModal>
 
       <TitleBox>
@@ -146,7 +147,10 @@ const RecipeDetailPage = () => {
           최신순
         </SortButton>
       </SortButtonContainer>
-      <CookReview recipeId={recipeId} />
+      <CookReview 
+        recipeId={recipeId}
+        userId={userId}
+       />
       {!reviewShowAll && (
         <ReviewMoreButton onClick={handleReview}>더보기</ReviewMoreButton>
       )}
