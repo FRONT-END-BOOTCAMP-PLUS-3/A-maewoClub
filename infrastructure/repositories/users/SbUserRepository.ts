@@ -1,6 +1,8 @@
+import bcrypt from "bcryptjs";
 import { createClient } from "@supabase/supabase-js";
-import { UserRepository } from "@/domain/repositories/users/UserRepository";
-import { User } from "@/domain/entities/auth/User";
+import { UserRepository } from "@/domain/repositories/UserRepository";
+import { User } from "@/domain/entities/User";
+import { UserDto } from "@/application/users/dto/UserDto";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,7 +16,7 @@ export class SbUserRepository implements UserRepository {
     return data;
   }
 
-  async findUserByUserId(id: number): Promise<User> {
+  async findUserByUserId(id: string): Promise<User> {
     const { data, error } = await supabase
       .from("user")
       .select("*")
@@ -24,18 +26,56 @@ export class SbUserRepository implements UserRepository {
     return data;
   }
 
-  async findUserByEmail(email: string): Promise<User | null> {
+  async checkPassword(email: string, password: string): Promise<boolean> {
     const { data, error } = await supabase
       .from("user")
-      .select("*")
+      .select("password")
       .eq("email", email)
-      .single();
+      .maybeSingle();
 
-    if (error) return null;
-    return data;
+    if (error || !data || !data.password) {
+      console.error("❌ 비밀번호 조회 실패 또는 저장된 비밀번호 없음:", error);
+      return false;
+    }
+
+    const isMatch = password == data.password;
+
+    return isMatch;
   }
 
-  // id, nickname, level, role, email, created_at, updated_at, photo_url, public_status
+  async getUserByEmail(email: string): Promise<UserDto | null> {
+    if (!email) {
+      console.error("❌ 유효하지 않은 이메일 값:", email);
+      return null;
+    }
+
+    const { data, error } = await supabase
+      .from("user")
+      .select("id, email, nickname, level, role, photo_url, created_at")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (error) {
+      return null;
+    }
+
+    if (!data) {
+      return null;
+    }
+
+    const userDto: UserDto = {
+      id: data.id,
+      nickname: data.nickname,
+      level: data.level,
+      role: data.role,
+      email: data.email,
+      photoUrl: data.photo_url,
+      createdAt: new Date(data.created_at),
+    };
+
+    return userDto;
+  }
+
   async createUser(
     nickname: string,
     email: string,
@@ -44,28 +84,20 @@ export class SbUserRepository implements UserRepository {
     const { data, error } = await supabase
       .from("user")
       .insert({ nickname, email, provider })
+      .select()
       .single();
+    if (error) {
+      console.error("❌ 유저 생성 중 오류 발생:", {
+        message: error.message,
+        code: error.code,
+      });
+      throw new Error(`유저 생성 실패: ${error.message} (코드: ${error.code})`);
+    }
 
-    if (error) throw new Error("유저 생성 실패");
     return data;
   }
 
-  // 상황 고려하여 accessToken을 DB에 넣을지말지 결정하고 지울 것
-  // async updateUserAccessToken(id: number, accessToken: string): Promise<void> {
-  //   const { error } = await supabase
-  //     .from("user")
-  //     .update({ accessToken })
-  //     .eq("id", id);
-
-  //   if (error) throw new Error("액세스 토큰 업데이트 실패");
-  // }
-
-  async checkUserExists(email: string): Promise<boolean> {
-    const user = await this.findUserByEmail(email);
-    return user !== null;
-  }
-
-  async deleteUser(id: number): Promise<void> {
+  async deleteUser(id: string): Promise<void> {
     const { error } = await supabase.from("user").delete().eq("id", id);
     if (error) throw new Error("유저 삭제 실패");
   }

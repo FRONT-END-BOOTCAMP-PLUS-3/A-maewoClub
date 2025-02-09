@@ -36,7 +36,7 @@ export const exchangeCodeForToken = async (
     });
 
     if (provider === "google") {
-      bodyParams.append("client_secret", config.google.clientSecret!); // ✅ Google만 clientSecret 추가
+      bodyParams.append("client_secret", config.google.clientSecret!);
     }
 
     const response = await fetch(providerConfig.tokenUrl, {

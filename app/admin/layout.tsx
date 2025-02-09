@@ -1,3 +1,5 @@
+"use client";
+
 import AdminFooter from "@/components/footer/adminFooter/adminFooter";
 import AdminHeader from "@/components/header/adminHeader/adminHeader";
 
