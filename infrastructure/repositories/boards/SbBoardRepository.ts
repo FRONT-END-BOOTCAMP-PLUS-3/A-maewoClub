@@ -24,7 +24,6 @@ export class SbBoardRepository implements BoardRepository {
     const { data, error } = await supabase
       .from("board_post")
       .select("*")
-      // .ilike("title", `%${keyword}%`)
       .order("created_at", { ascending: false })
       .range(from, to);
 
