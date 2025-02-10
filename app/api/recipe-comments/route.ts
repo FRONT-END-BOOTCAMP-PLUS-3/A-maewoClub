@@ -75,10 +75,10 @@ export async function POST(req: NextRequest) {
     });
     
     if (image) {
-      const buffer = await (image as File).arrayBuffer(); // 파일을 Buffer로 변환
-      const base64Image = Buffer.from(buffer).toString("base64"); // Base64로 변환
-      const mimeType = (image as File).type; // 이미지 MIME 타입 (예: image/png)
-      const photoUrl = `data:${mimeType};base64,${base64Image}`; // Base64 데이터 URL 생성
+      const buffer = await (image as File).arrayBuffer(); 
+      const base64Image = Buffer.from(buffer).toString("base64"); 
+      const mimeType = (image as File).type; 
+      const photoUrl = `data:${mimeType};base64,${base64Image}`;
     
       await recipeCommentImageRepository.addRecipeCommentImage({
         id: createRecipeCommentId,
