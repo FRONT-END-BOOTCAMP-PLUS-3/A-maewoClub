@@ -22,13 +22,13 @@ export class SbRecipeCommentImageRepository
   }
 
   async findAllByRecipeId(
-    recipeCommentId: number
+    ImageIds:number[]
   ): Promise<RecipeCommentImage[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment_image")
       .select("*")
-      .eq("id", recipeCommentId);
+      .in("id", ImageIds);
 
     if (error) {
       console.error(error);

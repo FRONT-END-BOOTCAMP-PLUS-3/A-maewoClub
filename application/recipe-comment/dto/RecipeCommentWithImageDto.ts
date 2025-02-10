@@ -7,5 +7,5 @@ export interface RecipeCommentWithImageDto {
     createdAt: Date;
     updatedAt: Date;
     
-    imageUrl: string; 
+    imageUrl?: string | null;
   }

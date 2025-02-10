@@ -3,7 +3,8 @@ import { RecipeCommentImageUpdateDto } from "@/application/recipe-comment/dto/Re
 import { RecipeCommentImage } from "@/domain/entities/RecipeCommentImage";
 
 export interface RecipeCommentImageRepository {
-  findAllByRecipeId(recipeId: number): Promise<RecipeCommentImage[]>;
+  findAllByRecipeId(ImageIds:number[]): Promise<RecipeCommentImage[]>;
+
   findDefaultImageByRecipeId(recipeId: number): Promise<RecipeCommentImage>;
   addRecipeCommentImage(
     recipeCommentImage: RecipeCommentImageDto

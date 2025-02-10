@@ -18,16 +18,16 @@ export class DfRecipeCommentListUsecase {
   }
 
   async getRecipeAllCommentListTest(id: number): Promise<RecipeCommentWithImageDto[]> {
-
     const comments = await this.recipeCommentRepository.findCommentAll(id);
-    const images = await this.recipeCommentImageRepository.findAllByRecipeId(id);
+    const ImageIds = comments.map((comment) => comment.id);
+    const images = await this.recipeCommentImageRepository.findAllByRecipeId(ImageIds);
 
     const commentsWithImagesDto: RecipeCommentWithImageDto[] = await Promise.all(
       comments.map(async (comment) => {
         const image = images.find((img) => img.id === comment.id);
         return {
           ...comment,
-          imageUrl: image ? image.imageUrl : "",
+          imageUrl: image ? image.photo_url : null,
         };
       })
     );

@@ -80,23 +80,6 @@ const RecipeDetailPage = () => {
   // 레시피 상세페이지에서 보여줄 데이터
   const stepsToShow = showAllSteps ? testDatas : testDatas.slice(0, 2);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const photosPerPage = 5;
-  const totalPhotos = 10;
-
-  const nextPhotos = () => {
-    setCurrentPage(
-      (prevPage) => (prevPage + 1) % Math.ceil(totalPhotos / photosPerPage)
-    );
-  };
-
-  const prevPhotos = () => {
-    setCurrentPage(
-      (prevPage) =>
-        (prevPage - 1 + Math.ceil(totalPhotos / photosPerPage)) %
-        Math.ceil(totalPhotos / photosPerPage)
-    );
-  };
 
   return (
     <RecipeDetailContainer>
@@ -129,12 +112,7 @@ const RecipeDetailPage = () => {
       <TitleBox>
         <SubTitle>포토리뷰</SubTitle>
       </TitleBox>
-      <PhotoReview
-        recipeId={recipeId}
-        currentPage={currentPage}
-        nextPhotos={nextPhotos}
-        prevPhotos={prevPhotos}
-      />
+    <PhotoReview />
       <SortButtonContainer>
         <SortButton
           className={sortType === "points" ? "active" : ""}

@@ -23,11 +23,11 @@ type ReviewData = {
   content: string;
   createdAt: string;
   imageUrl?: string;
-
 };
 
 export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
   const [reviewData, setReviewData] = useState<ReviewData[]>([]);
+  // const [imgData, setImgData] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedFire, setSelectedFire] = useState<number | null>(null);
@@ -35,7 +35,7 @@ export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
-  const imageRef = useRef<HTMLInputElement>(null!);  
+  const imageRef = useRef<HTMLInputElement>(null!);    
 
   useEffect(() => {
   const getComments = async (recipeId: number) => {
@@ -44,8 +44,9 @@ export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
         {
           method: "GET",
         });
-      const data = await res.json();
+      const data = await res.json();  
       setReviewData(data);
+      // setImgData(data.map((review: ReviewData) => review.imageUrl));
     } catch (error) {
       console.log(error);
     }
@@ -104,15 +105,12 @@ const handleDelete = async () => {
         <CookReviewContainer key={index}>
           <CookReviewCardContainer>
             <CookReviewCard>
-              {data.imageUrl && (
                 <CookReviewUserImg
-                  src={data.imageUrl}
+                  src={`/public/Dfprofile.png`}
                   alt="Avatar"
                   width={40}
                   height={40}
                 />
-              )}
-
               <CookReviewUserDetails
                 userName={data.userId}
                 createdAt={data.createdAt}
