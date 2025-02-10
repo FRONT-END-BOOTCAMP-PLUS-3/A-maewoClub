@@ -8,16 +8,17 @@ import {
   Container,
   Description,
   Tier,
-  UserProfileImage
+  UserProfileImage,
+  LikeCount,
+  LikeContainer
 } from "./recipeCardSlide.style";
 
 type RecipeCardProps = {
+  id: string,
   children: React.ReactNode;
-  id: string;
 };
 
 const RecipeCardSlide = ({ children, id }: RecipeCardProps) => {
-
   const router = useRouter();
   const imageUrl = '/recipe.jpg';
   const profileUrl = '/Dfprofile.png';
@@ -37,6 +38,10 @@ const RecipeCardSlide = ({ children, id }: RecipeCardProps) => {
              />
            )}
       <TextContainer>
+        <LikeContainer>
+          {/* 좋아요순으로 보임 TOP.으로 바꿀거면 10까지 맵돌리면 됨. */}
+          <LikeCount>likeCount. {id}</LikeCount>
+        </LikeContainer>
         <Description>{children}</Description>
         <UserContainer>
           {imageUrl && (
@@ -49,7 +54,7 @@ const RecipeCardSlide = ({ children, id }: RecipeCardProps) => {
           )}
           <UserNickname>
             나의 고향 신길동 매운 떡볶이
-            <Tier>알</Tier>
+            <Tier>불사조 ⚜️</Tier>
           </UserNickname>
         </UserContainer>
       </TextContainer>

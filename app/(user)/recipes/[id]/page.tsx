@@ -65,6 +65,37 @@ const RecipeDetailPage = () => {
     }, [recipeId]);
 
 
+      // const [recipe, setRecipe] = useState<RecipeDto | null>(null);
+      // const [isLoading, setIsLoading] = useState(true);
+      // const [error, setError] = useState<string | null>(null);
+    
+      // useEffect(() => {
+      //   if (!id) return;
+    
+      //   const fetchRecipe = async () => {
+      //     setIsLoading(true);
+      //     try {
+      //       const res = await fetch(`/api/recipes/${id}`);
+      //       if (!res.ok) throw new Error("Failed to fetch recipe data");
+            
+      //       const data: RecipeDto = await res.json();
+      //       setRecipe(data);
+      //     } catch (err) {
+      //       setError("레시피 정보를 불러오는 중 오류가 발생했습니다.");
+      //       console.error("Error fetching recipe:", err);
+      //     } finally {
+      //       setIsLoading(false);
+      //     }
+      //   };
+    
+      //   fetchRecipe();
+      // }, [id]);
+    
+      // if (isLoading) return <div>Loading 중입니다...</div>;
+      // if (error) return <div>{error}</div>;
+      // if (!recipe) return <div>레시피 정보를 찾을 수 없습니다.</div>;
+    
+
   const handleReview = () => {
     setReviewShowAll(true);
   };
