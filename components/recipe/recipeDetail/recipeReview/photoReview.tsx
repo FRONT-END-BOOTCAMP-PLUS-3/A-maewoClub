@@ -12,20 +12,9 @@ import {
   NavigationButton,
 } from "./photoReview.style";
 
-interface PhotoReviewProps {
-  currentPage: number;
-  nextPhotos: () => void;
-  prevPhotos: () => void;
-}
-export const PhotoReview  = ({
-  currentPage,
-  nextPhotos,
-  prevPhotos,
-}: PhotoReviewProps) => {
+// interface PhotoReviewProps {}
+export const PhotoReview  = ({}) => {
 
-  const photoUrl = "/recipe.jpg";
-
-// TODO : 이미지 url 받아오기, Photo 상태관리 해당 페이지로 가져오기
   return (
     <PhotoReviewContainer>
       <NavigationButton onClick={prevPhotos}>
@@ -39,12 +28,15 @@ export const PhotoReview  = ({
               transition: "transform 0.3s ease-in-out",
             }}
           >
-            <Photo
-              src={photoUrl}
-              alt={`foodPhoto`}
-              fill
-              sizes="10rem"
-            />
+            {imgData.map((photo_url: string, index: number) => (
+              <Photo
+                key={index}
+                src={photo_url}
+                alt={`foodPhoto ${index}`}
+                fill
+                sizes="10rem"
+              />
+            ))}
           </PhotoWrapper>
     
       </PhotoContainer>

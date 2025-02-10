@@ -14,55 +14,98 @@ import {
   ModalReview,
   ModalTitle,
 } from "./reviewModal.style";
-import { useEffect } from "react";
+import { useState } from "react";
 
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedFire: number | null;
   handleFireClick: (index: number) => void;
-  handleRegister: () => void;
   reviewRef: React.RefObject<HTMLTextAreaElement>;
   imageRef: React.RefObject<HTMLInputElement>;
   handleImageChange: () => void;
   imageName: string | null;
+  userId: string;
+  recipeId: number;
+  isUpdate: boolean;
+  createdAt: string | null
+  reviewId: number | null;
 }
 
 export const ReviewModal = ({
   isOpen,
   onClose,
   selectedFire,
-  handleFireClick,
-  handleRegister,
   reviewRef,
   imageRef,
   handleImageChange,
   imageName,
+  userId,
+  recipeId,
+  isUpdate,
+  createdAt,
+  reviewId,
 }: ReviewModalProps) => {
-  
-  useEffect(() => {
-    const postComment = async (id:number) => {
-      if (!isOpen) return null;
-      try {
-        const res = await fetch(`/api/recipe-comments?recipeId=${id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: id,
-            content: reviewRef.current?.value,
-            score: selectedFire,
-          }),
-        });
-        const data = await res.json();
-        console.log(data);
-      } catch (error) {
-        console.log(error);
+  const [fire, setFire] = useState<number | null>(selectedFire);
+
+  const postComment = async () => {    
+    try {
+      const formData = new FormData();
+      formData.append("userId", userId);
+      formData.append("content", reviewRef.current?.value || "");
+      formData.append("score", fire?.toString() || "");
+
+      if (imageRef.current?.files?.[0]) {
+        const file = imageRef.current.files[0];
+        formData.append("image", file);
       }
+        await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+          method: "POST",
+          body: formData,
+        });
+      onClose();
+    } catch (error) {
+      console.log(error);
     }
-    postComment(1);
-  }, [isOpen, selectedFire, reviewRef]);
+  };
+
+  const updateComment = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("id", reviewId?.toString() || "");
+      formData.append("createdAt", createdAt?.toString() || "");
+      formData.append("userId", userId);
+      formData.append("content", reviewRef.current?.value || "");
+      formData.append("score", fire?.toString() || "");
+
+      const imageFile = imageRef.current?.files?.[0];
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+        method: "PUT",
+        body: formData,
+      });
+      
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (recipeId && userId) {
+      if (isUpdate) {
+        await updateComment();
+      } else {
+        await postComment();
+      }
+    } else {
+      console.error("Recipe ID or User ID is missing");
+    }
+  };
+  
 
   if (!isOpen) return null; 
 
@@ -77,11 +120,11 @@ export const ReviewModal = ({
               key={index}
               size={40}
               color={
-                selectedFire !== null && selectedFire >= index
+                fire !== null && fire >= index
                   ? "var(--mainRed)"
                   : "gray"
               }
-              onClick={() => handleFireClick(index)}
+              onClick={() => setFire(index)}
               style={{ cursor: "pointer" }}
             />
           ))}
@@ -102,7 +145,7 @@ export const ReviewModal = ({
           />
           <ButtonGroup>
             <ModalButton onClick={onClose}>취소</ModalButton>
-            <ModalButton onClick={handleRegister}>등록</ModalButton>
+            <ModalButton onClick={handleSubmit}>등록</ModalButton>
           </ButtonGroup>
         </ModalButtonContainer>
         <ImageNameContainer>

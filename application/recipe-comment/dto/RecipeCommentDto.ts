@@ -1,7 +1,7 @@
 export interface RecipeCommentDto {
   id: number;
   recipeId: number;
-  userId: number;
+  userId: string;
   content: string;
   createdAt: Date;
   updatedAt: Date;
