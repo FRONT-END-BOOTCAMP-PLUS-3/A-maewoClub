@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ReactQueryProvider from "./reactQueryProvider";
 
 export const metadata: Metadata = {
   title: "A-maewoClub",
@@ -12,11 +13,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
-        <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+        <link
+          rel='icon'
+          href='./favicon.ico'
+          type='image/x-icon'
+        />
       </head>
-      <body>{children}</body>
+      <body>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }

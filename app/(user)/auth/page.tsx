@@ -35,7 +35,7 @@ export default function AuthCallback() {
 
       localStorage.setItem("access_token", response.accessToken);
 
-      await fetch("/api/users", {
+      await fetch("/api/users/account", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -51,13 +51,6 @@ export default function AuthCallback() {
     }
   };
 
-  // useEffect(() => {
-  //   if (code) {
-  //     handleSubmit(new Event("submit") as unknown as React.FormEvent);
-  //   }
-  // }, [code]);
-
-  // 추후 수정 예정
   return (
     <div style={{ backgroundColor: "white" }}>
       <h1>닉네임을 입력해주세요</h1>

@@ -12,6 +12,7 @@ import Pagination from "@/components/recipe/cardPaging/cardPaging";
 const Page = () => {
   const router = useRouter();
   const [boardData, setBoardData] = useState<BoardDto[]>([]);
+  const [filteredData, setFilteredData] = useState<BoardDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
@@ -25,6 +26,7 @@ const Page = () => {
         });
         const data = await res.json();
         setBoardData(data.boards);
+        setFilteredData(data.boards);
       } catch (error) {
         console.error("Error fetching boards:", error);
       } finally {
@@ -35,11 +37,21 @@ const Page = () => {
     fetchBoards();
   }, []);
 
+  const handleFilterChange = (tagId: number | null) => {
+    setCurrentPage(1);
+
+    if (tagId === null) {
+      setFilteredData(boardData);
+    } else {
+      const filtered = boardData.filter((board) => board.tagId === tagId);
+      setFilteredData(filtered);
+    }
+  };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = (currentPage - 1) * postsPerPage;
-  const currentPosts = boardData.slice(indexOfFirstPost, indexOfLastPost);
-
-  const totalPages = Math.ceil(boardData.length / postsPerPage);
+  const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(filteredData.length / postsPerPage);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -55,7 +67,7 @@ const Page = () => {
       <Overview />
       <FilterBar />
       <div style={{ display: "flex", gap: "15px" }}>
-        <FilterButtonGroup />
+        <FilterButtonGroup onFilterChange={handleFilterChange} />
       </div>
 
       <div

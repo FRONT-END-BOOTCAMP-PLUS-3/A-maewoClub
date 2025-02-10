@@ -4,7 +4,6 @@ export interface UserDto {
   level: string;
   role: string;
   email: string;
-  photoUrl: string;
+  photoUrl?: string;
   createdAt: Date;
-  publicStatus: boolean;
 }
