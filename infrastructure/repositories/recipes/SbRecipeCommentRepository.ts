@@ -105,7 +105,16 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment")
-      .insert([recipeComment])
+      .insert([
+        {
+          recipe_id: recipeComment.recipeId,
+          user_id: recipeComment.userId,
+          content: recipeComment.content,
+          created_at: recipeComment.createdAt,
+          updated_at: recipeComment.updatedAt,
+          score: recipeComment.score
+        }
+      ])
       .select("id")
       .single();
 
