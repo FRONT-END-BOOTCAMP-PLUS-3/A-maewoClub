@@ -99,3 +99,11 @@ export const UpdateButton = styled.button`
   font-size: 1rem;
   background-color: var(--mainRed); 
 `
+
+export const DeleteButton = styled.button`
+  color: white;
+  padding: 5px 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: var(--darkRed); 
+`;

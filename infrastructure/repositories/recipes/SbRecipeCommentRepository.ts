@@ -124,21 +124,6 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     return data.id || 0;
   }
 
-  async getCommentIdByCreatedAt(createdAt: string): Promise<number> {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("recipe_comment")
-      .select("id")
-      .eq("created_at", createdAt)
-      .single();
-
-    if (error) {
-      throw new Error(`Failed getCommentIdByCreatedAt: ${error.message}`);
-    }
-
-    return data.id || 0
-  }
-
   async updateRecipeComment(recipeComment: RecipeCommentUpdateDto) {
     const supabase = await createClient();
     const { error } = await supabase
@@ -160,17 +145,26 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
       }
   }
 
-
-
   async deleteByCommentId(id: number): Promise<void> {
     const supabase = await createClient();
-    const { error } = await supabase
+
+      // const { error: imageError } = await supabase
+      // .from("recipe_comment_image")
+      // .delete()
+      // .eq("id", id);
+
+      // if (imageError) {
+      //   throw new Error(`Failed to delete recipe comment image: ${imageError.message}`);
+      // }
+    
+
+    const { error : commentError} = await supabase
       .from("recipe_comment")
       .delete()
       .eq("id", id);
 
-    if (error) {
-      throw new Error(error.message);
+    if (commentError) {
+      throw new Error(`Failed to delete recipe comment: ${commentError.message}`);
     }
   }
 }

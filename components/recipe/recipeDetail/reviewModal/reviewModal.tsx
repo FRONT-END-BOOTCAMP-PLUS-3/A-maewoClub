@@ -28,7 +28,8 @@ interface ReviewModalProps {
   userId: string;
   recipeId: number;
   isUpdate: boolean;
-  createdAt: string
+  createdAt: string | null
+  reviewId: number | null;
 }
 
 export const ReviewModal = ({
@@ -43,6 +44,7 @@ export const ReviewModal = ({
   recipeId,
   isUpdate,
   createdAt,
+  reviewId,
 }: ReviewModalProps) => {
   const [fire, setFire] = useState<number | null>(selectedFire);
 
@@ -70,7 +72,8 @@ export const ReviewModal = ({
   const updateComment = async () => {
     try {
       const formData = new FormData();
-      formData.append("createdAt", createdAt);
+      formData.append("id", reviewId?.toString() || "");
+      formData.append("createdAt", createdAt?.toString() || "");
       formData.append("userId", userId);
       formData.append("content", reviewRef.current?.value || "");
       formData.append("score", fire?.toString() || "");

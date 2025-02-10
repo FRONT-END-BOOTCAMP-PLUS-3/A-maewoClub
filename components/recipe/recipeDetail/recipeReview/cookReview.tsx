@@ -5,9 +5,11 @@ import {
   CookReviewUserImg,
   CookReviewCardContainer,
   UpdateButton,
+  DeleteButton,
 } from "./cookReview.style";
 import CookReviewUserDetails from "./cookReviewUserDetails";
 import { ReviewModal } from "../reviewModal/reviewModal";
+import { ButtonGroup, ModalButton, ModalContent, ModalOverlay, ModalTitle } from "../reviewModal/reviewModal.style";
 
 type CookReviewProps = {
   recipeId: number;
@@ -15,11 +17,13 @@ type CookReviewProps = {
 }
 
 type ReviewData = {
+  id: number;
   userId: string;
   score: number;
   content: string;
   createdAt: string;
   imageUrl?: string;
+
 };
 
 export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
@@ -27,7 +31,9 @@ export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedFire, setSelectedFire] = useState<number | null>(null);
-  const [createdAt, setCreatedAt] = useState<string>("");
+  const [createdAt, setCreatedAt] = useState<string | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);  
 
@@ -39,9 +45,7 @@ export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
           method: "GET",
         });
       const data = await res.json();
-      console.log("comment : ", data);
       setReviewData(data);
-
     } catch (error) {
       console.log(error);
     }
@@ -53,20 +57,50 @@ export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
  const handleOpenModal = (review: ReviewData) => {
   setIsUpdate(true);
   setSelectedFire(review.score);
-  setCreatedAt(review.createdAt);
+  setCreatedAt(review.createdAt);   
+  setSelectedReviewId(review.id);
   setIsModalOpen(true);
 };
 
 const handleCloseModal = () => {
   setIsUpdate(false);
   setSelectedFire(null);
-  setCreatedAt("");
+  setCreatedAt(null);
+  setSelectedReviewId(null);
   setIsModalOpen(false);
 };
 
+const handleOpenDeleteModal = (id: number) => {
+  setSelectedReviewId(id);
+  setIsDeleteModalOpen(true);
+};
+
+const handleCloseDeleteModal = () => {
+  setSelectedReviewId(null);
+  setIsDeleteModalOpen(false);
+};
+
+const handleDelete = async () => {
+  if (selectedReviewId === null) return;
+  const reviewToDelete = reviewData.find((review) => review.id === selectedReviewId);
+  const hasImage = reviewToDelete?.imageUrl ? true : false;
+
+  try {
+      await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+      method: "DELETE",
+      body: JSON.stringify({ id: selectedReviewId, hasImage }),
+    });
+      setReviewData((prevData) => prevData.filter((review) => review.id !== selectedReviewId));
+      handleCloseDeleteModal();
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+  }
+};
+
+
   return (
     <>
-     {reviewData.map((data, index) => (
+    {reviewData.map((data, index) => (
         <CookReviewContainer key={index}>
           <CookReviewCardContainer>
             <CookReviewCard>
@@ -86,7 +120,10 @@ const handleCloseModal = () => {
                 description={data.content}
                 />
               {data.userId === userId && (
-                <UpdateButton onClick={()=>handleOpenModal(data)}>수정</UpdateButton>
+                <>
+                  <UpdateButton onClick={() => handleOpenModal(data)}>수정</UpdateButton>
+                  <DeleteButton onClick={() => handleOpenDeleteModal(data.id)}>삭제</DeleteButton>
+                </>
               )}             
             </CookReviewCard>
           </CookReviewCardContainer>
@@ -105,7 +142,20 @@ const handleCloseModal = () => {
         recipeId={recipeId}
         isUpdate={isUpdate}
         createdAt={createdAt}
+        reviewId={selectedReviewId}
       />
+      {isDeleteModalOpen && (
+        <ModalOverlay>
+          <ModalContent>
+            <ModalTitle>삭제 확인</ModalTitle>
+            <p>정말로 이 댓글을 삭제하시겠습니까?</p>
+            <ButtonGroup>
+              <ModalButton onClick={handleCloseDeleteModal}>취소</ModalButton>
+              <ModalButton onClick={handleDelete}>삭제</ModalButton>
+            </ButtonGroup>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </>
   );
 };

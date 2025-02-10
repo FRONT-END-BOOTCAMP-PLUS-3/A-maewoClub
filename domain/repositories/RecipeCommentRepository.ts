@@ -16,8 +16,6 @@ export interface RecipeCommentRepository {
 
   addRecipeComment(recipeComment:RecipeCommentCreateDto): Promise<number>;
 
-  getCommentIdByCreatedAt(createdAt: string): Promise<number>;
-
   updateRecipeComment(recipeComment:
     RecipeCommentUpdateDto
   ): void

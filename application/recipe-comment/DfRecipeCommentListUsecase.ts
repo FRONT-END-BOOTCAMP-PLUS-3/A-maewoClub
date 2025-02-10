@@ -16,10 +16,6 @@ export class DfRecipeCommentListUsecase {
   async getRecipeComment(id: number) {
     return await this.recipeCommentRepository.findOne(id);
   }
-  async deleteRecipeCommentImage(id: number) {
-    await this.recipeCommentRepository.deleteByCommentId(id);
-    await this.recipeCommentImageRepository.deleteByImageId(id);
-  }
 
   async getRecipeAllCommentListTest(id: number): Promise<RecipeCommentWithImageDto[]> {
 

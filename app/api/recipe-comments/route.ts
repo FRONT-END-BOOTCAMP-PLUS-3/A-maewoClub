@@ -106,18 +106,20 @@ export async function PUT(req: NextRequest) {
   try {
     const body = await req.formData();
 
-    const createdAt = String(body.get("createdAt")) 
+    const id = Number(body.get("id")) 
+    const createdAt = String(body.get("createdAt"))
     const userId = String(body.get("userId"))
     const content = String(body.get("content"))
     const score = Number(body.get("score"))
     const image = body.get("image")
 
-    if (!score || !userId || !content) {
+    if (!score || !userId || !content || !id) {
       return NextResponse.json(
         { error: "필수 값이 없습니다." },
         { status: 400 }
       );
     }
+
     const recipeCommentRepository: RecipeCommentRepository =
       new SbRecipeCommentRepository();
     const recipeCommentImageRepository: RecipeCommentImageRepository =
@@ -128,12 +130,8 @@ export async function PUT(req: NextRequest) {
       recipeCommentImageRepository
     );
 
-    const getCommentIdByCreatedAt = 
-    await recipeCommentRepository.getCommentIdByCreatedAt(createdAt);
-
-    // await recipeCommentRepository.deleteRecipeComment(getCommentIdByCreatedAt);
     await recipeCommentRepository.updateRecipeComment({
-      id: getCommentIdByCreatedAt,
+      id: id,
       userId: userId,
       content: content,
       updatedAt: new Date(),
@@ -146,9 +144,8 @@ export async function PUT(req: NextRequest) {
       const mimeType = (image as File).type; // 이미지 MIME 타입 (예: image/png)
       const photoUrl = `data:${mimeType};base64,${base64Image}`; // Base64 데이터 URL 생성
       
-      // await recipeCommentImageRepository.deleteRecipeCommentImage(getCommentIdByCreatedAt);
       await recipeCommentImageRepository.updateRecipeCommentImage({
-        id: getCommentIdByCreatedAt,
+        id: id,
         photoUrl,
         createdAt: createdAt,
         updatedAt: new Date(),
@@ -157,7 +154,7 @@ export async function PUT(req: NextRequest) {
       }
 
     const updateRecipeComment =
-      await recipeCommentImageUsecase.getRecipeComment(getCommentIdByCreatedAt);
+      await recipeCommentImageUsecase.getRecipeComment(id);
 
     return NextResponse.json(updateRecipeComment, { status: 200 });
   } catch (error) {
@@ -169,18 +166,31 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function Delete(id: number) {
-  const recipeCommentRepository: RecipeCommentRepository =
+export async function DELETE(req: NextRequest) {
+  try{
+    const body = await req.json();
+
+    if (!body.id) {
+      return NextResponse.json(
+        { error: "필수 값이 없습니다." },
+        { status: 400 }
+      );
+    }
+
+    const recipeCommentRepository: RecipeCommentRepository =
     new SbRecipeCommentRepository();
-  const recipeCommentImageRepository: RecipeCommentImageRepository =
+    const recipeCommentImageRepository: RecipeCommentImageRepository =
     new SbRecipeCommentImageRepository();
 
-  const recipeCommentImageUsecase: DfRecipeCommentListUsecase =
-    new DfRecipeCommentListUsecase(
-      recipeCommentRepository,
-      recipeCommentImageRepository
-    );
+    await recipeCommentImageRepository.deleteByImageId(body.id);
+    await recipeCommentRepository.deleteByCommentId(body.id);
 
-  await recipeCommentImageUsecase.deleteRecipeCommentImage(id);
-  return NextResponse.json({ message: "Deleted" });
+    return NextResponse.json({ message: "Deleted" }, { status: 200 });
+  }catch(error){
+    console.error("Error creating recipe:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

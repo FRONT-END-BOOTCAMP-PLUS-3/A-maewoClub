@@ -122,6 +122,8 @@ const RecipeDetailPage = () => {
         userId={userId}
         recipeId={recipeId}
         isUpdate={false}
+        createdAt={null}
+        reviewId={null}
       ></ReviewModal>
 
       <TitleBox>

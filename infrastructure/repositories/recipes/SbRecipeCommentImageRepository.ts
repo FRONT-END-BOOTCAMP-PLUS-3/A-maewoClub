@@ -96,13 +96,13 @@ export class SbRecipeCommentImageRepository
 
   async deleteByImageId(id: number): Promise<void> {
     const supabase = await createClient();
-    const { error } = await supabase
+    const { error: imageError } = await supabase
       .from("recipe_comment_image")
       .delete()
       .eq("id", id);
 
-    if (error) {
-      throw new Error(error.message);
+    if (imageError) {
+      throw new Error(imageError.message);
     }
   }
 }
