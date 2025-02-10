@@ -13,8 +13,8 @@ import {
 } from "@/components/recipe/recipeDetail/cookingStep/cookingSteps";
 import { RecipeUserProfile } from "@/components/recipe/recipeDetail/recipeUserProfile/recipeUserProfile";
 import { PhotoReview } from "@/components/recipe/recipeDetail/recipeReview/photoReview";
-import { CookReview } from "@/components/recipe/recipeDetail/recipeReview/cookReview";
-import { useRef, useState } from "react";
+import { CookReview, ReviewData } from "@/components/recipe/recipeDetail/recipeReview/cookReview";
+import { useEffect, useRef, useState } from "react";
 import { ReviewModal } from "@/components/recipe/recipeDetail/reviewModal/reviewModal";
 import {
   SortButtonContainer,
@@ -36,12 +36,34 @@ const RecipeDetailPage = () => {
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
 
-  const pathname = usePathname(); // 현재 경로 가져오기
-  const pathSegments = pathname.split("/"); // "/" 기준으로 분할
-  const recipeId = Number(pathSegments[pathSegments.length - 1]); // 마지막 요소가 ID
+  const pathname = usePathname(); 
+  const pathSegments = pathname.split("/");
+  const recipeId = Number(pathSegments[pathSegments.length - 1]);
+
+  const [reviewData, setReviewData] = useState<ReviewData[]>([]);
+  const [imgData, setImgData] = useState<string[]>([]);
+ 
 
 // TODO : UserId
   const userId = "12546258-59a4-4eb6-86cc-88e2d2421aa1";
+
+  useEffect(() => {
+    const getComments = async (recipeId: number) => {
+      try {
+        const res = await fetch(`/api/recipe-comments?recipeId=${recipeId}`,
+          {
+            method: "GET",
+          });
+        const data = await res.json();  
+        setReviewData(data);
+        setImgData(data.map((review: ReviewData) => review.imageUrl));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getComments(recipeId);
+    }, [recipeId]);
+
 
   const handleReview = () => {
     setReviewShowAll(true);
@@ -112,7 +134,7 @@ const RecipeDetailPage = () => {
       <TitleBox>
         <SubTitle>포토리뷰</SubTitle>
       </TitleBox>
-    <PhotoReview />
+    <PhotoReview imgData={imgData} />
       <SortButtonContainer>
         <SortButton
           className={sortType === "points" ? "active" : ""}
@@ -130,6 +152,7 @@ const RecipeDetailPage = () => {
       <CookReview 
         recipeId={recipeId}
         userId={userId}
+        reviewData={reviewData}
        />
       {!reviewShowAll && (
         <ReviewMoreButton onClick={handleReview}>더보기</ReviewMoreButton>

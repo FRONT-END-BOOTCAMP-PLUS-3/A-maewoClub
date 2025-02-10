@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   CookReviewContainer,
   CookReviewCard,
@@ -14,9 +14,10 @@ import { ButtonGroup, ModalButton, ModalContent, ModalOverlay, ModalTitle } from
 type CookReviewProps = {
   recipeId: number;
   userId: string;
+  reviewData: ReviewData[];
 }
 
-type ReviewData = {
+export type ReviewData = {
   id: number;
   userId: string;
   score: number;
@@ -25,9 +26,7 @@ type ReviewData = {
   imageUrl?: string;
 };
 
-export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
-  const [reviewData, setReviewData] = useState<ReviewData[]>([]);
-  // const [imgData, setImgData] = useState<string[]>([]);
+export const CookReview = ({ recipeId, userId, reviewData }: CookReviewProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedFire, setSelectedFire] = useState<number | null>(null);
@@ -36,23 +35,6 @@ export const CookReview = ({ recipeId, userId }: CookReviewProps) => {
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);    
-
-  useEffect(() => {
-  const getComments = async (recipeId: number) => {
-    try {
-      const res = await fetch(`/api/recipe-comments?recipeId=${recipeId}`,
-        {
-          method: "GET",
-        });
-      const data = await res.json();  
-      setReviewData(data);
-      // setImgData(data.map((review: ReviewData) => review.imageUrl));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  getComments(recipeId);
-  }, [recipeId]);
 
 
  const handleOpenModal = (review: ReviewData) => {
@@ -91,7 +73,6 @@ const handleDelete = async () => {
       method: "DELETE",
       body: JSON.stringify({ id: selectedReviewId, hasImage }),
     });
-      setReviewData((prevData) => prevData.filter((review) => review.id !== selectedReviewId));
       handleCloseDeleteModal();
   } catch (error) {
     console.error("Error deleting comment:", error);
@@ -105,12 +86,14 @@ const handleDelete = async () => {
         <CookReviewContainer key={index}>
           <CookReviewCardContainer>
             <CookReviewCard>
-                <CookReviewUserImg
-                  src={`/public/Dfprofile.png`}
-                  alt="Avatar"
-                  width={40}
-                  height={40}
-                />
+            {data.imageUrl && (
+                  <CookReviewUserImg
+                    src={data.imageUrl || ""}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                  />
+                )}
               <CookReviewUserDetails
                 userName={data.userId}
                 createdAt={data.createdAt}

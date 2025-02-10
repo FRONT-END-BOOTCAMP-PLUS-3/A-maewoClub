@@ -6,12 +6,15 @@ export interface RecipeCommentImageRepository {
   findAllByRecipeId(ImageIds:number[]): Promise<RecipeCommentImage[]>;
 
   findDefaultImageByRecipeId(recipeId: number): Promise<RecipeCommentImage>;
+
   addRecipeCommentImage(
     recipeCommentImage: RecipeCommentImageDto
   ): void;
+
   updateRecipeCommentImage(
     recipeCommentImage: RecipeCommentImageUpdateDto
   ): void;
+  
   deleteByImageId(id: number): Promise<void>;
   findOne(id: number): Promise<RecipeCommentImage>;
 }
