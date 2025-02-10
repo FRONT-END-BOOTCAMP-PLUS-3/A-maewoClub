@@ -100,20 +100,12 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
     return RecipeComment || [];
   }
 
+  // memo : 수정 필요 SbRecipeCommentRepository.ts
   async addRecipeComment(recipeComment: RecipeCommentCreateDto): Promise<number> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_comment")
-      .insert([
-        {
-          recipe_id: recipeComment.recipeId,
-          user_id: recipeComment.userId,
-          content: recipeComment.content,
-          created_at: recipeComment.createdAt,
-          updated_at: recipeComment.updatedAt,
-          score: recipeComment.score,
-        },
-      ])
+      .insert([recipeComment])
       .select("id")
       .single();
 
@@ -147,17 +139,6 @@ export class SbRecipeCommentRepository implements RecipeCommentRepository {
 
   async deleteByCommentId(id: number): Promise<void> {
     const supabase = await createClient();
-
-      // const { error: imageError } = await supabase
-      // .from("recipe_comment_image")
-      // .delete()
-      // .eq("id", id);
-
-      // if (imageError) {
-      //   throw new Error(`Failed to delete recipe comment image: ${imageError.message}`);
-      // }
-    
-
     const { error : commentError} = await supabase
       .from("recipe_comment")
       .delete()
