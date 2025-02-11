@@ -1,16 +1,18 @@
 export interface BoardCommentDto {
   id: number;
   boardId: number;
-  userId: number;
+  userId: string;
   content: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
   nickname?: string;
+  photoUrl?: string;
+
 }
 
 export interface CreateBoardCommentDto {
   boardId: number;
-  userId: number;
+  userId: string;
   content: string;
 }
 

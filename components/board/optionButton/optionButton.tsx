@@ -10,7 +10,7 @@ interface OptionButtonProps {
 }
 
 interface FilterButtonGroupProps {
-  onFilterChange: (tagId: number | null) => void;
+  onFilterChange: (tagId: number) => void;
 }
 
 const FilterToggleButton = ({
@@ -19,14 +19,17 @@ const FilterToggleButton = ({
   onClick,
 }: OptionButtonProps) => {
   return (
-    <OptionButton $isActive={$isActive} onClick={onClick}>
+    <OptionButton
+      $isActive={$isActive}
+      onClick={onClick}
+    >
       {label}
     </OptionButton>
   );
 };
 
 const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number>(0);
   const [tagData, setTagData] = useState<BoardTag[]>([]);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
 
   const handleButtonClick = (id: number) => {
     // 같은 태그를 다시 클릭하면 필터 해제
-    const newSelected = selected === id ? null : id;
+    const newSelected = selected === id ? 0 : id;
     setSelected(newSelected);
     onFilterChange(newSelected);
   };

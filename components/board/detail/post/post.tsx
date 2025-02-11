@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import Comment from "../comment/comment";
 import Profile from "../profile/profile";
 import {
@@ -11,65 +13,70 @@ import {
   ContentBox,
   PostImage,
 } from "./post.style";
+import { BoardDetailDto } from "@/application/board/dto/BoardDetailDto";
 
-interface PostProps {
-  nickname: string;
-  createdDate: string;
-
-  image: string;
-  title: string;
-  content: string;
-  like: number;
-  view: number;
-  comment: number;
-}
-
-const mock: PostProps = {
-  nickname: "빨간떡볶이1짱",
-  createdDate: "2025/01/28",
-
-  image: "/recipe.jpg",
-  title: "신당동 떡뽁이 안 매움",
-  content:
-    "이번에 신당동 떡볶이 혼자 뿌시고 왔습니다... 정말 맛있어서 까무러치는줄 알았습니다... 벌써 또 먹으러 가고 싶어서 미칠 것 같네요ㅋㅋ 바이럴 절대 아닙니다 혼자만 알기 아까운 맛집이니까 많이 팔아주세요~",
-  like: 33,
-  view: 84,
-  comment: 4,
-};
-const boardId = 1;
 const Post = () => {
+  const { id } = useParams();
+  const [board, setBoard] = useState<BoardDetailDto | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+
+    fetch(`/api/boards/detail?id=${id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("게시글 상세 정보를 불러오는데 실패했습니다.");
+        }
+        return res.json();
+      })
+      .then((data: BoardDetailDto) => {
+        setBoard(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("게시글 상세 정보 호출 오류:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <div>로딩중...</div>;
+  if (!board) return <div>존재하지 않는 게시글입니다.</div>;
+
+  const profileData = {
+    nickname: board.userId,
+    image: "/Dfprofile.png",
+    createdAt: new Date(board.createdAt),
+  };
+
   return (
-    <>
-      <PostContainer
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <ContentBox>
-          <Profile
-            nickname={mock.nickname}
-            image="/Dfprofile.png"
-            createdDate={mock.createdDate}
-          />
-          <Title>{mock.title}</Title>
+    <PostContainer>
+      <ContentBox>
+        <Profile
+          nickname={profileData.nickname}
+          image={profileData.image}
+          createdAt={profileData.createdAt}
+        />
+        <Title>{board.title}</Title>
+        {board.images && board.images.length > 0 && (
           <PostImage
-            src={mock.image}
+            src={board.images[0].photoUrl}
             width={500}
             height={300}
-            alt="post_image"
+            alt='post_image'
           />
-          <Content>{mock.content}</Content>
-          <InfoWrapper>
-            <SubInfo>조회 : {mock.view}</SubInfo>
-            <SubInfo>하트 : {mock.like}</SubInfo>
-            <SubInfo>댓글 : {mock.comment}</SubInfo>
-          </InfoWrapper>
-          <Comment/>
-        </ContentBox>
-      </PostContainer>
-    </>
+        )}
+        <Content>{board.description}</Content>
+        <InfoWrapper>
+          <SubInfo>조회 : {board.viewCount}</SubInfo>
+          <SubInfo>하트 : {board.likeCount}</SubInfo>
+          {/* <SubInfo>댓글 : {board.comments.length}</SubInfo> */}
+        </InfoWrapper>
+        <Comment comments={board.comments} />
+      </ContentBox>
+    </PostContainer>
   );
 };
 

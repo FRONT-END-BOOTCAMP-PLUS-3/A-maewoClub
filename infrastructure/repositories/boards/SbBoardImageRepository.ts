@@ -1,29 +1,27 @@
 import { BoardImage } from "@/domain/entities/BoardImage";
 import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
-
 import { createClient } from "@/utils/supabase/server";
 
 export class SbBoardImageRepository implements BoardImageRepository {
-  async save(boardImage: BoardImage): Promise<BoardImage> {
+  async addBoardImage(boardId: number, photoUrl: string): Promise<void> {
     const supabase = await createClient();
+
     const { data, error } = await supabase
       .from("board_image")
       .insert([
         {
-          id: boardImage.id,
-          user_id: boardImage.userId,
-          photo_url: boardImage.photoUrl,
+          id: boardId,
+          photo_url: photoUrl,
         },
       ])
       .select()
       .single();
 
-    if (error) {
-      console.error(error);
+    if (error || !data) {
+      throw new Error(`게시글 이미지 저장 실패: ${error?.message}`);
     }
-
-    return data || [] || null;
   }
+
   async findAllByBoardId(id: number): Promise<BoardImage[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -32,7 +30,8 @@ export class SbBoardImageRepository implements BoardImageRepository {
       .eq("id", id);
 
     if (error) {
-      console.error(error);
+      console.error("게시글 이미지 조회 오류:", error.message);
+      throw new Error("게시글 이미지 조회에 실패했습니다.");
     }
 
     return data || [];
@@ -44,11 +43,11 @@ export class SbBoardImageRepository implements BoardImageRepository {
       .from("board_image")
       .select("*")
       .eq("id", id)
-      // .eq("is_default", true)
       .maybeSingle();
+
     if (error) {
-      console.error(error);
-      throw new Error("Failed to fetch default image");
+      console.error("기본 게시글 이미지 조회 오류:", error.message);
+      throw new Error("기본 게시글 이미지 조회에 실패했습니다.");
     }
 
     return data || null;
