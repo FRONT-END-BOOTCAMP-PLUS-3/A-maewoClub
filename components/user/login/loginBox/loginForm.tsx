@@ -41,11 +41,21 @@ const LoginForm = ({ onUpdate }: AccountInputProps) => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(accountId)) {
+      setErrorMessage("올바른 이메일 형식이 아닙니다.");
+      return;
+    }
+
+    if (accountPw.length < 8) {
+      setErrorMessage("비밀번호는 8자 이상이어야 합니다.");
+      return;
+    }
+
     login(
       { email: accountId, password: accountPw },
       {
         onSuccess: async () => {
-          alert("로그인 성공!");
           await fetchUser();
           window.location.reload();
         },
@@ -75,7 +85,6 @@ const LoginForm = ({ onUpdate }: AccountInputProps) => {
         />
       </InputBox>
       {errorMessage && <ErrorMsg>{errorMessage}</ErrorMsg>}
-
       <SubmitButton onClick={handleSubmit}>로그인</SubmitButton>
     </Container>
   );
