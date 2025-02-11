@@ -11,7 +11,12 @@ import {
   ProfileImage,
 } from "./recipeUserProfile.style";
 
-export const RecipeUserProfile = () => {
+type UserProfileProps = {
+  id: number;
+}
+
+export const RecipeUserProfile = ({id}: UserProfileProps) => {
+  const recipeId = id;
   const thumbnailImage = "/recipe.jpg";
   const profileImage = "/Dfprofile.png";
   const userName = "순대위장";

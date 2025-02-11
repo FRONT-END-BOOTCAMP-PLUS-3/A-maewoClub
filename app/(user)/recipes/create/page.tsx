@@ -1,19 +1,16 @@
 "use client"
 
 import RecipeCreate from "@/components/recipe/create/recipeCreate";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Page = () => {
-  
-  // useEffect(() => {
-  //   if(userInfo != true){
-  //     loginModal 띄우기
-  //   }
-  // })
-
+  const {isAuthenticated} = useAuthStore();
   return(
     <>
-    {/* 로그인 회원만 보이도록 할 것 */}
-    <RecipeCreate></RecipeCreate>
+    {isAuthenticated ?? 
+      <RecipeCreate></RecipeCreate>
+    }
+    
     </>
   )
 }

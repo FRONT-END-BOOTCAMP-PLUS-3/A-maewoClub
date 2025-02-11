@@ -36,23 +36,10 @@ export const ReviewModal = ({
   reviewId,
 }: ReviewModalProps) => {
 
-  const [isModalOpen ,setIsModalOpen] = useState(false);
-  const [selectedFire, setSelectedFire] = useState<number | null>(null);
-  const [fire, setFire] = useState<number | null>(selectedFire);
+  const [fire, setFire] = useState<number | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
   const [imageName, setImageName] = useState<string | null>(null);
-  
-
-  const handleFireClick = (index: number) => {
-    setSelectedFire(index);
-  }
-
-  const handleCloseModal = () => {
-    setSelectedFire(null);
-    setImageName(null);
-    setIsModalOpen(false);
-  };
 
     const handleImageChange = () => {
     const image = imageRef.current?.files?.[0];
@@ -118,10 +105,8 @@ export const ReviewModal = ({
       console.error("Recipe ID or User ID is missing");
     }
   };
-  
 
   if (!isOpen) return null; 
-
 
   return (
     <ModalOverlay>
