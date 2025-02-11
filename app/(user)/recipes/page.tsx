@@ -98,8 +98,8 @@ export default function Page() {
         <SlideButton className="left" onClick={handleTopPrev} disabled={topCurrentSlide === 0}>◀</SlideButton>
         <SlideTrack position={topCurrentSlide}>
           {topRecipes.map((recipe) => (
-            <SlideWrapper key={recipe.id}>
-              <RecipeCardSlide id={`${recipe.likeCount}`}>{recipe.title}</RecipeCardSlide>
+            <SlideWrapper key={recipe.likeCount}>
+              <RecipeCardSlide id={`${recipe.id}`}>{recipe.title}</RecipeCardSlide>
             </SlideWrapper>
           ))}
         </SlideTrack>

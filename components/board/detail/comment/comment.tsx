@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import Button from "../../button/button";
 import Profile from "../profile/profile";
 import {
@@ -39,11 +40,13 @@ const mock: CommentProps[] = [
 ];
 
 const Comment = () => {
+  const { id } = useParams();
+  const boardId = Number(id);
   return (
     <>
       <CommentBox>
         {mock.map((e) => (
-          <Container key={e.nickname}>
+          <Container key={boardId}>
             <Profile
               nickname={e.nickname}
               image={e.image}

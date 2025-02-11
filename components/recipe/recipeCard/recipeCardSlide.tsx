@@ -40,7 +40,7 @@ const RecipeCardSlide = ({ children, id }: RecipeCardProps) => {
       <TextContainer>
         <LikeContainer>
           {/* 좋아요순으로 보임 TOP.으로 바꿀거면 10까지 맵돌리면 됨. */}
-          <LikeCount>likeCount. {id}</LikeCount>
+          <LikeCount>TOP. {id}</LikeCount>
         </LikeContainer>
         <Description>{children}</Description>
         <UserContainer>
