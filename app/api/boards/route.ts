@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BoardRepository } from "@/domain/repositories/BoardRepository";
-import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepostory";
 import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 import { SbBoardImageRepository } from "@/infrastructure/repositories/boards/SbBoardImageRepository";
 import { DfBoardListUsecase } from "@/application/board/DfBoardListUsecase";
 import { BoardListDto } from "@/application/board/dto/BoardListDto";
+import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepository";
 
 // recipes/route
 export async function GET() {
