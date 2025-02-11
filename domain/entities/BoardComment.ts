@@ -1,7 +1,7 @@
 export interface BoardComment {
   id: number;
   boardId: number;
-  userId: number;
+  userId: string;
   content: string;
   createdAt: Date;
   updatedAt: Date;
