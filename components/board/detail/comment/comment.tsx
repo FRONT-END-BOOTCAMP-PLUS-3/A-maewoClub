@@ -1,58 +1,44 @@
-"use client";
-
+import { BoardCommentDto } from "@/application/board/dto/BoardCommentDto";
 import Button from "../../button/button";
-import Profile from "../profile/profile";
 import {
   ButtonBox,
   CommentBox,
   CommentInput,
   Container,
   Content,
+  CreateDate,
+  InfoWrapper,
+  Nickname,
+  ProfileImage,
 } from "./comment.style";
 
 interface CommentProps {
-  nickname: string;
-  createdDate: string;
-  image: string;
-  comment: string;
+  comments: BoardCommentDto[];
 }
 
-const mock: CommentProps[] = [
-  {
-    nickname: "1번닉네임",
-    createdDate: "2025/01/21",
-    image: "/file.svg",
-    comment: "1번 댓글 내용~ 대충 너무 맛있다는 뜻~",
-  },
-  {
-    nickname: "2번닉네임",
-    createdDate: "2025/01/22",
-    image: "/file.svg",
-    comment: "2번 댓글 내용~ 대충 너무 맛있다는 뜻~",
-  },
-  {
-    nickname: "3번닉네임",
-    createdDate: "2025/01/23",
-    image: "/file.svg",
-    comment: "3번 댓글 내용~ 대충 너무 맛있다는 뜻~",
-  },
-];
-
-const Comment = () => {
+const Comment = ({ comments }: CommentProps) => {
   return (
     <>
       <CommentBox>
-        {mock.map((e) => (
-          <Container key={e.nickname}>
-            <Profile
-              nickname={e.nickname}
-              image={e.image}
-              createdDate={e.createdDate}
+        {comments.map((e) => (
+          <Container key={e.id}>
+            <ProfileImage
+              src={e.photoUrl}
+              alt='profile-image'
             />
-            <Content>{e.comment}</Content>
+            <InfoWrapper>
+              <Nickname>{e.nickname}</Nickname>
+              {/* <CreateDate>{e.createdAt}</CreateDate> */}
+            </InfoWrapper>
+            <InfoWrapper>
+              <Nickname>{e.nickname}</Nickname>
+              <CreateDate>{new Date(e.createdAt).toLocaleString()}</CreateDate>
+            </InfoWrapper>
+            <Content>{e.content}</Content>
           </Container>
         ))}
       </CommentBox>
+
       <CommentInput />
 
       <ButtonBox>
