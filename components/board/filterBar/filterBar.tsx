@@ -1,30 +1,36 @@
 "use client";
 import React, { useState } from "react";
 import { FilterBarContainer, FilterButton } from "./filterBar.style";
-const FilterBar = () => {
+
+interface FilterBarProps {
+  onSortChange: (sortType: string) => void;
+}
+
+const FilterBar = ({ onSortChange }: FilterBarProps) => {
   const [activeButton, setActiveButton] = useState<string>("");
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
+    onSortChange(buttonName);
   };
 
   return (
     <FilterBarContainer>
       <FilterButton
-        $isActive={activeButton === "button1"}
-        onClick={() => handleButtonClick("button1")}
+        $isActive={activeButton === "popular"}
+        onClick={() => handleButtonClick("popular")}
       >
         인기순
       </FilterButton>
       <FilterButton
-        $isActive={activeButton === "button2"}
-        onClick={() => handleButtonClick("button2")}
+        $isActive={activeButton === "following"}
+        onClick={() => handleButtonClick("following")}
       >
         팔로잉
       </FilterButton>
       <FilterButton
-        $isActive={activeButton === "button3"}
-        onClick={() => handleButtonClick("button3")}
+        $isActive={activeButton === "myFeed"}
+        onClick={() => handleButtonClick("myFeed")}
       >
         My 피드
       </FilterButton>
