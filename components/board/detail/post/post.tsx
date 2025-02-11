@@ -74,7 +74,7 @@ const Post = () => {
           <SubInfo>하트 : {board.likeCount}</SubInfo>
           {/* <SubInfo>댓글 : {board.comments.length}</SubInfo> */}
         </InfoWrapper>
-        <Comment comments={board.comments} />
+        <Comment boardId={board.id} />
       </ContentBox>
     </PostContainer>
   );
