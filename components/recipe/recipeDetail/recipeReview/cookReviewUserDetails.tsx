@@ -14,7 +14,7 @@ import { FaFire } from "react-icons/fa";
 
 type CookReviewUserDetailsProps = {
   userName: string;
-  createdAt: string;
+  createdAt: Date;
   points: number;
   description: string;
 };
@@ -29,7 +29,7 @@ const CookReviewUserDetails = ({
     <ReviewBox>
       <CookReviewUserInfo>
         <CookReviewUserName>{userName}</CookReviewUserName>
-        <CookReviewUserCreatedAt>{createdAt}</CookReviewUserCreatedAt>
+        <CookReviewUserCreatedAt>{createdAt.toISOString()}</CookReviewUserCreatedAt>
         <CookReviewUserPoints>
           {Array.from({ length: Math.floor(points) }).map((_, index) => (
             <FaFire key={index} />

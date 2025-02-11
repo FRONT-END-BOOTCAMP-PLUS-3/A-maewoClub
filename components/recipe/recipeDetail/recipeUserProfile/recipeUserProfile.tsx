@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import {
   ProfileContainer,
   CardDescription,
@@ -10,13 +11,19 @@ import {
   ThumbnailImage,
   ProfileImage,
 } from "./recipeUserProfile.style";
+import { useRecipeStore } from "@/store/useRecipeStore";
 
 type UserProfileProps = {
   id: number;
 }
 
 export const RecipeUserProfile = ({id}: UserProfileProps) => {
-  const recipeId = id;
+  const {fetchRecipeData} = useRecipeStore();
+  useEffect(() => {
+    fetchRecipeData(id);
+    console.log("fetchRecipeData부분 recipeUser data 확인용", fetchRecipeData);
+  }, [id, fetchRecipeData]);
+
   const thumbnailImage = "/recipe.jpg";
   const profileImage = "/Dfprofile.png";
   const userName = "순대위장";

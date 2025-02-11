@@ -1,41 +1,22 @@
 import { DfRecipeDetailUsecase } from "@/application/recipe/DfRecipeDetailUsecase";
-import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
-import { RecipeIngredientRepository } from "@/domain/repositories/RecipeIngredientRepository";
 import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
-import { RecipeStepRepository } from "@/domain/repositories/RecipeStepRepository";
-import { SbRecipeImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeImageRepository";
-import { SbRecipeIngredientRepository } from "@/infrastructure/repositories/recipes/SbRecipeIngredientRepository";
 import { SbRecipeRepository } from "@/infrastructure/repositories/recipes/SbRecipeRepository";
-import { SbRecipeStepRepository } from "@/infrastructure/repositories/recipes/SbRecipeStepRepository";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET( req: NextRequest ){
   const recipeRepository: RecipeRepository = new SbRecipeRepository();
-  const recipeImageRepository: RecipeImageRepository = new SbRecipeImageRepository();
-  const recipeIngredientRepository: RecipeIngredientRepository = new SbRecipeIngredientRepository();
-  const recipeStepRepository: RecipeStepRepository = new SbRecipeStepRepository();
-  
   const recipeDetailUsecase = new DfRecipeDetailUsecase(
     recipeRepository, 
-    recipeImageRepository, 
-    recipeIngredientRepository, 
-    recipeStepRepository
   );
 
   try {
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "Invalid recipe ID" }, { status: 400 });
+    const id = Number(req.nextUrl.searchParams.get("id"));
+    if (Number.isNaN(id) || id <= 0) {
+      return NextResponse.json({ error: "Valid ID is required" }, { status: 400 });
     }
 
-    const [recipe, images, ingredients, steps] = await Promise.all([
+    const [recipe] = await Promise.all([
       recipeDetailUsecase.getRecipeDetail(id),
-      recipeDetailUsecase.getRecipeImages(id),
-      recipeDetailUsecase.getRecipeIngredient(id),
-      recipeDetailUsecase.getRecipeSteps(id),
     ]);
 
     if (!recipe) {
@@ -46,9 +27,6 @@ export async function GET(
       {
         data: {
           recipe,
-          images,
-          ingredients,
-          steps,
         },
       },
       { status: 200 }

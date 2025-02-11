@@ -27,7 +27,7 @@ export class DfRecipeCommentListUsecase {
         const image = images.find((img) => img.id === comment.id);
         return {
           ...comment,
-          imageUrl: image ? image.photo_url : null,
+          imageUrl: image ? image.photoUrl : null,
         };
       })
     );

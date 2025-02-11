@@ -1,4 +1,5 @@
 "use client";
+import { useRecipeStore } from "@/store/useRecipeStore";
 import {
   CookCardDescription,
   CookCardImage,
@@ -6,62 +7,32 @@ import {
   CookingCard,
   CookStepImage,
 } from "./cookingStep.style";
-
-export const testDatas = [
-  {
-    number: 1,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 2,
-    description:
-      "0양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 3,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 4,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 5,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-];
-
-type CookingStep = {
-  number: number;
-  description: string;
-  image: string;
-};
+import { useEffect } from "react";
+import { RecipeStepDto } from "@/application/recipe/dto/RecipeStepDto";
 
 interface CookingStepsProps {
-  steps: CookingStep[];
+  steps: RecipeStepDto[],
   recipeId : number;
 }
 
-export const CookingSteps = ({ steps, recipeId }: CookingStepsProps) => {
+export const CookingSteps = ({recipeId, steps}: CookingStepsProps) => {
+  const { fetchRecipeData } = useRecipeStore();
 
-  const test = () => {
-    const id = recipeId;
-  }
+  useEffect(() => {
+    fetchRecipeData(recipeId);
+    console.log("fetchRecipeData부분 cookingSteps data 확인용", fetchRecipeData);
+  }, [recipeId, fetchRecipeData]);
+
   return (
     <>
       {steps.map((data) => (
-        <CookingCard key={data.number}>
-          <CookCardNumber>{data.number}</CookCardNumber>
-          <CookCardDescription>{data.description}</CookCardDescription>
+        <CookingCard key={data.recipeId}>
+          <CookCardNumber>{data.order}</CookCardNumber>
+          <CookCardDescription>{data.content}</CookCardDescription>
           <CookCardImage>
-            {data.image && (
+            {data.imageUrl && (
               <CookStepImage
-                src={data.image}
+                src={data.imageUrl}
                 alt="Recipe Image"
                 fill
                 sizes="(max-width: 768px) 20rem, 20rem"
