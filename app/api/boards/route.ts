@@ -7,6 +7,7 @@ import { BoardListDto } from "@/application/board/dto/BoardListDto";
 import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepository";
 import { DfBoardCreateUsecase } from "@/application/board/DfBoardCreateUsecase";
 import { BoardCreateDto } from "@/application/board/dto/BoardCreateDto";
+import { BoardImageDto } from "@/application/board/dto/BoardImageDto";
 
 export async function GET() {
   const boardRepository: BoardRepository = new SbBoardRepository();
@@ -31,14 +32,10 @@ export async function POST(req: NextRequest) {
     const tagIdStr = formData.get("tagId") as string;
     const tagId = tagIdStr ? parseInt(tagIdStr, 10) : 0;
     const files = formData.getAll("files") as File[];
-
-    const images = await Promise.all(
-      files.map(async (file) => {
-        const publicUrl = process.env.SUPABASE_STORAGE + file.name;
-        return { photoUrl: publicUrl };
-      })
-    );
-
+    const images: BoardImageDto[] = files.map((file) => ({
+      boardId: 0,
+      file: file,
+    }));
     const boardCreateDto: BoardCreateDto = {
       userId,
       title,
@@ -46,23 +43,20 @@ export async function POST(req: NextRequest) {
       tagId,
       images,
     };
-
     const boardRepository: BoardRepository = new SbBoardRepository();
     const boardImageRepository: BoardImageRepository =
       new SbBoardImageRepository();
-    const boardCreateUsecase: DfBoardCreateUsecase = new DfBoardCreateUsecase(
+    const boardCreateUsecase = new DfBoardCreateUsecase(
       boardRepository,
       boardImageRepository
     );
-
     const boardId = await boardCreateUsecase.addPost(boardCreateDto);
-
     return NextResponse.json({
-      message: "게시글 등록에 성공했습니다.",
+      message: "Board created successfully",
       boardId,
     });
   } catch (error: any) {
-    console.error("Error processing POST request:", error);
+    console.error("POST error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

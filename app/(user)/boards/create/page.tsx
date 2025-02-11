@@ -31,8 +31,8 @@ const Page = () => {
 
   const handleSubmit = async () => {
     if (!user) {
-      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
-      router.push("/login");
+      alert("로그인이 필요합니다. 메인 페이지로 이동합니다.");
+      router.push("/");
       return;
     }
 
