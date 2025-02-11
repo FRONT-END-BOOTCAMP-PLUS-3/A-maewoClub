@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   CookReviewContainer,
   CookReviewCard,
@@ -33,8 +33,6 @@ export const CookReview = ({ recipeId, userId, reviewData }: CookReviewProps) =>
   const [createdAt, setCreatedAt] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
-  const reviewRef = useRef<HTMLTextAreaElement>(null!);
-  const imageRef = useRef<HTMLInputElement>(null!);    
 
 
  const handleOpenModal = (review: ReviewData) => {
@@ -44,7 +42,6 @@ export const CookReview = ({ recipeId, userId, reviewData }: CookReviewProps) =>
   setSelectedReviewId(review.id);
   setIsModalOpen(true);
 };
-
 const handleCloseModal = () => {
   setIsUpdate(false);
   setSelectedFire(null);
@@ -113,12 +110,6 @@ const handleDelete = async () => {
       <ReviewModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        selectedFire={selectedFire}
-        handleFireClick={setSelectedFire}
-        reviewRef={reviewRef}
-        imageRef={imageRef}
-        handleImageChange={() => {}}
-        imageName={null}
         userId={userId}
         recipeId={recipeId}
         isUpdate={isUpdate}
