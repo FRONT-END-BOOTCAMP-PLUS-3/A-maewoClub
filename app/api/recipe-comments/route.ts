@@ -18,8 +18,7 @@ export async function GET(req: NextRequest) {
   );
 
   const url = new URL(req.url);
-  const recipeId = url.searchParams.get("recipeId"); 
-  const id = Number(recipeId);
+  const id = Number(url.searchParams.get("recipeId"))
 
   const recipeCommentListDto:RecipeCommentWithImageDto[] = 
     await recipeCommentListUsecase.getRecipeAllCommentListTest(id);
@@ -29,18 +28,25 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    if (!body.score || !body.userId || !body.content) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
+    const body = await req.formData();
+
+    const userId = body.get("userId") as string;
+    const content = body.get("content") as string;
+    const score = body.get("score");
+    const image = body.get("image")
+
+
+
+    if (!score || !userId || !content) {
+      console.error("❌ Missing required fields", { score, userId, content });
+        return NextResponse.json(
+          { error: "Missing required fields" },
+          { status: 400 }
+        );
     }
-    
-    const recipeCommentRepository: RecipeCommentRepository =
-      new SbRecipeCommentRepository();
-    const recipeCommentImageRepository: RecipeCommentImageRepository =
-      new SbRecipeCommentImageRepository();
+
+    const recipeCommentRepository: RecipeCommentRepository = new SbRecipeCommentRepository();
+    const recipeCommentImageRepository: RecipeCommentImageRepository = new SbRecipeCommentImageRepository();
 
     const recipeCommentImageUsecase = new DfRecipeCommentListUsecase(
       recipeCommentRepository,
@@ -48,34 +54,44 @@ export async function POST(req: NextRequest) {
     );
 
     const url = new URL(req.url);
-    const recipeId = url.searchParams.get("recipeId"); 
-    const id = Number(recipeId)
+    const recipeId = Number(url.searchParams.get("recipeId")) 
 
-    const createRecipeCommentId =
-      await recipeCommentRepository.addRecipeComment({
-        recipeId: id,
-        userId: body.userId,
-        content: body.content,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        score: body.score,
-      });
-
-    if (body.image?.length) {
-      await Promise.all(
-        body.image.map((imageUrl: string) => {
-          recipeCommentImageRepository.addRecipeCommentImage(
-            createRecipeCommentId,
-            imageUrl
-          );
-        })
+    if (isNaN(recipeId)) {
+      console.error("❌ Invalid recipeId:", recipeId);
+      return NextResponse.json(
+        { error: "Invalid recipe ID" },
+        { status: 400 }
       );
     }
+    
+    const createRecipeCommentId =
+    await recipeCommentRepository.addRecipeComment({
+      recipeId: recipeId,
+      userId: userId,
+      content: content,
+      createdAt: new Date(),
+      updatedAt: null,
+      score: Number(score),
+    });
+    
+    if (image) {
+      const buffer = await (image as File).arrayBuffer(); 
+      const base64Image = Buffer.from(buffer).toString("base64"); 
+      const mimeType = (image as File).type; 
+      const photoUrl = `data:${mimeType};base64,${base64Image}`;
+    
+      await recipeCommentImageRepository.addRecipeCommentImage({
+        id: createRecipeCommentId,
+        photoUrl,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      }
 
-    const createdRecipeComment =
-      await recipeCommentImageUsecase.getRecipeComment(createRecipeCommentId);
+    const recipeCommentComment = await recipeCommentImageUsecase.getRecipeComment(createRecipeCommentId);
 
-    return NextResponse.json(createdRecipeComment, { status: 200 });
+    return NextResponse.json(recipeCommentComment, { status: 200 });
+
   } catch (error) {
     console.error("Error creating recipe:", error);
     return NextResponse.json(
@@ -87,13 +103,22 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const body = await req.json();
-    if (!body.score || !body.userId || !body.content || !body.id) {
+    const body = await req.formData();
+
+    const id = Number(body.get("id")) 
+    const createdAt = String(body.get("createdAt"))
+    const userId = String(body.get("userId"))
+    const content = String(body.get("content"))
+    const score = Number(body.get("score"))
+    const image = body.get("image")
+
+    if (!score || !userId || !content || !id) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "필수 값이 없습니다." },
         { status: 400 }
       );
     }
+
     const recipeCommentRepository: RecipeCommentRepository =
       new SbRecipeCommentRepository();
     const recipeCommentImageRepository: RecipeCommentImageRepository =
@@ -104,35 +129,33 @@ export async function PUT(req: NextRequest) {
       recipeCommentImageRepository
     );
 
-    await recipeCommentRepository.findOne(body.id);
-    if (body.image?.length) {
-      await recipeCommentImageRepository.findOne(body.id);
-    }
-
-    const updateRecipeCommentId =
-      await recipeCommentRepository.updateRecipeComment({
-        id: body.id,
-        recipeId: body.recipeId,
-        content: body.content,
+    await recipeCommentRepository.updateRecipeComment({
+      id: id,
+      userId: userId,
+      content: content,
+      updatedAt: new Date(),
+      score: score,
+    });
+    
+    if (image) {
+      const buffer = await (image as File).arrayBuffer(); // 파일을 Buffer로 변환
+      const base64Image = Buffer.from(buffer).toString("base64"); // Base64로 변환
+      const mimeType = (image as File).type; // 이미지 MIME 타입 (예: image/png)
+      const photoUrl = `data:${mimeType};base64,${base64Image}`; // Base64 데이터 URL 생성
+      
+      await recipeCommentImageRepository.updateRecipeCommentImage({
+        id: id,
+        photoUrl,
+        createdAt: createdAt,
         updatedAt: new Date(),
-        score: body.score,
+        userId: userId,
       });
+      }
 
-    if (body.image?.length) {
-      await Promise.all(
-        body.image.map((imageUrl: string) => {
-          recipeCommentImageRepository.addRecipeCommentImage(
-            updateRecipeCommentId,
-            imageUrl
-          );
-        })
-      );
-    }
+    const updateRecipeComment =
+      await recipeCommentImageUsecase.getRecipeComment(id);
 
-    const createRecipeComment =
-      await recipeCommentImageUsecase.getRecipeComment(updateRecipeCommentId);
-
-    return NextResponse.json(createRecipeComment, { status: 200 });
+    return NextResponse.json(updateRecipeComment, { status: 200 });
   } catch (error) {
     console.error("Error creating recipe:", error);
     return NextResponse.json(
@@ -142,18 +165,31 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function Delete(id: number) {
-  const recipeCommentRepository: RecipeCommentRepository =
+export async function DELETE(req: NextRequest) {
+  try{
+    const body = await req.json();
+
+    if (!body.id) {
+      return NextResponse.json(
+        { error: "필수 값이 없습니다." },
+        { status: 400 }
+      );
+    }
+
+    const recipeCommentRepository: RecipeCommentRepository =
     new SbRecipeCommentRepository();
-  const recipeCommentImageRepository: RecipeCommentImageRepository =
+    const recipeCommentImageRepository: RecipeCommentImageRepository =
     new SbRecipeCommentImageRepository();
 
-  const recipeCommentImageUsecase: DfRecipeCommentListUsecase =
-    new DfRecipeCommentListUsecase(
-      recipeCommentRepository,
-      recipeCommentImageRepository
-    );
+    await recipeCommentImageRepository.deleteByImageId(body.id);
+    await recipeCommentRepository.deleteByCommentId(body.id);
 
-  await recipeCommentImageUsecase.deleteRecipeCommentImage(id);
-  return NextResponse.json({ message: "Deleted" });
+    return NextResponse.json({ message: "Deleted" }, { status: 200 });
+  }catch(error){
+    console.error("Error creating recipe:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

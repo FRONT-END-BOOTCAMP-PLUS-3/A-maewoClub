@@ -44,9 +44,10 @@ type CookingStep = {
 
 interface CookingStepsProps {
   steps: CookingStep[];
+  recipeId : number;
 }
 
-export const CookingSteps = ({ steps }: CookingStepsProps) => {
+export const CookingSteps = ({ steps, id }: CookingStepsProps) => {
 
   return (
     <>

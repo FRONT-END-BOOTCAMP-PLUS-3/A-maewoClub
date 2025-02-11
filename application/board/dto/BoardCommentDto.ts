@@ -7,6 +7,7 @@ export interface BoardCommentDto {
   updatedAt?: Date;
   nickname?: string;
   photoUrl?: string;
+
 }
 
 export interface CreateBoardCommentDto {

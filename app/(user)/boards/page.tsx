@@ -48,6 +48,32 @@ const Page = () => {
     }
   };
 
+  const handleSortChange = (sortType: string) => {
+    setCurrentPage(1);
+    const sortedData = [...filteredData];
+
+    switch (sortType) {
+      case "popular":
+        // 좋아요 수 기준 내림차순 정렬
+        sortedData.sort((a, b) => b.likeCount - a.likeCount);
+        break;
+      case "following":
+        // 팔로잉 정렬 로직 (추후 구현)
+        break;
+      case "myFeed":
+        // 내 피드 정렬 로직 (추후 구현)
+        break;
+      default:
+        // 기본 정렬 (최신순)
+        sortedData.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+    }
+
+    setFilteredData(sortedData);
+  };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = (currentPage - 1) * postsPerPage;
   const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost);
@@ -65,7 +91,7 @@ const Page = () => {
   return (
     <div style={{ height: "calc(100vh - 80px)" }}>
       <Overview />
-      <FilterBar />
+      <FilterBar onSortChange={handleSortChange} />
       <div style={{ display: "flex", gap: "15px" }}>
         <FilterButtonGroup onFilterChange={handleFilterChange} />
       </div>

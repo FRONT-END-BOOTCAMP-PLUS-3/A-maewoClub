@@ -16,33 +16,23 @@ export class DfRecipeCommentListUsecase {
   async getRecipeComment(id: number) {
     return await this.recipeCommentRepository.findOne(id);
   }
-  async deleteRecipeCommentImage(id: number) {
-    await this.recipeCommentRepository.deleteByCommentId(id);
-    await this.recipeCommentImageRepository.deleteByImageId(id);
-  }
 
   async getRecipeAllCommentListTest(id: number): Promise<RecipeCommentWithImageDto[]> {
-
-
-
     const comments = await this.recipeCommentRepository.findCommentAll(id);
-    const images = await this.recipeCommentImageRepository.findAllByRecipeId(id);
+    const ImageIds = comments.map((comment) => comment.id);
+    const images = await this.recipeCommentImageRepository.findAllByRecipeId(ImageIds);
 
     const commentsWithImagesDto: RecipeCommentWithImageDto[] = await Promise.all(
       comments.map(async (comment) => {
         const image = images.find((img) => img.id === comment.id);
         return {
           ...comment,
-          imageUrl: image ? image.photoUrl : "",
+          imageUrl: image ? image.photo_url : null,
         };
       })
     );
-
-    console.log("✅ getRecipeAllCommentListTest - Final Result:", commentsWithImagesDto);
     return commentsWithImagesDto;
 }
-
-
 
   async execute(
     id: number = 1,
@@ -66,7 +56,7 @@ export class DfRecipeCommentListUsecase {
 
         return {
           ...recipeComment,
-          img: image ? image.photoUrl : "default.svg",
+          img: image ? image.photoUrl :null,
         };
       })
     );
