@@ -25,7 +25,6 @@ const Page = () => {
           method: "GET",
         });
         const data = await res.json();
-        console.log("Fetched board data:", data);
         setBoardData(data.boards);
         setFilteredData(data.boards);
       } catch (error) {
