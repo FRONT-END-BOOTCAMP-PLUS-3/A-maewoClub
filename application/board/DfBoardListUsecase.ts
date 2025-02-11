@@ -45,7 +45,6 @@ export class DfBoardListUsecase {
 
   async addImageToBoard(
     boardId: number,
-    userId: string,
     images: BoardImage[]
   ): Promise<BoardImage[]> {
     const newImages: BoardImage[] = images.map((image) => ({
@@ -55,7 +54,9 @@ export class DfBoardListUsecase {
     }));
 
     await Promise.all(
-      newImages.map((image) => this.boardImageRepository.save(image))
+      newImages.map((image) =>
+        this.boardImageRepository.addBoardImage(boardId, image.photoUrl)
+      )
     );
     return newImages;
   }
