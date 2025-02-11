@@ -1,9 +1,9 @@
-import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 import { BoardRepository } from "@/domain/repositories/BoardRepository";
-import { SbBoardImageRepository } from "@/infrastructure/repositories/boards/SbBoardImageRepository";
-import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepository";
+import { BoardImageRepository } from "@/domain/repositories/BoardImageRepository";
 import { BoardCreateDto } from "./dto/BoardCreateDto";
 import { BoardImageDto } from "./dto/BoardImageDto";
+import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepository";
+import { SbBoardImageRepository } from "@/infrastructure/repositories/boards/SbBoardImageRepository";
 
 export class DfBoardCreateUsecase {
   constructor(
@@ -14,19 +14,17 @@ export class DfBoardCreateUsecase {
   async addPost(board: BoardCreateDto): Promise<number> {
     try {
       const boardId = await this.boardRepository.addPost(board);
-
       if (board.images && board.images.length > 0) {
-        await Promise.all(
-          board.images.map((imageDto: BoardImageDto) =>
-            this.boardImageRepository.addBoardImage(boardId, imageDto.photoUrl)
-          )
-        );
+        const boardImages: BoardImageDto[] = board.images.map((img) => ({
+          boardId,
+          file: img.file,
+        }));
+        await this.boardImageRepository.addBoardImages(boardImages);
       }
-
       return boardId;
-    } catch (error) {
-      console.error("게시글 생성 중 오류 발생:", error);
-      throw new Error("게시글 생성 실패");
+    } catch (error: any) {
+      console.error("Board creation error:", error);
+      throw new Error("Board creation failed: " + error.message);
     }
   }
 }
