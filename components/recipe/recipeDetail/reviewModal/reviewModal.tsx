@@ -14,17 +14,11 @@ import {
   ModalReview,
   ModalTitle,
 } from "./reviewModal.style";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  selectedFire: number | null;
-  handleFireClick: (index: number) => void;
-  reviewRef: React.RefObject<HTMLTextAreaElement>;
-  imageRef: React.RefObject<HTMLInputElement>;
-  handleImageChange: () => void;
-  imageName: string | null;
   userId: string;
   recipeId: number;
   isUpdate: boolean;
@@ -35,18 +29,37 @@ interface ReviewModalProps {
 export const ReviewModal = ({
   isOpen,
   onClose,
-  selectedFire,
-  reviewRef,
-  imageRef,
-  handleImageChange,
-  imageName,
   userId,
   recipeId,
   isUpdate,
   createdAt,
   reviewId,
 }: ReviewModalProps) => {
+
+  const [isModalOpen ,setIsModalOpen] = useState(false);
+  const [selectedFire, setSelectedFire] = useState<number | null>(null);
   const [fire, setFire] = useState<number | null>(selectedFire);
+  const reviewRef = useRef<HTMLTextAreaElement>(null!);
+  const imageRef = useRef<HTMLInputElement>(null!);
+  const [imageName, setImageName] = useState<string | null>(null);
+  
+
+  const handleFireClick = (index: number) => {
+    setSelectedFire(index);
+  }
+
+  const handleCloseModal = () => {
+    setSelectedFire(null);
+    setImageName(null);
+    setIsModalOpen(false);
+  };
+
+    const handleImageChange = () => {
+    const image = imageRef.current?.files?.[0];
+    if (image) {
+      setImageName(image.name);
+    }
+  };
 
   const postComment = async () => {    
     try {
