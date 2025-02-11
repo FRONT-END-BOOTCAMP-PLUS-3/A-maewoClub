@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { exchangeCodeForToken } from "@/components/user/login/exchangeCodeforToken";
+import NicknamePage from "@/components/user/nickname/nicknamePage";
 
 type ProviderType = "google" | "kakao";
 
@@ -10,6 +11,7 @@ export default function AuthCallback() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
+
   const [nickname, setNickname] = useState("");
 
   const getProvider = (): ProviderType | null => {
@@ -17,7 +19,7 @@ export default function AuthCallback() {
     return provider === "google" || provider === "kakao" ? provider : null;
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const provider = getProvider();
@@ -51,18 +53,15 @@ export default function AuthCallback() {
     }
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(event.target.value);
+  };
+
   return (
-    <div style={{ backgroundColor: "white" }}>
-      <h1>닉네임을 입력해주세요</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-          placeholder='닉네임을 입력하세요'
-        />
-        <button type='submit'>입력</button>
-      </form>
-    </div>
+    <NicknamePage
+      nickname={nickname}
+      onSubmit={handleSubmit}
+      onChange={handleChange}
+    />
   );
 }
