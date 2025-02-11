@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { OptionButton } from "./optionButton.style";
+import { OptionButton, DividerBox } from "./optionButton.style";
 import { BoardTag } from "@/domain/entities/BoardTag";
 
 interface OptionButtonProps {
@@ -19,10 +19,7 @@ const FilterToggleButton = ({
   onClick,
 }: OptionButtonProps) => {
   return (
-    <OptionButton
-      $isActive={$isActive}
-      onClick={onClick}
-    >
+    <OptionButton $isActive={$isActive} onClick={onClick}>
       {label}
     </OptionButton>
   );
@@ -58,7 +55,7 @@ const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
   };
 
   return (
-    <div style={{ display: "flex", gap: "8px", overflowX: "auto" }}>
+    <DividerBox>
       {tagData?.map((tag) => (
         <FilterToggleButton
           key={tag.id}
@@ -67,7 +64,7 @@ const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
           onClick={() => handleButtonClick(tag.id)}
         />
       ))}
-    </div>
+    </DividerBox>
   );
 };
 
