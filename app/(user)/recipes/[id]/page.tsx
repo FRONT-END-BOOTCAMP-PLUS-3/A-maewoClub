@@ -64,7 +64,6 @@ const RecipeDetailPage = () => {
     getComments(recipeId);
     }, [recipeId]);
 
-
   const handleReview = () => {
     setReviewShowAll(true);
   };
