@@ -27,7 +27,7 @@ export class SbBoardImageRepository implements BoardImageRepository {
     const { data, error } = await supabase
       .from("board_image")
       .select("*")
-      .eq("board_id", id);
+      .eq("id", id);
 
     if (error) {
       console.error("게시글 이미지 조회 오류:", error.message);
