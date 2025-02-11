@@ -24,7 +24,6 @@ const AdminUsers = () => {
       try {
         const res = await fetch("/api/users", { method: "GET" });
         const data = await res.json();
-        console.log(data);
         setUsers(data.user);
       } catch (error) {
         console.error("Error fetching boards:", error);

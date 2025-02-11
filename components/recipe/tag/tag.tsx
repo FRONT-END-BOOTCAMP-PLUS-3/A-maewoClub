@@ -12,13 +12,10 @@ const Tag = () => {
         const res = await fetch("/api/recipe-tags", {
           method: "GET",
         })
-        console.log(res);
         if (!res.ok) {
           throw new Error(`서버 응답 실패: ${res.status}`);
         }
         const data = await res.json();
-        console.log("data : tag data 입니다..!!", data);
-
         setTagData(data);
       } catch (error) {
         console.error("fetch 에러:", error);
