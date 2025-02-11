@@ -1,5 +1,3 @@
-import { BoardCommentDto } from "./BoardCommentDto";
-
 export interface BoardDetailDto {
   id: number;
   userId: string;
@@ -11,5 +9,9 @@ export interface BoardDetailDto {
   likeCount: number;
   viewCount: number;
   images: Array<{ photoUrl: string }>;
-  comments: BoardCommentDto[];
+  comments: Array<{
+    id: number;
+    content: string;
+    createdAt: Date;
+  }>;
 }
