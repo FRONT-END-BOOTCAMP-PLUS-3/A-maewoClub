@@ -65,7 +65,7 @@ const Post = () => {
             src={board.images[0].photoUrl}
             width={500}
             height={300}
-            alt='post_image'
+            alt="post_image"
           />
         )}
         <Content>{board.description}</Content>

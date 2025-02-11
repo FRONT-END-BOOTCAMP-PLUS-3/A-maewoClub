@@ -19,9 +19,20 @@ const OptionButton = styled.button<{ $isActive: boolean }>`
   background: ${({ $isActive }) =>
     $isActive ? "var(--point_red, #E50913)" : "#FFF"};
   color: ${({ $isActive }) => ($isActive ? "#FFF" : "#000")};
+
   &:hover {
     opacity: 0.8;
   }
 `;
 
-export { OptionButton };
+const DividerBox = styled.div`
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 20px 0; // 위아래 여백 추가
+  border-top: 1px solid var(--point_red, #e50913); // 상단 구분선 추가
+  border-bottom: 1px solid var(--point_red, #e50913); // 하단 구분선 추가
+  width: 100%; // 전체 너비 차지
+`;
+
+export { OptionButton, DividerBox };
