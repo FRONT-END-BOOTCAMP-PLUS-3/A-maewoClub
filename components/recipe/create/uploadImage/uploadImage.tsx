@@ -4,7 +4,6 @@ import { Container, HiddenInput, ImagePreview } from "./uploadImage.style";
 interface UploadImageProps {
   size?: number;
   onImageUpload?: (file: File | null) => void; 
-  // 부모에게 업로드된 파일 전달 부분
 }
 
 const UploadImage = ({ size = 150, onImageUpload }: UploadImageProps) => {

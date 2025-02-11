@@ -29,8 +29,8 @@ const PostListItem = (post: BoardDto) => {
         </PostContent>
         <PostText style={{ marginTop: "52px", marginBottom: "11px" }}>
           {/* <span>댓글: {post.comment}</span> */}
-          <span>조회수: {post.likeCount}</span>
-          <span>하트: {post.viewCount} </span>
+          <span>조회수: {post.viewCount}</span>
+          <span>하트: {post.likeCount} </span>
         </PostText>
       </div>
     </PostStyle>
