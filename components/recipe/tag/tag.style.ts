@@ -27,8 +27,9 @@ export const TagContainer = styled.div`
 `
 
 export const Tag = styled.span`
-  background: red;
-  padding: 2px 10px;
+  background: var(--mainRed);
+  color: #fff;
+  padding: 5px 10px;
   font-size: 12px;
   border-radius: 30px;
   display: inline-block;

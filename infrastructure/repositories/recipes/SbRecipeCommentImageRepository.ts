@@ -65,7 +65,6 @@ export class SbRecipeCommentImageRepository
         photo_url: recipeCommentImage.photoUrl,
         created_at: recipeCommentImage.createdAt,
         updated_at: recipeCommentImage.updatedAt,
-        user_id: recipeCommentImage.userId,
        }])
       .eq("id", recipeCommentImage.id);
 

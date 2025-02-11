@@ -14,14 +14,25 @@ export const Container = styled.div`
   border-radius: 20px;
   overflow:hidden;
   cursor: pointer;
+  width: 200px;
 `
 export const TextContainer = styled.div`
-  padding: 0px 10px;
+  padding: 10px 10px;
   background-color: #fff;
 `
+export const LikeContainer = styled.p`
+  margin: 10px 0;
+  
+`
+export const LikeCount = styled.span`
+  padding: 10px 10px;
+  background-color: var(--mainRed);
+  color:#fff;
+  border-radius: 10px;
+`
 export const Description = styled.p`
-font-size: 25px;
-font-weight: bold
+  font-size: 20px;
+  font-weight: bold;
 `
 export const UserContainer = styled.div`
   padding: 10px 0px;
@@ -29,18 +40,22 @@ export const UserContainer = styled.div`
 `
 export const UserProfileImage = styled(Image)`
   width:40px;
-  height:auto;
+  height:40px;
 `
 export const UserNickname = styled.h4`
   font-size: 12px;
-  margin-bottom:10px;
+  margin: 0 0 0 20px;
+`
+export const Title = styled.h2`
+  font-size: 20px;
+  margin-bottom:5px;
+  height: auto;
 `
 
-export const Tier = styled.p`
+export const Tier = styled.span`
   font-size: 10px;
-  padding: 4px 5px;
-  width: 20px;
+  padding: 6px 10px;
   background-color: gold;
-  border-radius: 10px
-
+  border-radius: 10px;
+  margin: 5px 10px;
 `

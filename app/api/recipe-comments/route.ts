@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       userId: userId,
       content: content,
       createdAt: new Date(),
-      updatedAt: new Date(),
+      updatedAt: null,
       score: Number(score),
     });
     
@@ -85,7 +85,6 @@ export async function POST(req: NextRequest) {
         photoUrl,
         createdAt: new Date(),
         updatedAt: new Date(),
-        userId: userId,
       });
       }
 

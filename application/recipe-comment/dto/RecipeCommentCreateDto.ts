@@ -3,7 +3,7 @@ export interface RecipeCommentCreateDto{
     userId: string;
     content: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: null;
     score: number;
     imageUrl?: string;
 }

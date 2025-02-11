@@ -12,7 +12,7 @@ export const PhotoReviewContainer = styled.div`
 
 export const PhotoContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; 
   gap: 1rem;
   width: 100%;
   height: auto;
@@ -20,14 +20,13 @@ export const PhotoContainer = styled.div`
 `;
 
 export const PhotoWrapper = styled.div`
-  position: relative;
-  width: 10rem;
-  height: 10rem;
-  flex-shrink: 0;
+  display: flex;
+  gap: 10px;
 `;
 
 export const Photo = styled(Image)`
   object-fit: contain;
+  object-fit: cover;
 `;
 
 export const NavigationButton = styled.button`

@@ -3,5 +3,4 @@ export interface RecipeCommentImageDto {
     photoUrl: string;
     createdAt: Date;
     updatedAt?: Date;
-    userId: string;
 }

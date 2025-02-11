@@ -1,36 +1,48 @@
 "use client";
 
-import { useState } from "react";
-import { Text, Button, IngredientInput } from "./recipeCreate.style";
+import { Text, Button, IngredientInput, InputContainer } from "./recipeCreate.style";
 import {
   StepsContainer,
   RecipeCompletionImageUpload,
-  InputImageLabel,
-  InputContainer,
-  ButtonGroup,
-  ImageNameList,
   HiddenInput,
   ImageNameItem,
   RemoveButton,
-  ImagePreview,
   ImagePreviewContainer,
+  ImagePreview,
+  InputImageLabel,
 } from "./recipeStepAndImage.style";
 
 import UploadImage from "./uploadImage/uploadImage";
 
-export const RecipeStepsAndImage = () => {
-  const [steps, setSteps] = useState([{ description: "" }]);
+type ImageType = {
+  url: string | undefined;
+  name: string;
+  file: File;
+};
 
-  const [uploadedImages, setUploadedImages] = useState<
-    { name: string; url: string }[]
-  >([]);
+type StepType = {
+  description: string;
+};
 
+type RecipeStepsAndImageProps = {
+  steps: StepType[];
+  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
+  uploadedImages: ImageType[];
+  setUploadedImages: React.Dispatch<React.SetStateAction<ImageType[]>>;
+};
+
+export const RecipeStepsAndImage = ({
+  steps,
+  setSteps,
+  uploadedImages,
+  setUploadedImages,
+}: RecipeStepsAndImageProps) => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files).map((file) => ({
         name: file.name,
-        url: URL.createObjectURL(file),
-         // 미리보기용 URL 생성
+        file: file,
+        url: URL.createObjectURL(file), 
       }));
 
       setUploadedImages((prevImages) => [...prevImages, ...filesArray]);
@@ -41,15 +53,6 @@ export const RecipeStepsAndImage = () => {
     setUploadedImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
-  const addStepHandler = () => {
-    setSteps([...steps, { description: "" }]);
-  };
-
-  const removeStepHandler = (index: number) => {
-    const newSteps = steps.filter((_, i) => i !== index);
-    setSteps(newSteps);
-  };
-
   return (
     <>
       <Text>요리순서</Text>
@@ -58,29 +61,22 @@ export const RecipeStepsAndImage = () => {
         <StepsContainer key={index}>
           <Text>Step {index + 1}</Text>
           <IngredientInput
-            name="description"
-            placeholder="재료 손질 예시"
             value={step.description}
+            placeholder="재료 손질 예시"
             onChange={(e) => {
-              const newSteps = [...steps];
-              newSteps[index].description = e.target.value;
-              setSteps(newSteps);
+              setSteps((prev) => {
+                const newSteps = [...prev];
+                newSteps[index].description = e.target.value;
+                return newSteps;
+              });
             }}
           />
           <UploadImage />
         </StepsContainer>
       ))}
-      <ButtonGroup>
-        <Button
-          type="button"
-          onClick={() => removeStepHandler(steps.length - 1)}
-        >
-          삭제
-        </Button>
-        <Button type="button" onClick={addStepHandler}>
-          추가
-        </Button>
-      </ButtonGroup>
+      <Button onClick={() => setSteps([...steps, { description: "" }])}>
+        추가
+      </Button>
 
       <Text>요리 완성 사진</Text>
       <RecipeCompletionImageUpload>
@@ -108,7 +104,6 @@ export const RecipeStepsAndImage = () => {
         ))}
         </ImagePreviewContainer>
       </RecipeCompletionImageUpload>
-
     </>
   );
 };

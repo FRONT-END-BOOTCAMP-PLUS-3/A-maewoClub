@@ -34,8 +34,6 @@ export class DfRecipeCommentListUsecase {
     return commentsWithImagesDto;
 }
 
-
-
   async execute(
     id: number = 1,
     page: number = 1
@@ -58,7 +56,7 @@ export class DfRecipeCommentListUsecase {
 
         return {
           ...recipeComment,
-          img: image ? image.imageUrl : "default.svg",
+          img: image ? image.photoUrl :null,
         };
       })
     );
