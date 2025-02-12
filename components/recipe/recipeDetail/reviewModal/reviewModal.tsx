@@ -22,7 +22,7 @@ interface ReviewModalProps {
   userId: string;
   recipeId: number;
   isUpdate: boolean;
-  createdAt: string | null;
+  createdAt: Date | null;
   reviewId: number | null;
 }
 

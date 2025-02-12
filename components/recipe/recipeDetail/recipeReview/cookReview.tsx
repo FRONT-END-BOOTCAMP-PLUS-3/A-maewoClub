@@ -22,7 +22,7 @@ export type ReviewData = {
   userId: string;
   score: number;
   content: string;
-  createdAt: string;
+  createdAt: Date;
   imageUrl?: string;
 };
 
@@ -30,9 +30,10 @@ export const CookReview = ({ recipeId, userId, reviewData }: CookReviewProps) =>
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedFire, setSelectedFire] = useState<number | null>(null);
-  const [createdAt, setCreatedAt] = useState<string | null>(null);
+  const [createdAt, setCreatedAt] = useState<Date | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
+
  const handleOpenModal = (review: ReviewData) => {
   setIsUpdate(true);
   setSelectedFire(review.score);
