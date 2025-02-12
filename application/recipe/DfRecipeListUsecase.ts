@@ -5,6 +5,7 @@ import { RecipeDto } from "./dto/RecipeDto";
 import { RecipeImage } from "@/domain/entities/RecipeImage";
 import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
 import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
+// import { User } from "@/domain/entities/User";
 
 export class DfRecipeListUsecase {
   constructor(
@@ -20,6 +21,11 @@ export class DfRecipeListUsecase {
           await this.recipeImageRepository.findDefaultImageByRecipeId(
             recipe.id
           );
+
+          // const user: User | null =
+          // await this.recipeImageRepository.findDefaultImageByRecipeId(
+          //   recipe.id
+          // );
          
         return {
           ...recipe,
