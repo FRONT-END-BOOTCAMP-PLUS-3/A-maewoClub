@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Comment from "../comment/comment";
 import Profile from "../profile/profile";
 import {
@@ -11,14 +11,19 @@ import {
   Title,
   PostContainer,
   ContentBox,
+  Settings,
+  FlexBox,
 } from "./post.style";
 import { BoardDetailDto } from "@/application/board/dto/BoardDetailDto";
 import Image from "next/image";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Post = () => {
   const { id } = useParams();
   const [board, setBoard] = useState<BoardDetailDto>();
   const [loading, setLoading] = useState(true);
+  const { user } = useAuthStore();
+  const router = useRouter();
 
   useEffect(() => {
     if (!id) return;
@@ -41,6 +46,30 @@ const Post = () => {
       });
   }, [id]);
 
+  const handleDelete = () => {
+    if (!id) return;
+
+    fetch(`/api/boards/detail?id=${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("게시글 삭제에 실패했습니다");
+        }
+        return res.json();
+      })
+      .then(() => {
+        alert("삭제가 완료됐습니다.");
+        router.push(`/boards`);
+      })
+      .catch((error) => {
+        console.error("게시글 상세 정보 호출 오류:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   if (loading) return <div>로딩중...</div>;
   if (!board) return <div>존재하지 않는 게시글입니다.</div>;
 
@@ -53,11 +82,20 @@ const Post = () => {
   return (
     <PostContainer>
       <ContentBox>
-        <Profile
-          nickname={profileData.nickname}
-          image={profileData.image}
-          createdAt={profileData.createdAt}
-        />
+        <FlexBox>
+          <Profile
+            nickname={profileData.nickname}
+            image={profileData.image}
+            createdAt={profileData.createdAt}
+          />
+          {user?.id == board.userId && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Settings> 수정 </Settings>
+              <SubInfo> | </SubInfo>
+              <Settings onClick={handleDelete}> 삭제 </Settings>
+            </div>
+          )}
+        </FlexBox>
         <Title>{board.title}</Title>
         {board.images &&
           board.images.length > 0 &&

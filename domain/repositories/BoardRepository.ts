@@ -6,4 +6,5 @@ export interface BoardRepository {
   findAll(keyword: number, from: number, to: number): Promise<Board[]>;
   findOne(id: number): Promise<Board>;
   addPost(board: BoardCreateDto): Promise<number>;
+  deleteBoard(id: number): Promise<void>;
 }

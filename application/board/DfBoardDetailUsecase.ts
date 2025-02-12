@@ -44,4 +44,13 @@ export class DfBoardDetailUsecase {
 
     return boardDetail;
   }
+
+  async deleteBoard(id: number): Promise<void> {
+    try {
+      await this.boardRepository.deleteBoard(id);
+    } catch (error) {
+      console.error("댓글 삭제 실패:", error);
+      throw error;
+    }
+  }
 }
