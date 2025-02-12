@@ -21,12 +21,12 @@ export const CookingSteps = ({ id }: CookingStepsProps) => {
 
   useEffect(() => {
     if (!id) return;
-
     const fetchSteps = async () => {
       try {
         const res = await fetch(`/api/recipe-steps?recipeId=${id}`);
         if (!res.ok) throw new Error(`Failed to fetch steps: ${res.status}`);
         const data = await res.json();
+        console.log("data recipe step 확인용", data);
         setSteps(data);
       } catch (err) {
         setError((err as Error).message);

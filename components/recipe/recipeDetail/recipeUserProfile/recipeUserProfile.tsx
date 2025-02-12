@@ -13,14 +13,14 @@ import {
   ProfileImage,
 } from "./recipeUserProfile.style";
 import { UserDto } from "@/application/users/dto/UserDto";
-import { RecipeImageDto } from "@/application/recipe/dto/RecipeImageDto";
+import { RecipeDetailDto } from "@/application/recipe/dto/RecipeDetailDto";
 
 type UserProfileProps = {
   id: number;
 };
 
 export const RecipeUserProfile = ({ id }: UserProfileProps) => {
-  const [recipe, setRecipe] = useState<RecipeImageDto | null>(null);
+  const [recipe, setRecipe] = useState<RecipeDetailDto | null>(null);
   const [user, setUser] = useState<UserDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,19 +30,19 @@ export const RecipeUserProfile = ({ id }: UserProfileProps) => {
 
     const fetchRecipe = async () => {
       try {
-        const res = await fetch(`/api/recipes/id?=${id}`);
+        const res = await fetch(`/api/recipes/detail?id=${id}`);
         if (!res.ok) throw new Error(`Failed to fetch recipe: ${res.status}`);
-        const data: RecipeImageDto = await res.json();
+        const data: RecipeDetailDto = await res.json();
         setRecipe(data);
 
-        return data.userId;
+        return data.recipes;
       } catch (err) {
         setError((err as Error).message);
         return null;
       }
     };
 
-    const fetchUser = async (userId: number) => {
+    const fetchUser = async (userId: string) => {
       try {
         const res = await fetch(`/api/users?id=${userId}`);
         if (!res.ok) throw new Error(`Failed to fetch user: ${res.status}`);
@@ -54,7 +54,7 @@ export const RecipeUserProfile = ({ id }: UserProfileProps) => {
     };
 
     fetchRecipe().then((userId) => {
-      if (userId) fetchUser(userId);
+      if (userId) fetchUser("userId");
       setIsLoading(false);
     });
   }, [id]);
@@ -66,25 +66,28 @@ export const RecipeUserProfile = ({ id }: UserProfileProps) => {
   return (
     <ProfileContainer>
       <MainImageWrapper>
-        {recipe. && (
+        {recipe.images.map((image)=> 
+        <div key={image.id}>
           <ThumbnailImage
-            src={recipe.thumbnailImage}
+            src={image.photoUrl}
             alt="Thumbnail Image"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority
           />
+        </div>
         )}
+        
       </MainImageWrapper>
       <StepImageWrapper>
-        {user.profileImage && (
-          <ProfileImage src={user.profileImage} alt="User Avatar" fill sizes="5rem" />
+        {user.photoUrl && (
+          <ProfileImage src={user.photoUrl} alt="User Avatar" fill sizes="5rem" />
         )}
       </StepImageWrapper>
       <RecipeUserInfo>
-        <UserName>{user.name}</UserName>
-        <CardTitle>{recipe.title}</CardTitle>
-        <CardDescription>{recipe.description}</CardDescription>
+        <UserName>{user.nickname}</UserName>
+        <CardTitle>{recipe.recipes.title}</CardTitle>
+        <CardDescription>{recipe.recipes.description}</CardDescription>
       </RecipeUserInfo>
     </ProfileContainer>
   );

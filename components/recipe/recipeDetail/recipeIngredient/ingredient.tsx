@@ -16,21 +16,21 @@ type IngredientProps = {
 
 export const Ingredient = ({id}: IngredientProps) => {
   
- useEffect(() => {
+//  useEffect(() => {
    
- },[])
+//  },[])
 
   return (
     <Container>
       <Title>재료</Title>
       <IngredientContainer>
         <IngredientList>
-          {ingredients.map((ingredient) => (
+          {/* {ingredients.map((ingredient) => (
             <IngredientItem key={id}> 
               <IngredientName>{ingredient.ingredientName}</IngredientName>
               <IngredientAmount>{ingredient.ingredientAmount}</IngredientAmount>
             </IngredientItem>
-          ))}
+          ))} */}
         </IngredientList>
       </IngredientContainer>
     </Container>

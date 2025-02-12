@@ -1,5 +1,7 @@
 import { DfRecipeDetailUsecase } from "@/application/recipe/DfRecipeDetailUsecase";
+import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
 import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
+import { SbRecipeImageRepository } from "@/infrastructure/repositories/recipes/SbRecipeImageRepository";
 import { SbRecipeRepository } from "@/infrastructure/repositories/recipes/SbRecipeRepository";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -18,7 +20,8 @@ export async function GET(req: NextRequest) {
 
   try {
     const recipeRepository: RecipeRepository = new SbRecipeRepository();
-    const recipeDetailUsecase = new DfRecipeDetailUsecase(recipeRepository);
+    const recipeImageRepository: RecipeImageRepository = new SbRecipeImageRepository();
+    const recipeDetailUsecase = new DfRecipeDetailUsecase(recipeRepository, recipeImageRepository);
 
     const recipe = await recipeDetailUsecase.getRecipeDetail(id);
     

@@ -34,7 +34,6 @@ export default function Page() {
       setIsLoading(true);
       try {
         const res = await fetch("/api/recipes", { method: "GET" });
-        console.log("res recipe main 인덱스 확인용 ", res);
         const data = await res.json();
         console.log("data recipe main 확인용", data);
         setListData(data);
@@ -47,9 +46,9 @@ export default function Page() {
     fetchRecipes();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading 중입니다...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading 중입니다...</div>;
+  // }
 
   const topRecipes = listData.filter((recipe) => recipe.likeCount).slice(0, 10);
   const topVisibleSlides = 3;

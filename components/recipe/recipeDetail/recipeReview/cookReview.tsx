@@ -5,6 +5,7 @@ import {
   CookReviewCardContainer,
   UpdateButton,
   DeleteButton,
+  CookReviewUserImg,
 } from "./cookReview.style";
 import CookReviewUserDetails from "./cookReviewUserDetails";
 import { ReviewModal } from "../reviewModal/reviewModal";
@@ -18,15 +19,6 @@ type CookReviewProps = {
   reviewData: RecipeCommentDto[];
   reviewImgData: RecipeCommentImageDto[];
 }
-
-// export type ReviewData = {
-//   id: number;
-//   userId: string;
-//   score: number;
-//   content: string;
-//   createdAt: string;
-//   imageUrl?: string;
-// };
 
 export const CookReview = ({ recipeId, userId, reviewData, reviewImgData }: CookReviewProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -86,20 +78,22 @@ const handleDelete = async () => {
         <CookReviewContainer key={index}>
           <CookReviewCardContainer>
             <CookReviewCard>
-            {/* {data.imageUrl && (
-                  <CookReviewUserImg
-                    src={data.imageUrl || ""}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                  />
-                )} */}
-              <CookReviewUserDetails
+            {reviewImgData.map((data) => (
+              <div key={data.id}>
+                <CookReviewUserImg
+                  src={data.photoUrl || ""}
+                  alt="Avatar"
+                  width={40}
+                  height={40}
+                />
+              </div>
+            ))}
+              {/* <CookReviewUserDetails
                 userName={data.userId}
                 createdAt={data.createdAt}
                 points={data.score}
                 description={data.content}
-                />
+                /> */}
               {data.userId === userId && (
                 <>
                   <UpdateButton onClick={() => handleOpenModal(data)}>수정</UpdateButton>

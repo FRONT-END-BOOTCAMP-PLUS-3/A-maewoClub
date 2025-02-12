@@ -22,7 +22,7 @@ const LoginForm = ({ onUpdate }: AccountInputProps) => {
   const [accountPw, setAccountPw] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const { mutate: login } = useLogin();
-  const { fetchUser } = useAuthStore();
+  const {fetchUser } = useAuthStore();
   const router = useRouter();
 
   const handleId = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +64,7 @@ const LoginForm = ({ onUpdate }: AccountInputProps) => {
         },
       }
     );
+    
   };
 
   return (

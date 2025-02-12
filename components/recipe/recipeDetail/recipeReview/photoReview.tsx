@@ -12,64 +12,82 @@ import {
   Photo,
   NavigationButton,
 } from "./photoReview.style";
-import { RecipeImageDto } from "@/application/recipe/dto/RecipeImageDto";
-import { useRecipeStore } from "@/store/useRecipeStore";
+import { RecipeCommentImageDto } from "@/application/recipe-comment/dto/RecipeCommentImageDto";
 
-type PhotoReviewProps ={
-  // imgData: (string | null)[];
+type PhotoReviewProps = {
   id: number;
-  imgData: RecipeImageDto[];
-}
+};
 
-export const PhotoReview  = ({id, imgData }: PhotoReviewProps) => {
-  // const [validImgData, setValidImgData] = useState<string[]>([]);
-  const {fetchRecipeData} = useRecipeStore();
+export const PhotoReview = ({ id }: PhotoReviewProps) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [listImageData, setListData] = useState<RecipeCommentImageDto[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    // const filteredData = imgData.filter((photo): photo is string => photo !== null);
-    // setValidImgData(filteredData);
-    fetchRecipeData(id);
-    console.log("recipeReview Image 부분 패칭 되는지")
-  }, [id, imgData, fetchRecipeData]);
+    const fetchRecipeImage = async () => {
+      if (!id) return;
+      setIsLoading(true);
+      try {
+        const res = await fetch(`/api/comment-images?id=${id}`, { method: "GET" });
+        if (!res.ok) throw new Error("Failed to fetch images");
+        const data: RecipeCommentImageDto[] = await res.json();
+        setListData(data);
+      } catch (error) {
+        console.error("Error fetching images ✅:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    const nextPhoto = () => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % imgData.length);
-    };
-  
-    const prevPhoto = () => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? imgData.length - 1 : prevIndex - 1
-      );
-    };
+    fetchRecipeImage();
+  }, [id]);
+
+  const nextPhoto = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % listImageData.length);
+  };
+
+  const prevPhoto = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? listImageData.length - 1 : prevIndex - 1
+    );
+  };
+
+  if (isLoading) {
+    return <div>Loading 중입니다...</div>;
+  }
+
+  if (listImageData.length === 0) {
+    return <div>이미지가 없습니다.</div>;
+  }
 
   return (
     <PhotoReviewContainer>
-      <NavigationButton onClick={prevPhoto} disabled={imgData.length <= 1}>
+      <NavigationButton onClick={prevPhoto} disabled={listImageData.length <= 1}>
         <MdKeyboardDoubleArrowLeft color="white" />
       </NavigationButton>
 
       <PhotoContainer>
-          <PhotoWrapper
-            style={{
-              display: "flex",
-              gap: "10px",
-              transform: `translateX(-${(currentIndex * 100) / imgData.length}%)`, // 스와이프 효과
-              transition: "transform 0.3s ease-in-out",
-            }}>
-            {/* {imgData.map((photo_url: string, index: number) => (
-              <Photo
-                key={index}
-                src={photo_url}
-                alt={`foodPhoto ${index}`}
-                width={150} 
-                height={150}
-              />
-            ))} */}
-          </PhotoWrapper>
+        <PhotoWrapper
+          style={{
+            display: "flex",
+            gap: "10px",
+            transform: `translateX(-${(currentIndex * 100) / listImageData.length}%)`,
+            transition: "transform 0.3s ease-in-out",
+          }}
+        >
+          {listImageData.map((image, index) => (
+            <Photo
+              key={image.id}
+              src={image.photoUrl}
+              alt={`foodPhoto ${index}`}
+              width={150}
+              height={150}
+            />
+          ))}
+        </PhotoWrapper>
       </PhotoContainer>
 
-      <NavigationButton onClick={nextPhoto} disabled={imgData.length <= 1}>
+      <NavigationButton onClick={nextPhoto} disabled={listImageData.length <= 1}>
         <MdKeyboardDoubleArrowRight color="white" />
       </NavigationButton>
     </PhotoReviewContainer>
