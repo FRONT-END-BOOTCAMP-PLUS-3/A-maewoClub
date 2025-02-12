@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { OptionButton } from "./optionButton.style";
+import { OptionButton, DividerBox } from "./optionButton.style";
 import { BoardTag } from "@/domain/entities/BoardTag";
 
 interface OptionButtonProps {
@@ -10,7 +10,7 @@ interface OptionButtonProps {
 }
 
 interface FilterButtonGroupProps {
-  onFilterChange: (tagId: number | null) => void;
+  onFilterChange: (tagId: number) => void;
 }
 
 const FilterToggleButton = ({
@@ -26,7 +26,7 @@ const FilterToggleButton = ({
 };
 
 const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number>(0);
   const [tagData, setTagData] = useState<BoardTag[]>([]);
 
   useEffect(() => {
@@ -49,13 +49,13 @@ const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
 
   const handleButtonClick = (id: number) => {
     // 같은 태그를 다시 클릭하면 필터 해제
-    const newSelected = selected === id ? null : id;
+    const newSelected = selected === id ? 0 : id;
     setSelected(newSelected);
     onFilterChange(newSelected);
   };
 
   return (
-    <div style={{ display: "flex", gap: "8px", overflowX: "auto" }}>
+    <DividerBox>
       {tagData?.map((tag) => (
         <FilterToggleButton
           key={tag.id}
@@ -64,7 +64,7 @@ const FilterButtonGroup = ({ onFilterChange }: FilterButtonGroupProps) => {
           onClick={() => handleButtonClick(tag.id)}
         />
       ))}
-    </div>
+    </DividerBox>
   );
 };
 

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { within } from "@storybook/test";
 import styled from "styled-components";
 
 export const PostContainer = styled.div`
@@ -30,10 +30,6 @@ export const Content = styled.p`
   color: white;
 `;
 
-export const PostImage = styled(Image)`
-  object-fit: cover;
-`;
-
 export const InfoWrapper = styled.div`
   display: flex;
   column-gap: 10px;
@@ -42,4 +38,19 @@ export const InfoWrapper = styled.div`
 export const SubInfo = styled.p`
   font-size: 12px;
   color: white;
+`;
+
+export const Settings = styled.button`
+  background: none;
+  font-size: 12px;
+  color: white;
+  padding: 4px;
+`;
+
+export const FlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
 `;

@@ -1,4 +1,6 @@
-export interface BoardDto {
+import { BoardCommentDto } from "./BoardCommentDto";
+
+export interface BoardDetailDto {
   id: number;
   userId: string;
   title: string;
@@ -8,4 +10,6 @@ export interface BoardDto {
   updatedAt: Date;
   likeCount: number;
   viewCount: number;
+  images: Array<{ photoUrl: string }>;
+  comments: BoardCommentDto[];
 }

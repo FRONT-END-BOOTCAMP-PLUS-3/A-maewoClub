@@ -1,3 +1,5 @@
+"use client";
+
 import { UserDto } from "@/application/users/dto/UserDto";
 import { create } from "zustand";
 

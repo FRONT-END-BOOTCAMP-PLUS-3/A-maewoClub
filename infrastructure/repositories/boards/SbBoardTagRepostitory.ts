@@ -6,6 +6,7 @@ export class SbBoardTagRepostiory implements BoardTagRepository {
   async findAll(): Promise<BoardTag[]> {
     const supabase = await createClient();
     const { data, error } = await supabase.from("board_tag").select("*");
+
     if (error) {
       console.error("Supabase 에러:", {
         code: error.code,

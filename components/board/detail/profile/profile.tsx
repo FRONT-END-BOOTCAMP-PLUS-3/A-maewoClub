@@ -11,13 +11,13 @@ import {
 interface ProfileProps {
   image: string;
   nickname: string;
-  createdDate: string;
+  createdAt: Date;
 }
 
 const Profile = ({
   nickname,
   image = "/Dfprofile.png",
-  createdDate,
+  createdAt,
 }: ProfileProps) => {
   return (
     <>
@@ -28,7 +28,7 @@ const Profile = ({
         />
         <InfoWrapper>
           <Nickname>{nickname}</Nickname>
-          <CreateDate>{createdDate}</CreateDate>
+          {/* <CreateDate>{createdAt}</CreateDate> */}
         </InfoWrapper>
       </Container>
     </>

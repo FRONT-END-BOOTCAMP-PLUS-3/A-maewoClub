@@ -5,6 +5,14 @@ export const PostStyle = styled.div`
   width: 716px;
   height: 155px;
   flex-shrink: 0;
+
+  width: 100%;
+  padding: 20px 0;
+  box-shadow: inset 0 -1px 0 var(--darkRed);
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const PostImage = styled.span`

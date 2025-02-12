@@ -1,3 +1,4 @@
+import { BoardDetailDto } from "./../../../../application/board/dto/BoardDetailDto";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -24,7 +25,9 @@ export const Category = styled.p`
 `;
 
 export const Input = styled.input`
-  padding: 2px;
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 8px;
 `;
 
 export const ErrorMsg = styled.p`

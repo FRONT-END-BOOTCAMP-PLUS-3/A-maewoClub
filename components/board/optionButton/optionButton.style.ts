@@ -16,12 +16,22 @@ const OptionButton = styled.button<{ $isActive: boolean }>`
   width: auto;
   min-width: 55px;
 
-  background: ${({ $isActive }) =>
-    $isActive ? "var(--point_red, #E50913)" : "#FFF"};
+  background: ${({ $isActive }) => ($isActive ? "var(--mainRed)" : "#FFF")};
   color: ${({ $isActive }) => ($isActive ? "#FFF" : "#000")};
+
   &:hover {
     opacity: 0.8;
   }
 `;
 
-export { OptionButton };
+const DividerBox = styled.div`
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 20px 0;
+  border-top: 1px solid var(--mainRed);
+  border-bottom: 1px solid var(--mainRed);
+  width: 100%;
+`;
+
+export { OptionButton, DividerBox };
