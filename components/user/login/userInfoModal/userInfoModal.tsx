@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ModalOverlay } from "@/components/recipe/recipeDetail/reviewModal/reviewModal.style";
-import { BoardContainer, BoardDateLikeWrapper, BoardHeader, BoardHeaderContainer, BoardItem, BoardItemContent, BoardItemDate, BoardItemLike, BoardItemTitle, BoardList, BoardTitle, ModalContent, UserCommunityBox, UserCommunityCount, UserCommunityTitle, UserCommunityWrapper, UserContainer, UserImage, UserInfoWrapper, UserLevelBackground, UserLevelBadge, UserLevelImage, UserLevelImgWarpper, UserLevelInfoWrapper, UserLevelTitle, UserLevelWrapper, UserNickName } from "./userInfoModal.style";
+import {  BoardDateLikeWrapper,Item, ItemContent, ItemDate, ItemLike, ItemTitle, NavTitle, ModalContent, UserCommunityBox, UserCommunityCount, UserCommunityTitle, UserCommunityWrapper, UserContainer, UserImage, UserInfoWrapper, UserLevelBackground, UserLevelBadge, UserLevelImage,  UserLevelImgWrapper, UserLevelInfoWrapper, UserLevelTitle, UserLevelWrapper, UserNickName, Navbar, NavbarContainer, Container, List } from "./userInfoModal.style";
 import { FaFire } from "react-icons/fa6";
 import { useAuthStore } from "@/store/useAuthStore";
 import { UserInfoRecipesModalDto, UserInfoBoardsModalDto } from "@/application/users/dto/UserInfoModalDto";
@@ -97,14 +97,14 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
                 </UserInfoWrapper>
 
                 <UserLevelWrapper>
-                    <UserLevelImgWarpper>
+                    <UserLevelImgWrapper>
                         <UserLevelImage
                             src={DfLevelImg}
                             alt="레벨이미지"
                             width={100}
                             height={100}
                         />
-                    </UserLevelImgWarpper>
+                    </UserLevelImgWrapper>
                     <UserLevelInfoWrapper>
                         <UserLevelTitle>
                             {getLevelTitle(Number(user?.level) || 0)}
@@ -136,47 +136,47 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
 
             </UserContainer>
 
-            <BoardContainer>
-                <BoardHeaderContainer>
-                    <BoardHeader onClick={() => setActiveTab("recipes")}>
-                    <BoardTitle>레시피</BoardTitle>
-                    </BoardHeader>
-                    <BoardHeader onClick={() => setActiveTab("boards")}>
-                    <BoardTitle>커뮤니티</BoardTitle>
-                    </BoardHeader>
-                    <BoardHeader>
-                    <BoardTitle>챌린지</BoardTitle>
-                    </BoardHeader>
-                </BoardHeaderContainer>
-                <BoardList>
+            <Container>
+                <NavbarContainer>
+                    <Navbar onClick={() => setActiveTab("recipes")}>
+                    <NavTitle>레시피</NavTitle>
+                    </Navbar>
+                    <Navbar onClick={() => setActiveTab("boards")}>
+                    <NavTitle>커뮤니티</NavTitle>
+                    </Navbar>
+                    <Navbar>
+                    <NavTitle>챌린지</NavTitle>
+                    </Navbar>
+                </NavbarContainer>
+                <List>
                     {activeTab === "recipes" &&
                     userRecipes.map((recipe) => (
-                        <BoardItem key={recipe.id}>
-                            <BoardItemTitle onClick={() => handleRecipeClick(recipe.id)}>
+                        <Item key={recipe.id}>
+                            <ItemTitle onClick={() => handleRecipeClick(recipe.id)}>
                                 {recipe.title}
-                            </BoardItemTitle>
-                            <BoardItemContent>{truncateDescription(recipe.description, 10)}</BoardItemContent>
+                            </ItemTitle>
+                            <ItemContent>{truncateDescription(recipe.description, 10)}</ItemContent>
                             <BoardDateLikeWrapper>
-                                <BoardItemDate>{formatDate(recipe.createdAt)}</BoardItemDate>
-                                <BoardItemLike> 좋아요: {recipe.likeCount}</BoardItemLike>
+                                <ItemDate>{formatDate(recipe.createdAt)}</ItemDate>
+                                <ItemLike> 좋아요: {recipe.likeCount}</ItemLike>
                             </BoardDateLikeWrapper>
-                        </BoardItem>
+                        </Item>
                     ))}
                     {activeTab === "boards" &&
                     userBoards.map((board) => (
-                        <BoardItem key={board.id}>
-                            <BoardItemTitle onClick={() => handleBoardClick(board.id)}>
+                        <Item key={board.id}>
+                            <ItemTitle onClick={() => handleBoardClick(board.id)}>
                                 {board.title}
-                            </BoardItemTitle>
-                            <BoardItemContent>{truncateDescription(board.description, 10)}</BoardItemContent>
+                            </ItemTitle>
+                            <ItemContent>{truncateDescription(board.description, 10)}</ItemContent>
                             <BoardDateLikeWrapper>
-                                <BoardItemDate>{formatDate(board.createdAt)}</BoardItemDate>
-                                <BoardItemLike>좋아요 : {board.likeCount}</BoardItemLike>
+                                <ItemDate>{formatDate(board.createdAt)}</ItemDate>
+                                <ItemLike>좋아요 : {board.likeCount}</ItemLike>
                             </BoardDateLikeWrapper>
-                        </BoardItem>
+                        </Item>
                     ))}
-                </BoardList>
-            </BoardContainer>
+                </List>
+            </Container>
         </ModalContent>
     </ModalOverlay>
     )

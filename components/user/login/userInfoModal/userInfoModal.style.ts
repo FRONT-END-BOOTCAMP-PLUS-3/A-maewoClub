@@ -33,7 +33,7 @@ export const UserLevelWrapper = styled.div`
     display: flex;
     width: 100%;
 `
-export const UserLevelImgWarpper = styled.div`
+export const UserLevelImgWrapper = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #CBCBCB;
@@ -83,7 +83,7 @@ export const UserCommunityWrapper = styled.div`
 export const UserCommunityTitle = styled.h3``
 export const UserCommunityCount = styled.p``
 
-export const BoardContainer = styled.div`
+export const Container = styled.div`
     display: flex;
     flex-direction: column;
     background-color:rgb(0, 0, 0);
@@ -92,46 +92,46 @@ export const BoardContainer = styled.div`
     overflow-y: auto;
     border-radius: 20px 20px 20px 0; 
 `
-export const BoardHeaderContainer = styled.div`
+export const NavbarContainer = styled.div`
     display: flex;
     justify-content: space-around; 
     background-color: var(--mainRed);
 `
 
-export const BoardHeader = styled.div`
+export const Navbar = styled.div`
     background-color: var(--mainRed);
     :hover {
         background-color: var(--darkRed);
     }
 `
 
-export const BoardTitle = styled.p`
+export const NavTitle = styled.p`
     color: #fff;
     padding: 1rem;
     font-weight: bold;
 
 `
 
-export const BoardList = styled.ul`
+export const List = styled.ul`
   max-height: 65vh; 
   overflow-y: auto;
 `
-export const BoardItem = styled.li`
+export const Item = styled.li`
     padding: 1rem;
     border-bottom: 1px solid var(--mainRed);
 `
-export const BoardItemTitle = styled.p`
+export const ItemTitle = styled.p`
     color: #fff;
 `
-export const BoardItemContent = styled.p`
+export const ItemContent = styled.p`
     color: #CBCBCB;
     font-size: 0.8em;
 `
-export const BoardItemDate = styled.p`
+export const ItemDate = styled.p`
     color: #CBCBCB;
     font-size: 0.7em;
 `
-export const BoardItemLike = styled.p`
+export const ItemLike = styled.p`
     color: var(--mainRed);
     font-size: 0.7em;
 `
