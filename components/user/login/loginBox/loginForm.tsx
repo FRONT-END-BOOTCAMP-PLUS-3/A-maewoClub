@@ -52,9 +52,8 @@ const LoginForm = () => {
       { email: accountId, password: accountPw },
       {
         onSuccess: async () => {
-          await fetchUser(); // fetchUser 호출 후 user 상태 업데이트
+          await fetchUser();
 
-          // user가 null이 아닌지 먼저 확인하고 role을 접근
           if (user) {
             if (user.role === "admin") {
               router.push("/admin");
