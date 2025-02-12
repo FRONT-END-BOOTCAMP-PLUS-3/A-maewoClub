@@ -1,3 +1,4 @@
+import { UserInfoModalDto } from "@/application/users/dto/UserInfoModalDto";
 import { BoardRepository } from "@/domain/repositories/BoardRepository";
 import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
 import { SbBoardRepository } from "@/infrastructure/repositories/boards/SbBoardRepository";
@@ -19,7 +20,9 @@ export async function GET(request: Request) {
         const userRecipes = await recipeRepository.findRecipeByUserId(userId)
         const userBoards = await boardRepository.findBoardByUserId(userId)
 
-        return NextResponse.json({ userRecipes, userBoards });
+        const UserInfoModalDto:UserInfoModalDto = { userRecipes, userBoards };
+
+        return NextResponse.json({ UserInfoModalDto });
 
     }catch (error) {
         console.error("❌ 게시판 조회 중 에러 발생:", error);

@@ -3,40 +3,19 @@ import { ModalOverlay } from "@/components/recipe/recipeDetail/reviewModal/revie
 import { BoardContainer, BoardDateLikeWrapper, BoardHeader, BoardHeaderContainer, BoardItem, BoardItemContent, BoardItemDate, BoardItemLike, BoardItemTitle, BoardList, BoardTitle, ModalContent, UserCommunityBox, UserCommunityCount, UserCommunityTitle, UserCommunityWrapper, UserContainer, UserImage, UserInfoWrapper, UserLevelBackground, UserLevelBadge, UserLevelImage, UserLevelImgWarpper, UserLevelInfoWrapper, UserLevelTitle, UserLevelWrapper, UserNickName } from "./userInfoModal.style";
 import { FaFire } from "react-icons/fa6";
 import { useAuthStore } from "@/store/useAuthStore";
+import { UserInfoRecipesModalDto, UserInfoBoardsModalDto } from "@/application/users/dto/UserInfoModalDto";
 
 type UserInfoModalProps = {
     onClose: () => void;
 }
 
-type UserRecipe = {
-    id: number;
-    userId: string;
-    title: string;
-    description: string;
-    tagId: number;
-    createdAt: Date;
-    updatedAt: Date;
-    likeCount: number;
-};
-
-type UserBoard = {
-    id: number;
-    userId: number;
-    title: string;
-    description: string;
-    tagId: number;
-    createdAt: Date;
-    updatedAt: Date;
-    likeCount: number;
-    viewCount: number;
-}
     const mockImg = "/Dfprofile.png";
     const DfLevelImg = "/Dflevel.png"
 
 export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
     const { user } = useAuthStore();
-    const [userRecipes, setUserRecipes] = useState<UserRecipe[]>([]);
-    const [userBoards, setUserBoards] = useState<UserBoard[]>([]);  
+    const [userRecipes, setUserRecipes] = useState<UserInfoRecipesModalDto[]>([]);
+    const [userBoards, setUserBoards] = useState<UserInfoBoardsModalDto[]>([]);  
     const [activeTab, setActiveTab] = useState<"recipes" | "boards">("recipes");
       
     useEffect(() => {
@@ -44,8 +23,9 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
             try {
                 const response = await fetch(`/api/users/communityInfo?userId=${user?.id}`);
                 const data = await response.json();
-                setUserRecipes(data.userRecipes);
-                setUserBoards(data.userBoards);
+                setUserRecipes(data.UserInfoModalDto.userRecipes);
+                setUserBoards(data.UserInfoModalDto.userBoards);
+                console.log(data);
             } catch (error) {
                 console.error("❌ 데이터 가져오기 중 에러 발생:", error);
             }
@@ -54,6 +34,7 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
             fetchUserData();
         }
     }, [user?.id]);
+   
 
     const formatDate = (dateString: Date) => {
         const date = new Date(dateString);
