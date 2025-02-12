@@ -114,6 +114,7 @@ const Page = () => {
                 <li key={board.id || index}>
                   <PostListItem
                     id={board.id}
+                    img={board.img}
                     userId={board.userId}
                     title={board.title}
                     description={board.description}

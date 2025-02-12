@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  padding: 20px 0;
+  border-bottom: 2px solid var(--darkRed);
+`;
+
 export const PostStyle = styled.div`
   display: flex;
   width: 716px;
@@ -7,8 +12,6 @@ export const PostStyle = styled.div`
   flex-shrink: 0;
 
   width: 100%;
-  padding: 20px 0;
-  box-shadow: inset 0 -1px 0 var(--darkRed);
 
   &:last-child {
     border-bottom: none;
