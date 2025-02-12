@@ -8,4 +8,5 @@ export interface BoardDto {
   updatedAt: Date;
   likeCount: number;
   viewCount: number;
+  img?: string;
 }

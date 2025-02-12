@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import {
+  Container,
   PostContent,
   PostImage,
   PostPhrase,
@@ -19,21 +20,27 @@ const PostListItem = (post: BoardDto) => {
   };
 
   return (
-    <PostStyle onClick={handleDetail}>
-      <PostImage>{/* <img src={post.image} alt={post.title} /> */}</PostImage>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <PostContent>
-          <PostTitle>{post.title}</PostTitle>
-          <PostPhrase>{post.description}</PostPhrase>
-          <PostText>{post.userId}</PostText>
-        </PostContent>
-        <PostText style={{ marginTop: "52px", marginBottom: "11px" }}>
-          {/* <span>댓글: {post.comment}</span> */}
-          <span>조회수: {post.viewCount}</span>
-          <span>하트: {post.likeCount} </span>
-        </PostText>
-      </div>
-    </PostStyle>
+    <Container>
+      <PostStyle onClick={handleDetail}>
+        <PostImage>
+          <img
+            src={post.img}
+            alt={post.title}
+          />
+        </PostImage>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <PostContent>
+            <PostTitle>{post.title}</PostTitle>
+            <PostPhrase>{post.description}</PostPhrase>
+            <PostText>{post.userId}</PostText>
+          </PostContent>
+          <PostText style={{ marginTop: "52px", marginBottom: "11px" }}>
+            <span>조회수: {post.viewCount}</span>
+            <span>하트: {post.likeCount} </span>
+          </PostText>
+        </div>
+      </PostStyle>
+    </Container>
   );
 };
 
