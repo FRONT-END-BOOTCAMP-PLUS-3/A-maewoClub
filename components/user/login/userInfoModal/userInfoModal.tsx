@@ -4,6 +4,7 @@ import {  BoardDateLikeWrapper,Item, ItemContent, ItemDate, ItemLike, ItemTitle,
 import { FaFire } from "react-icons/fa6";
 import { useAuthStore } from "@/store/useAuthStore";
 import { UserInfoRecipesModalDto, UserInfoBoardsModalDto } from "@/application/users/dto/UserInfoModalDto";
+import Link from "next/link";
 
 type UserInfoModalProps = {
     onClose: () => void;
@@ -25,7 +26,6 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
                 const data = await response.json();
                 setUserRecipes(data.UserInfoModalDto.userRecipes);
                 setUserBoards(data.UserInfoModalDto.userBoards);
-                console.log(data);
             } catch (error) {
                 console.error("❌ 데이터 가져오기 중 에러 발생:", error);
             }
@@ -74,13 +74,6 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
                 return "";
         }
     }
-
-    const handleRecipeClick = (recipeId: number) => {
-        window.location.href = `/recipes/${recipeId}`;
-    };
-    const handleBoardClick = (boardId: number) => {
-        window.location.href = `/boards/${boardId}`;
-      };
 
     return (
     <ModalOverlay onClick={handleOverlayClick}>
@@ -152,9 +145,11 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
                     {activeTab === "recipes" &&
                     userRecipes.map((recipe) => (
                         <Item key={recipe.id}>
-                            <ItemTitle onClick={() => handleRecipeClick(recipe.id)}>
-                                {recipe.title}
-                            </ItemTitle>
+                            <Link href={`/recipes/${recipe.id}`}>
+                                <ItemTitle onClick={onClose}>
+                                    {recipe.title}
+                                </ItemTitle>
+                            </Link>
                             <ItemContent>{truncateDescription(recipe.description, 10)}</ItemContent>
                             <BoardDateLikeWrapper>
                                 <ItemDate>{formatDate(recipe.createdAt)}</ItemDate>
@@ -165,9 +160,11 @@ export const UserInfoModal = ({ onClose }: UserInfoModalProps) => {
                     {activeTab === "boards" &&
                     userBoards.map((board) => (
                         <Item key={board.id}>
-                            <ItemTitle onClick={() => handleBoardClick(board.id)}>
-                                {board.title}
-                            </ItemTitle>
+                            <Link href={`/recipes/${board.id}`}>
+                                <ItemTitle onClick={onClose}>
+                                    {board.title}
+                                </ItemTitle>
+                            </Link>
                             <ItemContent>{truncateDescription(board.description, 10)}</ItemContent>
                             <BoardDateLikeWrapper>
                                 <ItemDate>{formatDate(board.createdAt)}</ItemDate>
