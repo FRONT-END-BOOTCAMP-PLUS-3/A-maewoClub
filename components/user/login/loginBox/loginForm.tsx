@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Category,
   Container,
@@ -13,16 +13,12 @@ import { useLogin } from "@/hook/useLogin";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 
-interface AccountInputProps {
-  onUpdate?: (content: string) => void;
-}
-
-const LoginForm = ({ onUpdate }: AccountInputProps) => {
+const LoginForm = () => {
   const [accountId, setAccountId] = useState<string>("");
   const [accountPw, setAccountPw] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const { mutate: login } = useLogin();
-  const { fetchUser } = useAuthStore();
+  const { user, fetchUser } = useAuthStore();
   const router = useRouter();
 
   const handleId = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +52,16 @@ const LoginForm = ({ onUpdate }: AccountInputProps) => {
       { email: accountId, password: accountPw },
       {
         onSuccess: async () => {
-          await fetchUser();
-          window.location.reload();
+          await fetchUser(); // fetchUser 호출 후 user 상태 업데이트
+
+          // user가 null이 아닌지 먼저 확인하고 role을 접근
+          if (user) {
+            if (user.role === "admin") {
+              router.push("/admin");
+            } else {
+              window.location.reload();
+            }
+          }
         },
         onError: (error) => {
           setErrorMessage(error.message);
@@ -66,22 +70,32 @@ const LoginForm = ({ onUpdate }: AccountInputProps) => {
     );
   };
 
+  useEffect(() => {
+    if (user) {
+      if (user.role === "admin") {
+        router.push("/admin");
+      } else {
+        window.location.reload();
+      }
+    }
+  }, [user]);
+
   return (
     <Container>
       <InputBox>
         <Category>아이디</Category>
         <Input
-          type='email'
+          type="email"
           value={accountId}
           onChange={handleId}
-          placeholder='이메일을 입력해주세요.'
+          placeholder="이메일을 입력해주세요."
         />
         <Category>비밀번호</Category>
         <Input
-          type='password'
+          type="password"
           value={accountPw}
           onChange={handlePw}
-          placeholder='비밀번호를 입력해주세요'
+          placeholder="비밀번호를 입력해주세요"
         />
       </InputBox>
       {errorMessage && <ErrorMsg>{errorMessage}</ErrorMsg>}
