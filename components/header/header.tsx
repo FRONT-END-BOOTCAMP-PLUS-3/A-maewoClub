@@ -13,6 +13,9 @@ import {
 import { Login } from "../user/login/login";
 import { useAuthStore } from "@/store/useAuthStore";
 import { UserInfoModal } from "../user/login/userInfoModal/userInfoModal";
+import Image from "next/image";
+
+const logo = '/logo.png';
 
 export const Header = () => {
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -26,11 +29,19 @@ export const Header = () => {
     }
   const closeUserInfoModal = () => setShowUserInfoModal(false);
 
+
   return (
     <>
       <HeaderStyle>
         <LogoStyle>
-          <LinkStyle href='/'>logo</LinkStyle>
+          <LinkStyle href='/'>
+          <Image 
+            src={logo}
+            alt='logo'
+            height={150}
+            width={150}
+          />
+          </LinkStyle>
         </LogoStyle>
         <NavStyle>
           <LinkStyle href='/recipes'>레시피</LinkStyle>
