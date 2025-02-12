@@ -72,6 +72,7 @@ const Post = () => {
 
   if (loading) return <div>로딩중...</div>;
   if (!board) return <div>존재하지 않는 게시글입니다.</div>;
+  if (!user) return <div>유저 정보를 불러올 수 없습니다.</div>;
 
   const profileData = {
     nickname: board.userId,
@@ -88,7 +89,7 @@ const Post = () => {
             image={profileData.image}
             createdAt={profileData.createdAt}
           />
-          {user?.id == board.userId && (
+          {user.id === board.userId && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <Settings> 수정 </Settings>
               <SubInfo> | </SubInfo>
@@ -113,7 +114,7 @@ const Post = () => {
         <InfoWrapper>
           <SubInfo>조회 : {board.viewCount}</SubInfo>
           <SubInfo>하트 : {board.likeCount}</SubInfo>
-          {/* <SubInfo>댓글 : {board.comments.length}</SubInfo> */}
+          <SubInfo>댓글 : {board.comments.length}</SubInfo>
         </InfoWrapper>
         <Comment boardId={board.id} />
       </ContentBox>
