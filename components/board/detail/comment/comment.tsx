@@ -46,6 +46,7 @@ const Comment = ({ boardId }: CommentProps) => {
     fetchComments();
   }, [boardId]);
 
+  console.log(comments);
   const handleCreateComment = async () => {
     if (!newComment.trim()) {
       alert("⚠️ 댓글을 입력해주세요!");
@@ -110,18 +111,20 @@ const Comment = ({ boardId }: CommentProps) => {
     }
   };
 
+  const formattedDate = (date: Date) =>
+    new Date()
+      .toLocaleDateString("ko-KR")
+      .replace(/\. /g, "/")
+      .replace(/\.$/, "");
+
   return (
     <>
       <CommentBox>
         {comments.map((e) => (
           <Container key={e.id}>
-            <ProfileImage
-              src={e.photoUrl}
-              alt='profile-image'
-            />
             <InfoWrapper>
               <Nickname>{e.nickname || "익명"}</Nickname>
-              <CreateDate>{new Date(e.createdAt).toLocaleString()}</CreateDate>
+              <CreateDate>{formattedDate(e.createdAt)}</CreateDate>
             </InfoWrapper>
             <Content>{e.content}</Content>
             {user.id === e.userId && (

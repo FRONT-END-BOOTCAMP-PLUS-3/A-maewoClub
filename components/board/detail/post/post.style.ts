@@ -33,6 +33,7 @@ export const Content = styled.p`
 export const InfoWrapper = styled.div`
   display: flex;
   column-gap: 10px;
+  margin: 10px 0;
 `;
 
 export const SubInfo = styled.p`

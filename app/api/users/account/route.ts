@@ -21,12 +21,10 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest) {
   try {
-    const user = await findUserByUserIdUseCase.execute(params.id);
+    const id = req.nextUrl.searchParams.get("id") as string;
+    const user = await findUserByUserIdUseCase.execute(id);
     if (!user) {
       return NextResponse.json(
         { error: "유저를 찾을 수 없습니다." },

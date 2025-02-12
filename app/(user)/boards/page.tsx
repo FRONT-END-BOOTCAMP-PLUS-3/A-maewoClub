@@ -112,18 +112,7 @@ const Page = () => {
             <ul>
               {currentPosts.map((board, index) => (
                 <li key={board.id || index}>
-                  <PostListItem
-                    id={board.id}
-                    img={board.img}
-                    userId={board.userId}
-                    title={board.title}
-                    description={board.description}
-                    tagId={board.tagId}
-                    createdAt={board.createdAt}
-                    updatedAt={board.updatedAt}
-                    likeCount={board.likeCount}
-                    viewCount={board.viewCount}
-                  />
+                  <PostListItem {...board} />
                 </li>
               ))}
             </ul>
@@ -138,7 +127,7 @@ const Page = () => {
       </div>
 
       <div
-        style={{ position: "fixed", right: "30px", bottom: "30px" }}
+        style={{ position: "fixed", right: "20%", bottom: "30px" }}
         onClick={handleCreate}
       >
         <Button>+ 글쓰기</Button>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   Container,
   CreateDate,
@@ -8,31 +9,37 @@ import {
   ProfileImage,
 } from "./profile.style";
 
-interface ProfileProps {
+export interface ProfileProps {
   image: string;
   nickname: string;
-  createdAt: Date;
+  createdAt: Date | string;
 }
 
-const Profile = ({
-  nickname,
-  image = "/Dfprofile.png",
-  createdAt,
-}: ProfileProps) => {
+function Profile({ nickname, image, createdAt }: ProfileProps) {
+  const formattedDate = new Date(createdAt)
+    .toLocaleDateString("ko-KR")
+    .replace(/\. /g, "/")
+    .replace(/\.$/, "");
+
   return (
     <>
       <Container>
-        <ProfileImage
-          src={image}
-          alt='profile-image'
-        />
+        <ProfileImage>
+          <Image
+            src={image}
+            alt='profile image'
+            width={60}
+            height={60}
+          />
+        </ProfileImage>
+
         <InfoWrapper>
           <Nickname>{nickname}</Nickname>
-          {/* <CreateDate>{createdAt}</CreateDate> */}
+          <CreateDate>{formattedDate}</CreateDate>
         </InfoWrapper>
       </Container>
     </>
   );
-};
+}
 
 export default Profile;
