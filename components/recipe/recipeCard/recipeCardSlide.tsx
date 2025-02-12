@@ -14,7 +14,7 @@ import {
 } from "./recipeCardSlide.style";
 
 type RecipeCardProps = {
-  id: string,
+  id: number,
   children: React.ReactNode;
 };
 

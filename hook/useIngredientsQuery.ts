@@ -12,7 +12,7 @@ const fetchIngredients = async (id: number): Promise<RecipeIngredientDto[]> => {
 
 export const IngredientsQuery = (id: number) => {
   return useQuery<RecipeIngredientDto[], Error>({
-    queryKey: ["ingredient", id],  
+    queryKey: ['ingredient', id],  
     queryFn: () => fetchIngredients(id),
     staleTime: 1000 * 60 * 5, 
     retry: false,

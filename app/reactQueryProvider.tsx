@@ -2,7 +2,8 @@
 
 import { useAuthStore } from "@/store/useAuthStore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { useEffect, useState } from "react";
 
 export default function ReactQueryProvider({
   children,
@@ -10,9 +11,16 @@ export default function ReactQueryProvider({
   children: React.ReactNode;
 }) {
 
-  const queryClient = new QueryClient()
-  //const [queryClient] = useState(() => new QueryClient());
+  // const queryClient = new QueryClient()
+  const [queryClient] = useState(() => new QueryClient());
   const fetchUser = useAuthStore((state) => state.fetchUser);
+
+  // const [isAuth, setIsAuth] = useState(false);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("access_token");
+  //   setIsAuth(!!token);
+  // }, []);
 
   useEffect(() => {
     fetchUser();
@@ -20,6 +28,9 @@ export default function ReactQueryProvider({
 
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
   );
 }

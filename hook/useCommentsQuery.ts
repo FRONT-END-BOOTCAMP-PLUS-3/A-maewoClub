@@ -12,7 +12,7 @@ const fetchComments = async (id: number): Promise<RecipeCommentDto[]> => {
 
 export const CommentsQuery = (id: number) => {
   return useQuery<RecipeCommentDto[], Error>({
-    queryKey: ["comment", id],  
+    queryKey: ['comment', id],  
     queryFn: () => fetchComments(id),
     staleTime: 1000 * 60 * 5, 
     retry: false,

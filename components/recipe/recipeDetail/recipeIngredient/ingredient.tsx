@@ -1,3 +1,4 @@
+// import { useEffect } from "react";
 import { useEffect } from "react";
 import {
   Container,
@@ -8,21 +9,16 @@ import {
   IngredientName,
   IngredientAmount,
 } from "./ingredient.style";
-import { useRecipeStore } from "@/store/useRecipeStore";
-import { RecipeIngredientDto } from "@/application/recipe/dto/RecipeIngredientDto";
 
 type IngredientProps = {
   id: number;
-  ingredients: RecipeIngredientDto[];
 }
 
-export const Ingredient = ({id, ingredients}: IngredientProps) => {
+export const Ingredient = ({id}: IngredientProps) => {
   
-  const {fetchRecipeData} = useRecipeStore();
-  useEffect(()=>{
-    fetchRecipeData(id);
-    console.log("fetchRecipeData부분 ingredients data 확인용", fetchRecipeData);
-  }, [id, fetchRecipeData]);
+ useEffect(() => {
+   
+ },[])
 
   return (
     <Container>
@@ -30,7 +26,7 @@ export const Ingredient = ({id, ingredients}: IngredientProps) => {
       <IngredientContainer>
         <IngredientList>
           {ingredients.map((ingredient) => (
-            <IngredientItem key={ingredient.id}>
+            <IngredientItem key={id}> 
               <IngredientName>{ingredient.ingredientName}</IngredientName>
               <IngredientAmount>{ingredient.ingredientAmount}</IngredientAmount>
             </IngredientItem>

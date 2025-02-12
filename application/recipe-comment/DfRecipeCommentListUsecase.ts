@@ -19,12 +19,15 @@ export class DfRecipeCommentListUsecase {
 
   async getRecipeAllCommentListTest(id: number): Promise<RecipeCommentWithImageDto[]> {
     const comments = await this.recipeCommentRepository.findCommentAll(id);
+    console.log("comments 데이터 확인용~~" , comments );
     const ImageIds = comments.map((comment) => comment.id);
+    console.log("ImageIds 데이터 확인용~~", ImageIds);
     const images = await this.recipeCommentImageRepository.findAllByRecipeId(ImageIds);
 
     const commentsWithImagesDto: RecipeCommentWithImageDto[] = await Promise.all(
       comments.map(async (comment) => {
         const image = images.find((img) => img.id === comment.id);
+        console.log("image사용 되는가? Images Dto 확인용 ", image);
         return {
           ...comment,
           imageUrl: image ? image.photoUrl : null,

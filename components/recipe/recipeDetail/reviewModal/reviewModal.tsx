@@ -58,7 +58,7 @@ export const ReviewModal = ({
         formData.append("image", imageRef.current.files[0]);
       }
 
-      await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+      await fetch(`/api/recipe-comments?id=${recipeId}`, {
         method: "POST",
         body: formData,
       });
@@ -87,7 +87,7 @@ export const ReviewModal = ({
         formData.append("image", imageRef.current.files[0]);
       }
 
-      await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+      await fetch(`/api/recipe-comments?id=${recipeId}`, {
         method: "PUT",
         body: formData,
       });

@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   CookReviewContainer,
   CookReviewCard,
-  CookReviewUserImg,
   CookReviewCardContainer,
   UpdateButton,
   DeleteButton,

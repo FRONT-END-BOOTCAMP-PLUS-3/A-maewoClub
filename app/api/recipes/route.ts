@@ -118,6 +118,7 @@ export async function PUT(req: NextRequest) {
       new SbRecipeImageRepository();
     const recipeDetailUsecase = new DfRecipeDetailUsecase(
       recipeRepository,
+    
     );
 
     // 레시피 기본 정보 업데이트

@@ -12,7 +12,7 @@ const fetchImages = async (id: number): Promise<RecipeImageDto[]> => {
 
 export const RecipeImagesQuery = (id: number) => {
   return useQuery<RecipeImageDto[], Error>({
-    queryKey: ["images", id],  
+    queryKey: ['images', id],  
     queryFn: () => fetchImages(id),
     staleTime: 1000 * 60 * 5, 
     retry: false,

@@ -5,7 +5,7 @@ export class DfRecipeStepUsecase {
     private recipeStepRepository: RecipeStepRepository
   ){}
   
-  async getRecipeSteps(recipeId: number) {
-    return await this.recipeStepRepository.findAllByRecipeId(recipeId);
+  async getRecipeSteps(id: number) {
+    return await this.recipeStepRepository.findAllByRecipeId(id);
   }
 }

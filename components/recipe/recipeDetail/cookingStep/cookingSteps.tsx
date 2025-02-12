@@ -1,5 +1,6 @@
 "use client";
-import { useRecipeStore } from "@/store/useRecipeStore";
+
+import { useState, useEffect } from "react";
 import {
   CookCardDescription,
   CookCardImage,
@@ -7,26 +8,44 @@ import {
   CookingCard,
   CookStepImage,
 } from "./cookingStep.style";
-import { useEffect } from "react";
 import { RecipeStepDto } from "@/application/recipe/dto/RecipeStepDto";
 
 interface CookingStepsProps {
-  steps: RecipeStepDto[],
-  recipeId : number;
+  id: number;
 }
 
-export const CookingSteps = ({recipeId, steps}: CookingStepsProps) => {
-  const { fetchRecipeData } = useRecipeStore();
+export const CookingSteps = ({ id }: CookingStepsProps) => {
+  const [steps, setSteps] = useState<RecipeStepDto[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchRecipeData(recipeId);
-    console.log("fetchRecipeData부분 cookingSteps data 확인용", fetchRecipeData);
-  }, [recipeId, fetchRecipeData]);
+    if (!id) return;
+
+    const fetchSteps = async () => {
+      try {
+        const res = await fetch(`/api/recipe-steps?recipeId=${id}`);
+        if (!res.ok) throw new Error(`Failed to fetch steps: ${res.status}`);
+        const data = await res.json();
+        setSteps(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSteps();
+  }, [id]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>에러 발생: {error}</div>;
+  if (steps.length === 0) return <div>조리 과정이 없습니다.</div>;
 
   return (
     <>
       {steps.map((data) => (
-        <CookingCard key={data.recipeId}>
+        <CookingCard key={data.order}>
           <CookCardNumber>{data.order}</CookCardNumber>
           <CookCardDescription>{data.content}</CookCardDescription>
           <CookCardImage>

@@ -22,7 +22,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+            {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );

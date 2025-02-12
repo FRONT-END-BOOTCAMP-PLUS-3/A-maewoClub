@@ -34,7 +34,9 @@ export default function Page() {
       setIsLoading(true);
       try {
         const res = await fetch("/api/recipes", { method: "GET" });
+        console.log("res recipe main 인덱스 확인용 ", res);
         const data = await res.json();
+        console.log("data recipe main 확인용", data);
         setListData(data);
       } catch (error) {
         console.error("Error fetching recipes ✅:", error);
@@ -99,7 +101,7 @@ export default function Page() {
         <SlideTrack position={topCurrentSlide}>
           {topRecipes.map((recipe) => (
             <SlideWrapper key={recipe.likeCount}>
-              <RecipeCardSlide id={`${recipe.id}`}>{recipe.title}</RecipeCardSlide>
+              <RecipeCardSlide id={recipe.id}>{recipe.title}</RecipeCardSlide>
             </SlideWrapper>
           ))}
         </SlideTrack>
@@ -109,7 +111,7 @@ export default function Page() {
       <SubTitle>총 {totalRecipes}개의 레시피가 있습니다.</SubTitle>
       <RecipeContainer>
         {currentRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} id={`${recipe.id}`}>{recipe.title}</RecipeCard>
+          <RecipeCard key={recipe.id} id={recipe.id}>{recipe.title}</RecipeCard>
         ))}
       </RecipeContainer>
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
@@ -121,7 +123,7 @@ export default function Page() {
           <SlideTrack position={recentCurrentSlide}>
             {recentRecipes.map((recipe) => (
               <SlideWrapper key={recipe.id}>
-                <RecipeCard id={`${recipe.id}`}>{recipe.title}</RecipeCard>
+                <RecipeCard id={recipe.id}>{recipe.title}</RecipeCard>
               </SlideWrapper>
             ))}
           </SlideTrack>
