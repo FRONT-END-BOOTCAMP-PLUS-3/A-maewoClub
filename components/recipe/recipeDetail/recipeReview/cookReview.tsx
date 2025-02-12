@@ -33,10 +33,6 @@ export const CookReview = ({ recipeId, userId, reviewData }: CookReviewProps) =>
   const [createdAt, setCreatedAt] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
-  const reviewRef = useRef<HTMLTextAreaElement>(null!);
-  const imageRef = useRef<HTMLInputElement>(null!);    
-
-
  const handleOpenModal = (review: ReviewData) => {
   setIsUpdate(true);
   setSelectedFire(review.score);
@@ -113,12 +109,6 @@ const handleDelete = async () => {
       <ReviewModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        selectedFire={selectedFire}
-        handleFireClick={setSelectedFire}
-        reviewRef={reviewRef}
-        imageRef={imageRef}
-        handleImageChange={() => {}}
-        imageName={null}
         userId={userId}
         recipeId={recipeId}
         isUpdate={isUpdate}
