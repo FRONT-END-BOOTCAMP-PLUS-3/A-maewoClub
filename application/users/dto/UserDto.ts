@@ -6,4 +6,5 @@ export interface UserDto {
   email: string;
   photoUrl?: string;
   createdAt: Date;
+  user?: any;
 }

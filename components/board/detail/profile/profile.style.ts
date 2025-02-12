@@ -8,11 +8,9 @@ export const Container = styled.span`
   column-gap: 20px;
 `;
 
-export const ProfileImage = styled.img`
-  width: 60px;
-  height: 60px;
+export const ProfileImage = styled.div`
   border-radius: 70px;
-
+  border: 2px solid white;
   overflow: auto;
 `;
 
@@ -23,7 +21,7 @@ export const InfoWrapper = styled.div`
 `;
 
 export const Nickname = styled.p`
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 400;
 
   color: white;

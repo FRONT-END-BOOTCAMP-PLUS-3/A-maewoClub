@@ -10,8 +10,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 15px 20px;
-  background-color: #222; /* 배경색 추가 (댓글 영역 구분을 위해) */
+  padding: 15px 0;
+  background-color: #222;
   margin-bottom: 10px;
   border-radius: 10px;
 `;
@@ -19,7 +19,7 @@ export const Container = styled.div`
 export const Content = styled.p`
   font-size: 16px;
   color: white;
-  margin-left: 70px; /* 프로필 이미지 오른쪽에 여백 */
+  margin-left: 40px;
 `;
 
 export const ButtonBox = styled.div`
@@ -44,14 +44,14 @@ export const ProfileImage = styled.img`
   height: 50px;
   border-radius: 50%;
   position: absolute;
-  left: 10px; /* 프로필 이미지를 왼쪽에 배치 */
+  left: 10px;
   top: 10px;
 `;
 
 export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 70px; /* 프로필 이미지와 텍스트 사이 공간 확보 */
+  margin-left: 40px;
 `;
 
 export const Nickname = styled.p`
@@ -70,7 +70,7 @@ export const DeleteButton = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: red;
+  background-color: gray;
   color: white;
   border: none;
   padding: 5px 10px;
