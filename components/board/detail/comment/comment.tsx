@@ -17,6 +17,7 @@ import {
   InfoWrapper,
   Nickname,
   ProfileImage,
+  DeleteButton,
 } from "./comment.style";
 import { useAuthStore } from "@/store/useAuthStore";
 
@@ -29,18 +30,13 @@ const Comment = ({ boardId }: CommentProps) => {
   const [newComment, setNewComment] = useState("");
   const { user } = useAuthStore();
 
-  // ✅ 클라이언트에서 userId 가져오기 (SSR 방지)
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-    }
-  }, []);
+  if (!user) return <div>유저 정보를 불러올 수 없습니다.</div>;
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const response = await fetch(`/api/board-comments?boardId=${boardId}`);
         const data: BoardCommentListDto = await response.json();
-        console.log("💬 불러온 댓글 데이터:", data);
         setComments(data.comments);
       } catch (error) {
         console.error("❌ 댓글을 불러오는 데 실패했습니다:", error);
@@ -82,11 +78,35 @@ const Comment = ({ boardId }: CommentProps) => {
       }
 
       const data: BoardCommentDto = await response.json();
-
       setComments([data, ...comments]);
       setNewComment("");
     } catch (error) {
       console.error("❌ 댓글 등록 오류:", error);
+    }
+  };
+
+  const handleDeleteComment = async (id: number) => {
+    if (!user) {
+      alert("⚠️ 로그인이 필요합니다!");
+      return;
+    }
+
+    const confirmDelete = window.confirm("이 댓글을 삭제하시겠습니까?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`/api/board-comments?id=${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error();
+      }
+      console.log("댓글 삭제 성공");
+      setComments(comments.filter((comment) => comment.id !== id));
+    } catch (error) {
+      console.error("❌ 댓글 삭제 오류:", error);
+      alert("댓글 삭제 중 오류가 발생했습니다.");
     }
   };
 
@@ -96,14 +116,19 @@ const Comment = ({ boardId }: CommentProps) => {
         {comments.map((e) => (
           <Container key={e.id}>
             <ProfileImage
-              src={e.photoUrl || "/default-avatar.png"}
-              alt="profile-image"
+              src={e.photoUrl}
+              alt='profile-image'
             />
             <InfoWrapper>
               <Nickname>{e.nickname || "익명"}</Nickname>
               <CreateDate>{new Date(e.createdAt).toLocaleString()}</CreateDate>
             </InfoWrapper>
             <Content>{e.content}</Content>
+            {user.id === e.userId && (
+              <DeleteButton onClick={() => handleDeleteComment(e.id)}>
+                삭제
+              </DeleteButton>
+            )}
           </Container>
         ))}
       </CommentBox>
@@ -111,7 +136,7 @@ const Comment = ({ boardId }: CommentProps) => {
       <CommentInput
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
-        placeholder="댓글을 입력하세요..."
+        placeholder='댓글을 입력하세요...'
       />
 
       <ButtonBox>

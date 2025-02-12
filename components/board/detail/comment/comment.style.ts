@@ -3,39 +3,36 @@ import styled from "styled-components";
 export const CommentBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
 `;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-
-  padding: 10px 5px;
+  position: relative;
+  padding: 15px 20px;
+  background-color: #222; /* 배경색 추가 (댓글 영역 구분을 위해) */
+  margin-bottom: 10px;
+  border-radius: 10px;
 `;
 
 export const Content = styled.p`
-  display: flex;
-  justify-content: start;
-  margin-left: 90px;
-
-  font-size: 18px;
+  font-size: 16px;
   color: white;
+  margin-left: 70px; /* 프로필 이미지 오른쪽에 여백 */
 `;
 
 export const ButtonBox = styled.div`
   display: flex;
   justify-content: end;
-
   width: 100%;
 `;
 
 export const CommentInput = styled.textarea`
   width: 100%;
   height: 150px;
-
   padding: 20px;
   margin: 20px 0;
-
   border: 2px solid var(--darkRed);
   border-radius: 20px;
   background-color: var(--black);
@@ -43,29 +40,46 @@ export const CommentInput = styled.textarea`
 `;
 
 export const ProfileImage = styled.img`
-  width: 60px;
-  height: 60px;
-  border-radius: 70px;
-
-  overflow: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  left: 10px; /* 프로필 이미지를 왼쪽에 배치 */
+  top: 10px;
 `;
 
 export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 4px;
+  margin-left: 70px; /* 프로필 이미지와 텍스트 사이 공간 확보 */
 `;
 
 export const Nickname = styled.p`
   font-size: 18px;
   font-weight: 400;
-
   color: white;
 `;
 
 export const CreateDate = styled.p`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
-
   color: gray;
+`;
+
+export const DeleteButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 10;
+
+  &:hover {
+    background-color: darkred;
+  }
 `;

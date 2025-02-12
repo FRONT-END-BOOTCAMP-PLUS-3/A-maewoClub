@@ -1,5 +1,8 @@
 import { BoardCommentRepository } from "@/domain/repositories/BoardCommentRepository";
-import { BoardComment } from "@/domain/entities/BoardComment";
+import {
+  BoardComment,
+  BoardCommentMapping,
+} from "@/domain/entities/BoardComment";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbBoardCommentRepository implements BoardCommentRepository {
@@ -111,11 +114,11 @@ export class SbBoardCommentRepository implements BoardCommentRepository {
     }
   }
 
-  private mapToEntity(data: BoardComment): BoardComment {
+  private mapToEntity(data: BoardCommentMapping): BoardComment {
     return {
       id: data.id,
-      boardId: data.boardId,
-      userId: data.userId,
+      boardId: data.board_id,
+      userId: data.user_id,
       content: data.content,
       createdAt: new Date(data.createdAt),
       updatedAt: new Date(data.updatedAt),
