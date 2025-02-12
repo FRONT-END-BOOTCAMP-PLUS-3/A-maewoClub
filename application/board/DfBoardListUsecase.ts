@@ -26,7 +26,9 @@ export class DfBoardListUsecase {
 
         return {
           ...board,
-          img: image ? image.photoUrl : "default.svg",
+          img: image
+            ? image.photo_url
+            : "https://zjktstxlgkdcxykljyug.supabase.co/storage/v1/object/public/image//default_board.svg",
         };
       })
     );
