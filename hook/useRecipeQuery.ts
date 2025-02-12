@@ -2,7 +2,7 @@ import { RecipeDto } from "@/application/recipe/dto/RecipeDto";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchRecipe = async (id: number): Promise<RecipeDto> => {
-  const res = await fetch(`/api/recipes/${id}`, { method: "GET" });
+  const res = await fetch(`/api/recipes?id=${id}`, { method: "GET" });
   if (!res.ok) throw new Error(`Failed to fetch recipe: ${res.status}`);
   console.log("recipe query res 출력: ", res);
   const data: RecipeDto = await res.json();

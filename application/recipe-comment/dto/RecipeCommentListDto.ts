@@ -9,4 +9,6 @@ export interface RecipeCommentListDto {
   hasPreviousPage: boolean;
   hasNextPage: boolean;
   pages: number[];
+
+  photoUrl?: string;
 }

@@ -7,5 +7,5 @@ export interface RecipeCommentDto {
   updatedAt: Date;
   score: number;
 
-  photoUrl: string;
+  photoUrl?: string;
 }
