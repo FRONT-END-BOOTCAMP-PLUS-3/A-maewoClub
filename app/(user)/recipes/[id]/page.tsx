@@ -46,7 +46,6 @@ const RecipeDetailPage = () => {
           method: "GET",
         });
         const data = await res.json();
-        console.log(data, "data recipeComment 입니다!!!!")
         setReviewData(data);
         setImgData(data.map((review: ReviewData) => review.imageUrl));
       } catch (error) {
@@ -62,7 +61,6 @@ const RecipeDetailPage = () => {
         if (!res.ok) throw new Error("Failed to fetch recipe data");
 
         const data: RecipeDto = await res.json();
-        console.log("recipeDetail 호출중입니다!!!", data)
         setRecipe(data);
       } catch (err) {
         setError("레시피 정보를 불러오는 중 오류가 발생했습니다.");
