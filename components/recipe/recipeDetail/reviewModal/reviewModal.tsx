@@ -22,7 +22,7 @@ interface ReviewModalProps {
   userId: string;
   recipeId: number;
   isUpdate: boolean;
-  createdAt: string | null
+  createdAt: string | null;
   reviewId: number | null;
 }
 
@@ -35,20 +35,19 @@ export const ReviewModal = ({
   createdAt,
   reviewId,
 }: ReviewModalProps) => {
-
   const [fire, setFire] = useState<number | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement>(null!);
   const imageRef = useRef<HTMLInputElement>(null!);
   const [imageName, setImageName] = useState<string | null>(null);
 
-    const handleImageChange = () => {
+  const handleImageChange = () => {
     const image = imageRef.current?.files?.[0];
     if (image) {
       setImageName(image.name);
     }
   };
 
-  const postComment = async () => {    
+  const postComment = async () => {
     try {
       const formData = new FormData();
       formData.append("userId", userId);
@@ -56,13 +55,13 @@ export const ReviewModal = ({
       formData.append("score", fire?.toString() || "");
 
       if (imageRef.current?.files?.[0]) {
-        const file = imageRef.current.files[0];
-        formData.append("image", file);
+        formData.append("image", imageRef.current.files[0]);
       }
-        await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
-          method: "POST",
-          body: formData,
-        });
+
+      await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
+        method: "POST",
+        body: formData,
+      });
       onClose();
     } catch (error) {
       console.log(error);
@@ -71,16 +70,21 @@ export const ReviewModal = ({
 
   const updateComment = async () => {
     try {
-      const formData = new FormData();
-      formData.append("id", reviewId?.toString() || "");
-      formData.append("createdAt", createdAt?.toString() || "");
-      formData.append("userId", userId);
-      formData.append("content", reviewRef.current?.value || "");
-      formData.append("score", fire?.toString() || "");
+      const existingData = {
+        id: reviewId?.toString() || "",
+        createdAt: createdAt?.toString() || "",
+        userId,
+        content: reviewRef.current?.value || "",
+        score: fire?.toString() || "",
+      };
 
-      const imageFile = imageRef.current?.files?.[0];
-      if (imageFile) {
-        formData.append("image", imageFile);
+      const formData = new FormData();
+      Object.entries(existingData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      if (imageRef.current?.files?.[0]) {
+        formData.append("image", imageRef.current.files[0]);
       }
 
       await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
@@ -106,7 +110,7 @@ export const ReviewModal = ({
     }
   };
 
-  if (!isOpen) return null; 
+  if (!isOpen) return null;
 
   return (
     <ModalOverlay>
@@ -117,20 +121,13 @@ export const ReviewModal = ({
             <FaFire
               key={index}
               size={40}
-              color={
-                fire !== null && fire >= index
-                  ? "var(--mainRed)"
-                  : "gray"
-              }
+              color={fire !== null && fire >= index ? "var(--mainRed)" : "gray"}
               onClick={() => setFire(index)}
               style={{ cursor: "pointer" }}
             />
           ))}
         </ModalPoint>
-        <ModalReview
-          ref={reviewRef}
-          placeholder="얼마나 매운지 의견 남겨주세요"
-        />
+        <ModalReview ref={reviewRef} placeholder="얼마나 매운지 의견 남겨주세요" />
 
         <ModalButtonContainer>
           <InputImageLabel htmlFor="file-upload">이미지 업로드</InputImageLabel>
@@ -146,9 +143,7 @@ export const ReviewModal = ({
             <ModalButton onClick={handleSubmit}>등록</ModalButton>
           </ButtonGroup>
         </ModalButtonContainer>
-        <ImageNameContainer>
-          {imageName && <p>{imageName}</p>}
-        </ImageNameContainer>
+        <ImageNameContainer>{imageName && <p>{imageName}</p>}</ImageNameContainer>
       </ModalContent>
     </ModalOverlay>
   );

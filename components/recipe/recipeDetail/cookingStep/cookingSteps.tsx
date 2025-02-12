@@ -47,8 +47,11 @@ interface CookingStepsProps {
   recipeId : number;
 }
 
-export const CookingSteps = ({ steps, id }: CookingStepsProps) => {
+export const CookingSteps = ({ steps, recipeId }: CookingStepsProps) => {
 
+  const test = () => {
+    const id = recipeId;
+  }
   return (
     <>
       {steps.map((data) => (

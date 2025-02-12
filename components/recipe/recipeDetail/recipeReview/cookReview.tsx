@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   CookReviewContainer,
   CookReviewCard,
@@ -40,7 +40,6 @@ export const CookReview = ({ recipeId, userId, reviewData }: CookReviewProps) =>
   setSelectedReviewId(review.id);
   setIsModalOpen(true);
 };
-
 const handleCloseModal = () => {
   setIsUpdate(false);
   setSelectedFire(null);
