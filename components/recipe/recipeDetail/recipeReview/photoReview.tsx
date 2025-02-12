@@ -47,7 +47,7 @@ export const PhotoReview  = ({ imgData }: PhotoReviewProps) => {
             style={{
               display: "flex",
               gap: "10px",
-              transform: `translateX(-${(currentIndex * 100) / validImgData.length}%)`, // 스와이프 효과
+              transform: `translateX(-${(currentIndex * 100) / validImgData.length}%)`, 
               transition: "transform 0.3s ease-in-out",
             }}>
             {validImgData.map((photo_url: string, index: number) => (

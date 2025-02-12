@@ -31,6 +31,31 @@ export class SbRecipeRepository implements RecipeRepository{
     return recipes || [];
   }
 
+  async findRecipeByUserId(id: string):Promise<Recipe[]>{
+    const supabase = await createClient();
+    const {data, error} = await supabase
+    .from("recipe")
+    .select("*")
+    .eq("user_id", id)
+
+    if (error) {
+      console.error("Error fetching menus:", error.message);
+      throw new Error("Failed to fetch menus");
+    }
+    const recipes: Recipe[] = data.map((recipe): Recipe => {
+      return {
+        id: recipe.id,
+        userId: recipe.user_id,
+        title: recipe.title,
+        description: recipe.description,
+        tagId: recipe.tag_id,
+        createdAt: recipe.created_at,
+        updatedAt: recipe.updated_at,
+        likeCount: recipe.like_count,
+      };
+    });
+    return recipes || [];
+  }
 
   async findOne(id: number): Promise<Recipe> {
     const supabase = await createClient();
