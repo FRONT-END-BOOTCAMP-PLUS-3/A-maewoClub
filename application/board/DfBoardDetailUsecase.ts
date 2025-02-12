@@ -32,7 +32,7 @@ export class DfBoardDetailUsecase {
       updatedAt: board.updatedAt,
       likeCount: board.likeCount,
       viewCount: board.viewCount,
-      images: images.map((img) => ({ photoUrl: img.photoUrl })),
+      images: images.map((img) => ({ photoUrl: img.photo_url })),
       comments: comments.map((comment) => ({
         id: comment.id,
         content: comment.content,

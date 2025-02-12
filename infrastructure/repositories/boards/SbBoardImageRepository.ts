@@ -59,7 +59,7 @@ export class SbBoardImageRepository implements BoardImageRepository {
       throw new Error("게시글 이미지 조회에 실패했습니다.");
     }
 
-    return data || [];
+    return data;
   }
 
   async findDefaultImageByBoardId(id: number): Promise<BoardImage> {

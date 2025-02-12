@@ -11,13 +11,13 @@ import {
   Title,
   PostContainer,
   ContentBox,
-  PostImage,
 } from "./post.style";
 import { BoardDetailDto } from "@/application/board/dto/BoardDetailDto";
+import Image from "next/image";
 
 const Post = () => {
   const { id } = useParams();
-  const [board, setBoard] = useState<BoardDetailDto | null>(null);
+  const [board, setBoard] = useState<BoardDetailDto>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,7 +32,6 @@ const Post = () => {
       })
       .then((data: BoardDetailDto) => {
         setBoard(data);
-        console.log(data);
       })
       .catch((error) => {
         console.error("게시글 상세 정보 호출 오류:", error);
@@ -60,14 +59,18 @@ const Post = () => {
           createdAt={profileData.createdAt}
         />
         <Title>{board.title}</Title>
-        {board.images && board.images.length > 0 && (
-          <PostImage
-            src={board.images[0].photoUrl}
-            width={500}
-            height={300}
-            alt="post_image"
-          />
-        )}
+        {board.images &&
+          board.images.length > 0 &&
+          board.images.map((image, index) => (
+            <Image
+              key={index}
+              src={image.photoUrl}
+              width={500}
+              height={400}
+              alt={`post_image_${index}`}
+            />
+          ))}
+
         <Content>{board.description}</Content>
         <InfoWrapper>
           <SubInfo>조회 : {board.viewCount}</SubInfo>
