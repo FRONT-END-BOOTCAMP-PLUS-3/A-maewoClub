@@ -29,5 +29,6 @@ export interface BoardCommentDetailDto extends BoardCommentDto {
   board?: {
     title: string;
     id: number;
+    userId: string;
   };
 }

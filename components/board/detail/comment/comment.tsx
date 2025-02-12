@@ -30,6 +30,8 @@ const Comment = ({ boardId }: CommentProps) => {
   const [newComment, setNewComment] = useState("");
   const { user } = useAuthStore();
 
+  if (!user) return <div>유저 정보를 불러올 수 없습니다.</div>;
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -43,10 +45,6 @@ const Comment = ({ boardId }: CommentProps) => {
 
     fetchComments();
   }, [boardId]);
-
-  useEffect(() => {
-    console.log("현재 user 상태:", user); // user 상태 추적용 로그
-  }, [user]);
 
   const handleCreateComment = async () => {
     if (!newComment.trim()) {
@@ -93,25 +91,19 @@ const Comment = ({ boardId }: CommentProps) => {
       return;
     }
 
-    console.log("삭제하려는 댓글 ID:", id); // 삭제하려는 댓글 ID 확인
-    console.log("로그인된 사용자 ID:", user?.id); // 로그인된 사용자 ID 확인
-
     const confirmDelete = window.confirm("이 댓글을 삭제하시겠습니까?");
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`/api/board-comments/user?id=${id}`, {
+      const response = await fetch(`/api/board-comments?id=${id}`, {
         method: "DELETE",
       });
 
       if (!response.ok) {
-        const errorMessage = await response.text();
-        console.error("❌ 댓글 삭제 실패:", errorMessage);
-        throw new Error(`❌ 댓글 삭제 실패: ${errorMessage}`);
+        throw new Error();
       }
-
-      console.log("댓글 삭제 성공"); // 삭제 성공 로그
-      setComments(comments.filter((comment) => comment.id !== id)); // 해당 댓글 삭제
+      console.log("댓글 삭제 성공");
+      setComments(comments.filter((comment) => comment.id !== id));
     } catch (error) {
       console.error("❌ 댓글 삭제 오류:", error);
       alert("댓글 삭제 중 오류가 발생했습니다.");
@@ -124,17 +116,15 @@ const Comment = ({ boardId }: CommentProps) => {
         {comments.map((e) => (
           <Container key={e.id}>
             <ProfileImage
-              src={e.photoUrl || "/default-avatar.png"}
-              alt="profile-image"
+              src={e.photoUrl}
+              alt='profile-image'
             />
             <InfoWrapper>
               <Nickname>{e.nickname || "익명"}</Nickname>
               <CreateDate>{new Date(e.createdAt).toLocaleString()}</CreateDate>
             </InfoWrapper>
             <Content>{e.content}</Content>
-
-            {/* 삭제 버튼을 클릭했을 때 해당 댓글의 id를 전달하여 삭제 */}
-            {user?.id === e.userId && (
+            {user.id === e.userId && (
               <DeleteButton onClick={() => handleDeleteComment(e.id)}>
                 삭제
               </DeleteButton>
@@ -146,7 +136,7 @@ const Comment = ({ boardId }: CommentProps) => {
       <CommentInput
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
-        placeholder="댓글을 입력하세요..."
+        placeholder='댓글을 입력하세요...'
       />
 
       <ButtonBox>
