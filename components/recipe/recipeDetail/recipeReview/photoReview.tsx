@@ -87,6 +87,23 @@ export const PhotoReview = ({ id }: PhotoReviewProps) => {
             />
           ))}
         </PhotoWrapper>
+          <PhotoWrapper
+            style={{
+              display: "flex",
+              gap: "10px",
+              transform: `translateX(-${(currentIndex * 100) / listImageData.length}%)`, 
+              transition: "transform 0.3s ease-in-out",
+            }}>
+            {listImageData.map((images) => (
+              <Photo
+                key={images.id}
+                src={images.photoUrl}
+                alt={`foodPhoto ${images.id}`}
+                width={150} 
+                height={150}
+              />
+            ))}
+          </PhotoWrapper>
       </PhotoContainer>
 
       <NavigationButton onClick={nextPhoto} disabled={listImageData.length <= 1}>

@@ -10,6 +10,7 @@ import {
 } from "./login.style";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import LoginForm from "./loginBox/loginForm";
+import Image from "next/image";
 
 type LoginModalProps = {
   onClose: () => void;
@@ -35,14 +36,12 @@ const KakaoLogin = () => {
   localStorage.setItem("provider", "kakao");
 };
 
-const handleChange = () => {};
-
 export const Login = ({ onClose }: LoginModalProps) => {
   return (
     <>
       <ModalContainer>
         <h2>로그인 / 회원가입</h2>
-        <LoginForm onUpdate={handleChange} />
+        <LoginForm />
         <LoginBox
           style={{ backgroundColor: "#FEE500" }}
           onClick={KakaoLogin}
@@ -54,9 +53,11 @@ export const Login = ({ onClose }: LoginModalProps) => {
           style={{ boxShadow: "3px 3px 10px rgba(0, 0, 0, 0.1)" }}
           onClick={googleLogin}
         >
-          <img
+          <Image
+            width={26}
+            height={26}
             src='/google_logo.svg'
-            style={{ width: "26px", height: "26px" }}
+            alt='google logo'
           />
           <SocialName>구글로 시작하기</SocialName>
         </LoginBox>

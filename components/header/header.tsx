@@ -12,32 +12,47 @@ import {
 } from "./header.style";
 import { Login } from "../user/login/login";
 import { useAuthStore } from "@/store/useAuthStore";
+import { UserInfoModal } from "../user/login/userInfoModal/userInfoModal";
+import Image from "next/image";
+
+const logo = "/logo.png";
 
 export const Header = () => {
   const { user, isAuthenticated, logout } = useAuthStore();
   const [showLogin, setShowLogin] = useState(false);
-
   const openLoginModal = () => setShowLogin(true);
   const closeLoginModal = () => setShowLogin(false);
+
+  const [showUserInfoModal, setShowUserInfoModal] = useState(false);
+  const toggleUserInfoModal = () => {
+    setShowUserInfoModal((prev) => !prev);
+  };
+  const closeUserInfoModal = () => setShowUserInfoModal(false);
 
   return (
     <>
       <HeaderStyle>
         <LogoStyle>
-          <LinkStyle href='/'>logo</LinkStyle>
+          <LinkStyle href='/'>
+            <Image
+              src={logo}
+              alt='logo'
+              height={150}
+              width={150}
+            />
+          </LinkStyle>
         </LogoStyle>
         <NavStyle>
           <LinkStyle href='/recipes'>레시피</LinkStyle>
           <LinkStyle href='/boards'>커뮤니티</LinkStyle>
           <LinkStyle href='/quests'>챌린지</LinkStyle>
-          <LinkStyle href='/admin'>관리자</LinkStyle>
         </NavStyle>
         <LoginStyle>
           {isAuthenticated ? (
-            <ProfileWrapper>
+            <ProfileWrapper onClick={toggleUserInfoModal}>
               <img
                 src={user?.photoUrl}
-                alt=''
+                alt='profile photo'
               />
             </ProfileWrapper>
           ) : (
@@ -55,6 +70,7 @@ export const Header = () => {
       </HeaderStyle>
 
       {showLogin && <Login onClose={closeLoginModal} />}
+      {showUserInfoModal && <UserInfoModal onClose={closeUserInfoModal} />}
     </>
   );
 };

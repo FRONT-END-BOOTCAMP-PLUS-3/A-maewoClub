@@ -11,8 +11,11 @@ import {
 } from "./cardPost.style";
 import { BoardDto } from "@/application/board/dto/BoardDto";
 import { useRouter } from "next/navigation";
+import useFindUserByUserId from "@/hook/useFindUserbyUserId";
+import Image from "next/image";
 
 const PostListItem = (post: BoardDto) => {
+  const { userData, isLoading, error } = useFindUserByUserId(post.userId);
   const router = useRouter();
 
   const handleDetail = () => {
@@ -20,27 +23,36 @@ const PostListItem = (post: BoardDto) => {
   };
 
   return (
-    <Container>
-      <PostStyle onClick={handleDetail}>
-        <PostImage>
-          <img
-            src={post.img}
-            alt={post.title}
-          />
-        </PostImage>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <PostContent>
-            <PostTitle>{post.title}</PostTitle>
-            <PostPhrase>{post.description}</PostPhrase>
-            <PostText>{post.userId}</PostText>
-          </PostContent>
-          <PostText style={{ marginTop: "52px", marginBottom: "11px" }}>
-            <span>조회수: {post.viewCount}</span>
-            <span>하트: {post.likeCount} </span>
-          </PostText>
-        </div>
-      </PostStyle>
-    </Container>
+    <>
+      <Container>
+        <PostStyle onClick={handleDetail}>
+          <PostImage>
+            <Image
+              src={post.img}
+              alt={post.title}
+              width={176}
+              height={155}
+            />
+          </PostImage>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "0 20px",
+            }}
+          >
+            <PostContent>
+              <PostTitle>{post.title}</PostTitle>
+              <PostPhrase>{userData?.user.nickname}</PostPhrase>
+            </PostContent>
+            <PostText style={{ marginTop: "40px" }}>
+              <span>👁️: {post.viewCount || 0}</span>
+              <span>❤️: {post.likeCount} </span>
+            </PostText>
+          </div>
+        </PostStyle>
+      </Container>
+    </>
   );
 };
 

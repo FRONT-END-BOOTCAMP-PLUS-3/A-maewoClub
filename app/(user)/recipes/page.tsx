@@ -63,7 +63,7 @@ export default function Page() {
 
   const recentRecipes = [...listData]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 5);
+    .slice(0, 6);
 
   const recentVisibleSlides = 3;
   const recentMaxIndex = Math.ceil(recentRecipes.length / recentVisibleSlides) - 1;

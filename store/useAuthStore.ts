@@ -9,7 +9,7 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (token: string, user: UserDto) => void;
   logout: () => void;
-  fetchUser: () => Promise<void>;
+  fetchUser: () => Promise<UserDto | null>; // UserDto 반환
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -36,7 +36,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     const token = localStorage.getItem("access_token");
     if (!token) {
       set({ user: null, isAuthenticated: false });
-      return;
+      return null; // 인증 토큰이 없을 경우 null 반환
     }
 
     try {
@@ -50,9 +50,11 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       const { user } = await res.json();
       set({ user, isAuthenticated: true });
+      return user; // 유저 정보를 반환
     } catch (error) {
       console.error("❌ 유저 정보 불러오기 실패:", error);
       set({ user: null, isAuthenticated: false });
+      return null; // 오류가 나면 null 반환
     }
   },
 }));
