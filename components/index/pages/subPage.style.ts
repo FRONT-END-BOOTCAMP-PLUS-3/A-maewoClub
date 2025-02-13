@@ -80,6 +80,7 @@ export const Title = styled.p`
   font-size: 2.5rem;
   font-weight: 700;
   color: white;
+  font-family: "Pretendard", sans-serif;
 
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -91,7 +92,8 @@ export const Content = styled.p`
   font-weight: 700;
   line-height: normal;
   color: white;
-
+  font-family: "Pretendard", sans-serif;
+  white-space: pre-line;
   @media (max-width: 768px) {
     font-size: 1.4rem;
   }
