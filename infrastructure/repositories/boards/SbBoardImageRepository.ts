@@ -67,7 +67,7 @@ export class SbBoardImageRepository implements BoardImageRepository {
     const { data, error } = await supabase
       .from("board_image")
       .select("*")
-      .eq("id", id)
+      .eq("board_id", id)
       .maybeSingle();
 
     if (error) {
