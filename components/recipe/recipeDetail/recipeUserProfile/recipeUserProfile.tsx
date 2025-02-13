@@ -17,9 +17,10 @@ import { RecipeDetailDto } from "@/application/recipe/dto/RecipeDetailDto";
 
 type UserProfileProps = {
   id: number;
+  userId: string
 };
 
-export const RecipeUserProfile = ({ id }: UserProfileProps) => {
+export const RecipeUserProfile = ({ id , userId}: UserProfileProps) => {
   const [recipe, setRecipe] = useState<RecipeDetailDto | null>(null);
   const [user, setUser] = useState<UserDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +58,7 @@ export const RecipeUserProfile = ({ id }: UserProfileProps) => {
       if (userId) fetchUser("userId");
       setIsLoading(false);
     });
-  }, [id]);
+  }, [id, userId]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>에러 발생: {error}</div>;
@@ -85,9 +86,9 @@ export const RecipeUserProfile = ({ id }: UserProfileProps) => {
         )}
       </StepImageWrapper>
       <RecipeUserInfo>
-        <UserName>{user.nickname}</UserName>
-        <CardTitle>{recipe.recipes.title}</CardTitle>
-        <CardDescription>{recipe.recipes.description}</CardDescription>
+        <UserName>{user.nickname}test</UserName>
+        <CardTitle>{recipe.recipes.title}하나도 안뜨나?</CardTitle>
+        <CardDescription>{recipe.recipes.description}아주매워</CardDescription>
       </RecipeUserInfo>
     </ProfileContainer>
   );

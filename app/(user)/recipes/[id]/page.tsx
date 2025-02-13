@@ -23,10 +23,6 @@ import { RecipeCommentDto } from "@/application/recipe-comment/dto/RecipeComment
 import { RecipeCommentImageDto } from "@/application/recipe-comment/dto/RecipeCommentImageDto";
 import { useParams } from "next/navigation";
 
-// type PageProps = {
-//   recipeId: number;
-// };
-
 const RecipeDetailPage = () => {
   const params = useParams();
   const id = Number(params.id);
@@ -67,7 +63,7 @@ const RecipeDetailPage = () => {
 
         // 리뷰 이미지 배열 생성 (이미지가 있는 경우만)
         const images: string[] = data
-          .flatMap((review) => review.images || [])
+          .flatMap((review) => review.image || [])
           .map((image: RecipeCommentImageDto) => image.photoUrl);
 
         setImgData(images);
@@ -110,7 +106,7 @@ const RecipeDetailPage = () => {
 
   return (
     <RecipeDetailContainer>
-      <RecipeUserProfile id={id} />
+      <RecipeUserProfile id={recipe.id} userId={recipe.userId}/>
 
       <CookingSteps id={recipe.id} />
 
@@ -118,7 +114,7 @@ const RecipeDetailPage = () => {
         <ReviewMoreButton onClick={() => setShowAllSteps(true)}>더보기</ReviewMoreButton>
       )}
 
-      <Ingredient id={id} />
+      <Ingredient id={recipe.id} />
 
       <WriteReviewButton onClick={() => setIsModalOpen(true)}>리뷰 작성</WriteReviewButton>
 
@@ -126,7 +122,7 @@ const RecipeDetailPage = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         userId={userId}
-        recipeId={id}
+        recipeId={recipe.id}
         isUpdate={false}
         createdAt={null}
         reviewId={null}
@@ -136,7 +132,7 @@ const RecipeDetailPage = () => {
         <SubTitle>포토리뷰</SubTitle>
       </TitleBox>
 
-      <PhotoReview id={id} />
+      <PhotoReview id={recipe.id} />
 
       <SortButtonContainer>
         <SortButton className={sortType === "points" ? "active" : ""} onClick={() => handleSort("points")}>

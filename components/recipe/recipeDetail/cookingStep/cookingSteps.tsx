@@ -15,6 +15,7 @@ interface CookingStepsProps {
 }
 
 export const CookingSteps = ({ id }: CookingStepsProps) => {
+
   const [steps, setSteps] = useState<RecipeStepDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,8 +24,9 @@ export const CookingSteps = ({ id }: CookingStepsProps) => {
     if (!id) return;
     const fetchSteps = async () => {
       try {
-        const res = await fetch(`/api/recipe-steps?recipeId=${id}`);
+        const res = await fetch(`/api/recipe-steps?id=${id}`);
         if (!res.ok) throw new Error(`Failed to fetch steps: ${res.status}`);
+        console.log("fetchres", res)
         const data = await res.json();
         console.log("data recipe step 확인용", data);
         setSteps(data);
@@ -44,14 +46,14 @@ export const CookingSteps = ({ id }: CookingStepsProps) => {
 
   return (
     <>
-      {steps.map((data) => (
-        <CookingCard key={data.order}>
-          <CookCardNumber>{data.order}</CookCardNumber>
-          <CookCardDescription>{data.content}</CookCardDescription>
+      {steps.map((step) => (
+        <CookingCard key={step.order}>
+          <CookCardNumber>{step.order}</CookCardNumber>
+          <CookCardDescription>{step.content}</CookCardDescription>
           <CookCardImage>
-            {data.imageUrl && (
+            {step.imageUrl && (
               <CookStepImage
-                src={data.imageUrl}
+                src={step.imageUrl}
                 alt="Recipe Image"
                 fill
                 sizes="(max-width: 768px) 20rem, 20rem"

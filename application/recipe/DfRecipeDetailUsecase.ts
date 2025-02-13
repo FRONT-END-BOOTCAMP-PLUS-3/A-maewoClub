@@ -14,7 +14,7 @@ export class DfRecipeDetailUsecase {
     if (!recipe) return null;
 
     const allImages: RecipeImageDto[] = 
-    await this.recipeImageRepository.findImagesByRecipeId(id);
+    await this.recipeImageRepository.findAllByRecipeId(id);
 
 
     return {

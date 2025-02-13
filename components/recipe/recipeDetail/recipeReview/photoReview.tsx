@@ -30,10 +30,12 @@ export const PhotoReview = ({ id }: PhotoReviewProps) => {
       try {
         const res = await fetch(`/api/comment-images?id=${id}`, { method: "GET" });
         if (!res.ok) throw new Error("Failed to fetch images");
+        console.log("댓글 이미지 불러오기 성공공", res)
         const data: RecipeCommentImageDto[] = await res.json();
+        console.log("댓글 이미지 불러오기 확인", data)
         setListData(data);
       } catch (error) {
-        console.error("Error fetching images ✅:", error);
+        console.error("Error 댓글 이미지 불러오기 성공 에러 ✅:", error);
       } finally {
         setIsLoading(false);
       }

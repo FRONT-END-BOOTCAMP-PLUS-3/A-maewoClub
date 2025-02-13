@@ -88,12 +88,12 @@ const handleDelete = async () => {
                 />
               </div>
             ))}
-              {/* <CookReviewUserDetails
+              <CookReviewUserDetails
                 userName={data.userId}
                 createdAt={data.createdAt}
                 points={data.score}
                 description={data.content}
-                /> */}
+                />
               {data.userId === userId && (
                 <>
                   <UpdateButton onClick={() => handleOpenModal(data)}>수정</UpdateButton>
