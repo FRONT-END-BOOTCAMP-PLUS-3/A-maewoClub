@@ -2,34 +2,39 @@ import { useState } from "react";
 import {
   CookReviewContainer,
   CookReviewCard,
+  CookReviewUserImg,
   CookReviewCardContainer,
   UpdateButton,
   DeleteButton,
-  CookReviewUserImg,
 } from "./cookReview.style";
 import CookReviewUserDetails from "./cookReviewUserDetails";
 import { ReviewModal } from "../reviewModal/reviewModal";
 import { ButtonGroup, ModalButton, ModalContent, ModalOverlay, ModalTitle } from "../reviewModal/reviewModal.style";
-import { RecipeCommentDto } from "@/application/recipe-comment/dto/RecipeCommentDto";
-import { RecipeCommentImageDto } from "@/application/recipe-comment/dto/RecipeCommentImageDto";
 
 type CookReviewProps = {
   recipeId: number;
   userId: string;
-  reviewData: RecipeCommentDto[];
-  reviewImgData: RecipeCommentImageDto[];
+  reviewData: ReviewData[];
 }
 
-export const CookReview = ({ recipeId, userId, reviewData, reviewImgData }: CookReviewProps) => {
+export type ReviewData = {
+  id: number;
+  userId: string;
+  score: number;
+  content: string;
+  createdAt: string;
+  imageUrl?: string;
+};
+
+export const CookReview = ({ recipeId, userId, reviewData }: CookReviewProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedFire, setSelectedFire] = useState<number | null>(null);
-  const [createdAt, setCreatedAt] = useState<Date | null>(null);
+  const [createdAt, setCreatedAt] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
 
-
- const handleOpenModal = (review: RecipeCommentDto) => {
+ const handleOpenModal = (review: ReviewData) => {
   setIsUpdate(true);
   setSelectedFire(review.score);
   setCreatedAt(review.createdAt);   
@@ -57,8 +62,7 @@ const handleCloseDeleteModal = () => {
 const handleDelete = async () => {
   if (selectedReviewId === null) return;
   const reviewToDelete = reviewData.find((review) => review.id === selectedReviewId);
-  //TODO: 이부분 id 에 recipe comment id에 해당되는 이미지 지우기 함수. 타입 고치기
-  const hasImage = reviewToDelete?.id ? true : false;
+  const hasImage = reviewToDelete?.imageUrl ? true : false;
 
   try {
       await fetch(`/api/recipe-comments?recipeId=${recipeId}`, {
@@ -78,16 +82,14 @@ const handleDelete = async () => {
         <CookReviewContainer key={index}>
           <CookReviewCardContainer>
             <CookReviewCard>
-            {reviewImgData.map((data) => (
-              <div key={data.id}>
-                <CookReviewUserImg
-                  src={data.photoUrl || ""}
-                  alt="Avatar"
-                  width={40}
-                  height={40}
-                />
-              </div>
-            ))}
+            {data.imageUrl && (
+                  <CookReviewUserImg
+                    src={data.imageUrl || ""}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                  />
+                )}
               <CookReviewUserDetails
                 userName={data.userId}
                 createdAt={data.createdAt}
