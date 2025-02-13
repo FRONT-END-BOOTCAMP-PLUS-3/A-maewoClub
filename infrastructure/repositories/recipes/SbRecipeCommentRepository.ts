@@ -6,13 +6,13 @@ import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeCommentRepository implements RecipeCommentRepository {
 
-  async findCommentAll(id: number): Promise<RecipeComment[]> {
+  async findCommentAll(recipeId: number): Promise<RecipeComment[]> {
     try{
       const supabase = await createClient();
       const { data, error } = await supabase
         .from("recipe_comment")
         .select("*")
-        .eq("recipe_id", id);
+        .eq("recipe_id", recipeId);
 
         if (error) {
           console.error("Error fetching recipe comments:", error.message);

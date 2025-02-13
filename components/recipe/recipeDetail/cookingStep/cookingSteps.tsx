@@ -1,4 +1,6 @@
 "use client";
+
+import { useState, useEffect } from "react";
 import {
   CookCardDescription,
   CookCardImage,
@@ -6,62 +8,52 @@ import {
   CookingCard,
   CookStepImage,
 } from "./cookingStep.style";
-
-export const testDatas = [
-  {
-    number: 1,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 2,
-    description:
-      "0양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 3,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 4,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-  {
-    number: 5,
-    description: "양파와 어쩌구 준비해줍니다!",
-    image: "/recipe.jpg",
-  },
-];
-
-type CookingStep = {
-  number: number;
-  description: string;
-  image: string;
-};
+import { RecipeStepDto } from "@/application/recipe/dto/RecipeStepDto";
 
 interface CookingStepsProps {
-  steps: CookingStep[];
-  recipeId : number;
+  id: number;
 }
 
-export const CookingSteps = ({ steps, recipeId }: CookingStepsProps) => {
+export const CookingSteps = ({ id }: CookingStepsProps) => {
 
-  const test = () => {
-    const id = recipeId;
-  }
+  const [steps, setSteps] = useState<RecipeStepDto[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetchSteps = async () => {
+      try {
+        const res = await fetch(`/api/recipe-steps?id=${id}`);
+        if (!res.ok) throw new Error(`Failed to fetch steps: ${res.status}`);
+        console.log("fetchres", res)
+        const data = await res.json();
+        console.log("data recipe step 확인용", data);
+        setSteps(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSteps();
+  }, [id]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>에러 발생: {error}</div>;
+  if (steps.length === 0) return <div>조리 과정이 없습니다.</div>;
+
   return (
     <>
-      {steps.map((data) => (
-        <CookingCard key={data.number}>
-          <CookCardNumber>{data.number}</CookCardNumber>
-          <CookCardDescription>{data.description}</CookCardDescription>
+      {steps.map((step) => (
+        <CookingCard key={step.order}>
+          <CookCardNumber>{step.order}</CookCardNumber>
+          <CookCardDescription>{step.content}</CookCardDescription>
           <CookCardImage>
-            {data.image && (
+            {step.imageUrl && (
               <CookStepImage
-                src={data.image}
+                src={step.imageUrl}
                 alt="Recipe Image"
                 fill
                 sizes="(max-width: 768px) 20rem, 20rem"

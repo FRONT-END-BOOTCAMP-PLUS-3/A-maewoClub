@@ -49,8 +49,6 @@ export async function POST(req: NextRequest) {
     const recipeDetailUsecase = new DfRecipeDetailUsecase(
       recipeRepository,
       recipeImageRepository,
-      recipeIngredientRepository,
-      recipeStepRepository
     );
 
     // createRecipe
@@ -121,9 +119,7 @@ export async function PUT(req: NextRequest) {
       new SbRecipeImageRepository();
     const recipeDetailUsecase = new DfRecipeDetailUsecase(
       recipeRepository,
-      recipeImageRepository,
-      recipeIngredientRepository,
-      recipeStepRepository
+      recipeImageRepository
     );
 
     // 레시피 기본 정보 업데이트
@@ -159,7 +155,6 @@ export async function PUT(req: NextRequest) {
     }
 
     // addImages
-    // 단일 이미지, 복수 이미지 여부를 special type으로 줌.
     if (images?.length) {
       await Promise.all(
         images.map((photoUrl: string) =>

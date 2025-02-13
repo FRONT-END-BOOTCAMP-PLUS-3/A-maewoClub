@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 export class SbRecipeStepRepository implements RecipeStepRepository {
   async findAllByRecipeId(id: number): Promise<RecipeStep[]> {
     const supabase = await createClient();
+    console.log(id, "✅recipe step 에서 id 확인합니다!!✅✅")
     const { data, error } = await supabase
       .from("recipe_step")
       .select("*")
@@ -32,23 +33,23 @@ export class SbRecipeStepRepository implements RecipeStepRepository {
     return data || null;
   }
 
-  async addStep(recipeId: number, stepNumber: number, steps: RecipeStep) {
+  async addStep(id: number, stepNumber: number, steps: RecipeStep) {
     const supabase = await createClient();
     const { error } = await supabase
       .from("recipe_step")
-      .insert([{ id: stepNumber, recipe_id: recipeId, steps }]);
+      .insert([{ id: stepNumber, recipe_id: id, steps }]);
   
     if (error) {
       throw new Error(error.message);
     }
   }
 
-  async getStepsByRecipeId(recipeId: number): Promise<RecipeStep[]>{
+  async getStepsByRecipeId(id: number): Promise<RecipeStep[]>{
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_step")
-      .update(recipeId)
-      .eq("id", recipeId)
+      .update(id)
+      .eq("recipe_id", id)
   
     if (error) {
       throw new Error("step put 중에 에러입니다~~" + error.message);
@@ -56,12 +57,12 @@ export class SbRecipeStepRepository implements RecipeStepRepository {
     return data || [];
   }
 
-  async deleteStepsByRecipeId(recipeId: number): Promise<void> {
+  async deleteStepsByRecipeId(id: number): Promise<void> {
     const supabase = await createClient();
     const { error } = await supabase
       .from("recipe_step")
       .delete()
-      .eq("id", recipeId)
+      .eq("recipe_id", id)
   
     if (error) {
       throw new Error("step delete 중에 에러입니다~~" + error.message);

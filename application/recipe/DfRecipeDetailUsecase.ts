@@ -1,29 +1,29 @@
-import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
-import { RecipeIngredientRepository } from "@/domain/repositories/RecipeIngredientRepository";
 import { RecipeRepository } from "@/domain/repositories/RecipeRepository";
-import { RecipeStepRepository } from "@/domain/repositories/RecipeStepRepository";
+import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository"; 
+import { RecipeImageDto } from "./dto/RecipeImageDto";
+import { RecipeDetailDto } from "./dto/RecipeDetailDto";
 
 export class DfRecipeDetailUsecase {
   constructor(
     private recipeRepository: RecipeRepository,
-    private recipeImageRepository: RecipeImageRepository,
-    private recipeIngredientRepository: RecipeIngredientRepository,
-    private recipeStepRepository: RecipeStepRepository
+    private recipeImageRepository: RecipeImageRepository 
   ) {}
 
-  async getRecipeDetail(id: number) {
-    return await this.recipeRepository.findOne(id);
-  }
-  
-  async getRecipeIngredient(recipeId: number) {
-    return await this.recipeIngredientRepository.findAllByRecipeId(recipeId);
-  }
+  async getRecipeDetail(id: number): Promise<RecipeDetailDto | null> {
+    const recipe = await this.recipeRepository.findOne(id);
+    if (!recipe) return null;
 
-  async getRecipeImages(recipeId: number) {
-    return await this.recipeImageRepository.findAllByRecipeId(recipeId);
-  }
+    const allImages: RecipeImageDto[] = 
+    await this.recipeImageRepository.findAllByRecipeId(id);
 
-  async getRecipeSteps(recipeId: number) {
-    return await this.recipeStepRepository.findAllByRecipeId(recipeId);
+
+    return {
+      recipes: recipe,
+      images: allImages.map(img => ({
+        id: img.id,
+        recipeId: recipe.id,
+        photoUrl: img.photoUrl,
+      }))
+    };
   }
 }

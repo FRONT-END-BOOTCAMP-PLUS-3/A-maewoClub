@@ -35,6 +35,7 @@ export default function Page() {
       try {
         const res = await fetch("/api/recipes", { method: "GET" });
         const data = await res.json();
+        console.log("data recipe main 확인용", data);
         setListData(data);
       } catch (error) {
         console.error("Error fetching recipes ✅:", error);
@@ -45,9 +46,9 @@ export default function Page() {
     fetchRecipes();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading 중입니다...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading 중입니다...</div>;
+  // }
 
   const topRecipes = listData.filter((recipe) => recipe.likeCount).slice(0, 10);
   const topVisibleSlides = 3;
@@ -62,7 +63,7 @@ export default function Page() {
 
   const recentRecipes = [...listData]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 5);
+    .slice(0, 6);
 
   const recentVisibleSlides = 3;
   const recentMaxIndex = Math.ceil(recentRecipes.length / recentVisibleSlides) - 1;
@@ -99,7 +100,7 @@ export default function Page() {
         <SlideTrack position={topCurrentSlide}>
           {topRecipes.map((recipe) => (
             <SlideWrapper key={recipe.likeCount}>
-              <RecipeCardSlide id={`${recipe.id}`}>{recipe.title}</RecipeCardSlide>
+              <RecipeCardSlide id={recipe.id}>{recipe.title}</RecipeCardSlide>
             </SlideWrapper>
           ))}
         </SlideTrack>
@@ -109,7 +110,7 @@ export default function Page() {
       <SubTitle>총 {totalRecipes}개의 레시피가 있습니다.</SubTitle>
       <RecipeContainer>
         {currentRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} id={`${recipe.id}`}>{recipe.title}</RecipeCard>
+          <RecipeCard key={recipe.id} id={recipe.id}>{recipe.title}</RecipeCard>
         ))}
       </RecipeContainer>
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
@@ -121,7 +122,7 @@ export default function Page() {
           <SlideTrack position={recentCurrentSlide}>
             {recentRecipes.map((recipe) => (
               <SlideWrapper key={recipe.id}>
-                <RecipeCard id={`${recipe.id}`}>{recipe.title}</RecipeCard>
+                <RecipeCard id={recipe.id}>{recipe.title}</RecipeCard>
               </SlideWrapper>
             ))}
           </SlideTrack>

@@ -1,12 +1,25 @@
+import { RecipeImageDto } from "@/application/recipe/dto/RecipeImageDto";
 import { RecipeImage } from "@/domain/entities/RecipeImage";
 import { RecipeImageRepository } from "@/domain/repositories/RecipeImageRepository";
 import { createClient } from "@/utils/supabase/server";
 
 export class SbRecipeImageRepository implements RecipeImageRepository {
+  async findImagesByRecipeId(recipeId: number): Promise<RecipeImageDto[]> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("recipe_image")
+      .select("*")
+      .eq("id", recipeId);
+
+    if (error) {
+      console.error("레시피 이미지 패치 에러 : " + error);
+    }
+    return data || [];
+  }
   async deleteImagesByRecipeId(recipeId: number): Promise<void> {
     const supabase = await createClient();
     const { error } = await supabase
-      .from("board_image")
+      .from("recipe_image")
       .delete()
       .eq("id", recipeId);
 
@@ -15,7 +28,7 @@ export class SbRecipeImageRepository implements RecipeImageRepository {
     }
   }
   
-  async findAllByRecipeId(recipeId: number): Promise<RecipeImage[]> {
+  async findAllByRecipeId(recipeId: number): Promise<RecipeImageDto[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("recipe_image")

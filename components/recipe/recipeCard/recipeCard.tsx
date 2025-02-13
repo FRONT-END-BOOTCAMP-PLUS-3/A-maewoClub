@@ -15,7 +15,7 @@ import { TagContainer, Tag } from "../tag/tag.style";
 
 type RecipeCardProps = {
   children: React.ReactNode;
-  id: string;
+  id: number;
 };
 
 const RecipeCard = ({ children, id }: RecipeCardProps) => {
@@ -38,7 +38,7 @@ const RecipeCard = ({ children, id }: RecipeCardProps) => {
         </TagContainer>
         <Description>{children}</Description>
         <UserContainer>
-          {imageUrl && (
+          {profileUrl && (
             <UserProfileImage
               src={profileUrl}
               alt="Avatar"
@@ -48,7 +48,7 @@ const RecipeCard = ({ children, id }: RecipeCardProps) => {
           )}
           <UserNickname>
             나의 고향 신길동 매운 떡볶이
-            <Tier>알</Tier>
+            <Tier>불사조 ⚜️</Tier>
           </UserNickname>
         </UserContainer>
       </TextContainer>

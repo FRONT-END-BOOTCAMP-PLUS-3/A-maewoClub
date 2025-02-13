@@ -9,14 +9,25 @@ export default function ReactQueryProvider({
 }: {
   children: React.ReactNode;
 }) {
+
   const [queryClient] = useState(() => new QueryClient());
   const fetchUser = useAuthStore((state) => state.fetchUser);
 
+  // const [isAuth, setIsAuth] = useState(false);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("access_token");
+  //   setIsAuth(!!token);
+  // }, []);
+
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
+
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
   );
 }

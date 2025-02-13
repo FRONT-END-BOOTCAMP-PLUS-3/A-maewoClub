@@ -1,9 +1,11 @@
-import { RecipeImage } from "@/domain/entities/RecipeImage";
+import { RecipeImageDto } from "@/application/recipe/dto/RecipeImageDto";
+import { RecipeImage } from "../entities/RecipeImage";
 
 
 export interface RecipeImageRepository {
-  findAllByRecipeId(recipeId: number): Promise<RecipeImage[]>;
+  findAllByRecipeId(recipeId: number): Promise<RecipeImageDto[]>;
   findDefaultImageByRecipeId(recipeId: number): Promise<RecipeImage>;
+  findImagesByRecipeId(recipeId: number):Promise<RecipeImageDto[]>
   findRecipeImageByUserId(id: string): Promise<RecipeImage[]>;
   addRecipeImage(recipeId: number, imageUrl: string):void;
   deleteImagesByRecipeId(recipeId: number): void;
