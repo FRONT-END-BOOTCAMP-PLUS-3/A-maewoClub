@@ -14,7 +14,6 @@ interface CookingStepsProps {
   id: number;
 }
 
-<<<<<<< HEAD
 export const CookingSteps = ({ id }: CookingStepsProps) => {
 
   const [steps, setSteps] = useState<RecipeStepDto[]>([]);
@@ -44,13 +43,7 @@ export const CookingSteps = ({ id }: CookingStepsProps) => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>에러 발생: {error}</div>;
   if (steps.length === 0) return <div>조리 과정이 없습니다.</div>;
-=======
-export const CookingSteps = ({ steps, recipeId }: CookingStepsProps) => {
->>>>>>> 69398b844aa967225a87708d4351576ffe262a7f
 
-  const test = () => {
-    const id = recipeId;
-  }
   return (
     <>
       {steps.map((step) => (
