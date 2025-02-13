@@ -12,6 +12,7 @@ import {
 import { BoardDto } from "@/application/board/dto/BoardDto";
 import { useRouter } from "next/navigation";
 import useFindUserByUserId from "@/hook/useFindUserbyUserId";
+import Image from "next/image";
 
 const PostListItem = (post: BoardDto) => {
   const { userData, isLoading, error } = useFindUserByUserId(post.userId);
@@ -26,17 +27,25 @@ const PostListItem = (post: BoardDto) => {
       <Container>
         <PostStyle onClick={handleDetail}>
           <PostImage>
-            <img
+            <Image
               src={post.img}
               alt={post.title}
+              width={176}
+              height={155}
             />
           </PostImage>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "0 20px",
+            }}
+          >
             <PostContent>
               <PostTitle>{post.title}</PostTitle>
               <PostPhrase>{userData?.user.nickname}</PostPhrase>
             </PostContent>
-            <PostText style={{ marginTop: "70px", marginBottom: "11px" }}>
+            <PostText style={{ marginTop: "40px" }}>
               <span>👁️: {post.viewCount || 0}</span>
               <span>❤️: {post.likeCount} </span>
             </PostText>
